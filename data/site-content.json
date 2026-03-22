@@ -1,0 +1,256 @@
+{
+  "profile": {
+    "name": "Francis Itoua",
+    "role": "Ingenieur informatique | IA, automatisation et applications sur mesure",
+    "location": "Brest, France",
+    "availability": "Disponible pour missions, alternance et collaborations ambitieuses",
+    "heroTitle": "Je concois des experiences numeriques utiles, rapides et memorables.",
+    "heroIntro": "Je developpe des applications web, des workflows automatises et des systemes IA capables de faire gagner du temps, de clarifier les operations et de donner une vraie longueur d'avance.",
+    "quickPitch": "Backend, frontend, automatisation, agents autonomes, APIs, UX claire: je relie les briques techniques a un objectif concret de performance.",
+    "about": "Ingenieur informaticien passionne par les solutions numeriques innovantes, j'interviens sur toute la chaine: cadrage, architecture, developpement, automatisation et mise en production. Mon approche est simple: moins de friction, plus de valeur, plus d'impact.",
+    "highlights": [
+      "Experience en React, Node.js, Spring Boot, Django REST, Laravel et Flutter.",
+      "Conception d'agents IA, graphes de connaissances Neo4j et moteurs de dialogue multilingues.",
+      "Automatisation de processus metier et orchestration de workflows intelligents."
+    ],
+    "photoPath": "/francis-itoua.jpg"
+  },
+  "socialLinks": [
+    {
+      "label": "Email",
+      "value": "francisitoua05@gmail.com",
+      "href": "mailto:francisitoua05@gmail.com"
+    },
+    {
+      "label": "Telephone",
+      "value": "+33 7 46 53 35 91",
+      "href": "tel:+33746533591"
+    },
+    {
+      "label": "GitHub",
+      "value": "ItxMveng",
+      "href": "https://github.com/ItxMveng"
+    },
+    {
+      "label": "Adresse",
+      "value": "Boulevard Montaigne, Brest",
+      "href": "https://maps.google.com/?q=Boulevard+Montaigne+Brest"
+    }
+  ],
+  "stats": [
+    {
+      "label": "Projets publics cites au CV",
+      "value": "4"
+    },
+    {
+      "label": "Domaines actifs",
+      "value": "Web / IA / Automatisation"
+    },
+    {
+      "label": "Temps de reponse",
+      "value": "< 24h"
+    }
+  ],
+  "services": [
+    {
+      "title": "Applications web a forte valeur",
+      "summary": "Interfaces React ou Next.js, APIs securisees et backends robustes pour des plateformes utiles et rapides.",
+      "bullets": [
+        "UX claire",
+        "Architecture evolutive",
+        "Mise en production propre"
+      ]
+    },
+    {
+      "title": "IA appliquee et agents autonomes",
+      "summary": "Agents conversationnels, LLMs, Neo4j, raisonnement outille et experiences assistees par IA.",
+      "bullets": [
+        "LLM",
+        "Neo4j",
+        "Dialogue multilingue"
+      ]
+    },
+    {
+      "title": "Automatisation des operations",
+      "summary": "Workflows n8n et integrations intelligentes pour supprimer les taches repetitives et accelerer les equipes.",
+      "bullets": [
+        "n8n",
+        "APIs",
+        "Automatisation metier"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "slug": "clic-sarl-elearning",
+      "title": "CLIC SARL e-learning",
+      "category": "web",
+      "categories": [
+        "web",
+        "automation"
+      ],
+      "year": "2025",
+      "summary": "Refonte complete d'une plateforme e-learning avec gestion des formations, certificats, paiements et administration.",
+      "challenge": "Le besoin couvrait un produit dense: suivi des apprenants, tutoriels avances, paiements par tranches et administration performante.",
+      "solution": "Conception de l'interface, gestion dynamique des formations, optimisation du tableau de bord admin avec pagination SQL, recherche AJAX et meilleures performances sur gros volumes.",
+      "impact": "Une plateforme plus lisible, plus rapide a administrer et mieux adaptee a la croissance du catalogue comme au suivi des apprenants.",
+      "stack": [
+        "React",
+        "JavaScript",
+        "SQL",
+        "AJAX",
+        "Admin UX"
+      ],
+      "liveUrl": "https://clicsarl.com",
+      "githubUrl": "https://github.com/ItxMveng",
+      "featured": true,
+      "accent": "linear-gradient(135deg, #56ccf2 0%, #2f80ed 58%, #1d3b72 100%)"
+    },
+    {
+      "slug": "rh360view",
+      "title": "RH360View",
+      "category": "web",
+      "categories": [
+        "web"
+      ],
+      "year": "2025",
+      "summary": "Un projet web public oriente presentation et services, cite dans le CV parmi les realisations en ligne.",
+      "challenge": "Construire une presence en ligne credible, claire et utile pour presenter l'offre et faciliter la prise de contact.",
+      "solution": "Mise en place d'une interface web responsive, d'une structure claire et d'un parcours plus direct vers les informations essentielles.",
+      "impact": "Un support digital mieux structure pour valoriser l'activite et orienter les visiteurs vers l'action.",
+      "stack": [
+        "Web",
+        "Responsive UI",
+        "Front-end"
+      ],
+      "liveUrl": "https://rh360view.com",
+      "githubUrl": "https://github.com/ItxMveng",
+      "featured": true,
+      "accent": "linear-gradient(135deg, #ff9966 0%, #ff5e62 58%, #6d214f 100%)"
+    },
+    {
+      "slug": "action-for-youths",
+      "title": "Action For Youths",
+      "category": "web",
+      "categories": [
+        "web"
+      ],
+      "year": "2025",
+      "summary": "Site public pour une structure engagee, pense pour mieux presenter l'organisation et ses actions.",
+      "challenge": "Donner de la visibilite a un projet associatif avec une interface lisible et une narration plus claire.",
+      "solution": "Structuration du contenu, responsive design et mise en avant des informations importantes pour gagner en confiance et en clarte.",
+      "impact": "Une vitrine plus professionnelle qui facilite la decouverte des actions et la prise de contact.",
+      "stack": [
+        "Web",
+        "Content structure",
+        "Responsive"
+      ],
+      "liveUrl": "https://actionforyouths.com",
+      "githubUrl": "https://github.com/ItxMveng",
+      "featured": false,
+      "accent": "linear-gradient(135deg, #8e9eab 0%, #eef2f3 100%)"
+    },
+    {
+      "slug": "afrosi",
+      "title": "Afrosi",
+      "category": "web",
+      "categories": [
+        "web"
+      ],
+      "year": "2025",
+      "summary": "Projet web public cite au CV, avec un objectif de presence digitale plus solide et plus actuelle.",
+      "challenge": "Presenter une organisation et ses activites de facon plus fluide, plus claire et plus convaincante.",
+      "solution": "Travail sur la structure de l'information, l'experience responsive et la mise en avant des contenus utiles.",
+      "impact": "Une vitrine plus serieuse pour soutenir la communication et rendre l'experience plus simple pour les visiteurs.",
+      "stack": [
+        "Web",
+        "Front-end",
+        "Responsive"
+      ],
+      "liveUrl": "https://afrosi.org",
+      "githubUrl": "https://github.com/ItxMveng",
+      "featured": false,
+      "accent": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
+    },
+    {
+      "slug": "cerv-agent-ia",
+      "title": "Agent IA multimodal",
+      "category": "ai",
+      "categories": [
+        "ai",
+        "automation"
+      ],
+      "year": "2025",
+      "summary": "Projet mene au CERV autour d'un agent IA multimodal avec Neo4j, LLM et moteur de dialogue multilingue.",
+      "challenge": "Concevoir un robot capable d'interagir de facon plus naturelle, robuste et coherent dans des scenarios varies.",
+      "solution": "Pipeline Python, integration d'un LLM Mistral, structuration du graphe de connaissances sous Neo4j, Vosk pour le dialogue FR/EN et tests de robustesse.",
+      "impact": "Une base serieuse pour des experiences conversationnelles plus adaptatives, plus logiques et plus utiles.",
+      "stack": [
+        "Python",
+        "Mistral",
+        "Neo4j",
+        "Vosk",
+        "IA multimodale"
+      ],
+      "githubUrl": "https://github.com/ItxMveng",
+      "featured": true,
+      "accent": "linear-gradient(135deg, #7f7fd5 0%, #86a8e7 55%, #91eae4 100%)"
+    }
+  ],
+  "blogPosts": [
+    {
+      "slug": "concevoir-un-agent-ia-utile",
+      "title": "Concevoir un agent IA utile sans tomber dans la demo gratuite",
+      "excerpt": "Une methode simple pour partir d'un vrai besoin metier avant de brancher un LLM, un graphe ou une automatisation.",
+      "category": "tutorial",
+      "publishedAt": "2026-03-03",
+      "readTime": "5 min",
+      "tags": [
+        "IA",
+        "LLM",
+        "Architecture"
+      ],
+      "content": [
+        "Un agent utile commence rarement par le modele. Il commence par un probleme precis, un contexte d'usage clair et un niveau de fiabilite attendu.",
+        "Avant d'ajouter un LLM, il faut definir ce que l'agent doit observer, quelles actions il peut lancer et quels garde-fous il doit respecter.",
+        "La bonne approche consiste souvent a combiner logique metier, appels API, base de connaissance et intervention humaine sur les points critiques."
+      ]
+    },
+    {
+      "slug": "mieux-penser-un-dashboard-admin",
+      "title": "Mieux penser un dashboard admin quand les donnees grossissent",
+      "excerpt": "Pagination, recherche, priorites UX et choix techniques qui evitent un back-office lent et frustrant.",
+      "category": "formation",
+      "publishedAt": "2026-03-01",
+      "readTime": "4 min",
+      "tags": [
+        "Admin",
+        "SQL",
+        "UX"
+      ],
+      "content": [
+        "Un dashboard admin n'est pas une interface secondaire. C'est souvent l'endroit ou la valeur du produit est reellement produite au quotidien.",
+        "Quand les volumes montent, il faut prioriser les requetes efficaces, la recherche pertinente, les etats vides clairs et la reduction du nombre de clics.",
+        "L'objectif n'est pas seulement d'afficher des donnees. Il est de permettre d'agir rapidement sans fatigue cognitive inutile."
+      ]
+    },
+    {
+      "slug": "n8n-pour-les-equipes-qui-perdent-du-temps",
+      "title": "n8n pour les equipes qui perdent du temps sur des taches repetitives",
+      "excerpt": "Comment identifier un bon cas d'automatisation et le transformer en workflow vraiment rentable.",
+      "category": "demo",
+      "publishedAt": "2026-02-25",
+      "readTime": "6 min",
+      "tags": [
+        "n8n",
+        "Automatisation",
+        "Workflow"
+      ],
+      "content": [
+        "Une automatisation rentable cible une friction repetitive, frequente et assez stable pour etre modelisee.",
+        "n8n devient puissant quand il relie le formulaire, le CRM, l'email, la qualification et le suivi sans multiplier les outils opaques.",
+        "Le bon reflexe est de mesurer le temps gagne, les erreurs evitees et la visibilite ajoutee au processus apres mise en place."
+      ]
+    }
+  ]
+}

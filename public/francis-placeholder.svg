@@ -1,0 +1,18 @@
+<svg width="800" height="1000" viewBox="0 0 800 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="1000" rx="48" fill="#0B1724"/>
+  <rect x="32" y="32" width="736" height="936" rx="36" fill="url(#paint0_linear)"/>
+  <circle cx="400" cy="310" r="150" fill="#15314A"/>
+  <path d="M207 795C207 665.213 312.213 560 442 560H358C487.787 560 593 665.213 593 795V826H207V795Z" fill="#15314A"/>
+  <circle cx="400" cy="310" r="92" fill="#7DD3FC" fill-opacity="0.16"/>
+  <path d="M400 256C432.033 256 458 281.967 458 314C458 346.033 432.033 372 400 372C367.967 372 342 346.033 342 314C342 281.967 367.967 256 400 256Z" fill="#7DD3FC" fill-opacity="0.18"/>
+  <text x="400" y="118" text-anchor="middle" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="26" letter-spacing="7">PHOTO</text>
+  <text x="400" y="898" text-anchor="middle" fill="#EAF4FF" font-family="Arial, sans-serif" font-size="36" font-weight="700">FRANCIS ITOUA</text>
+  <text x="400" y="936" text-anchor="middle" fill="#9BB0C9" font-family="Arial, sans-serif" font-size="20">Ajoute /public/francis-itoua.jpg</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="106" y1="93" x2="699" y2="905" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#102335"/>
+      <stop offset="0.55" stop-color="#13283D"/>
+      <stop offset="1" stop-color="#1A314A"/>
+    </linearGradient>
+  </defs>
+</svg>

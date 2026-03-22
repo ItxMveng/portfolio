@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  bio         String
+  availability String?
+  heroTitle   String?
+  heroIntro   String?
+  quickPitch  String?
+  about       String?
+  highlights  String[] @default([])
+  email       String
+  phone       String?
+  location    String?
+  photoUrl    String?
+  cvUrl       String?
+  linkedin    String?
+  github      String?
+  twitter     String?
+  metrics     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Domain {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  icon        String?
+  order       Int       @default(0)
+  isActive    Boolean   @default(true)
+  services    Service[]
+  projects    Project[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  domainId    String?
+  domain      Domain?  @relation(fields: [domainId], references: [id], onDelete: SetNull)
+  features    String[]
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  category        String   @default("web")
+  year            String?
+  description     String
+  longDescription String?
+  imageUrl        String?
+  technologies    String[]
+  processSummary  String?
+  processSteps    String[] @default([])
+  domainId        String?
+  domain          Domain?  @relation(fields: [domainId], references: [id], onDelete: SetNull)
+  demoUrl         String?
+  githubUrl       String?
+  featured        Boolean  @default(false)
+  order           Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  label     String
+  value     String
+  href      String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteStat {
+  id        String   @id @default(cuid())
+  label     String
+  value     String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  type        String   @default("article")
+  category    String
+  publishedAt DateTime @default(now())
+  readTime    String   @default("5 min")
+  tags        String[] @default([])
+  tools       String[] @default([])
+  content     String[] @default([])
+  contentBlocks Json?
+  coverImageUrl String?
+  videoUrl    String?
+  githubUrl   String?
+  downloadUrl String?
+  ctaLabel    String?
+  ctaUrl      String?
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
