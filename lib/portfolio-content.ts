@@ -1,12 +1,3 @@
-import type {
-  BlogPost as PrismaBlogPost,
-  Domain as PrismaDomain,
-  Profile as PrismaProfile,
-  Project as PrismaProject,
-  Service as PrismaService,
-  SiteStat as PrismaSiteStat,
-  SocialLink as PrismaSocialLink,
-} from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import {
   defaultSiteContent,
@@ -79,8 +70,84 @@ const CATEGORY_RULES: Array<{ id: ProjectCategory; patterns: RegExp[] }> = [
   { id: "web", patterns: [/web/i, /react/i, /next/i, /node/i, /spring/i, /laravel/i, /django/i] },
 ];
 
-type ServiceRecord = PrismaService & { domain: PrismaDomain | null };
-type ProjectRecord = PrismaProject & { domain: PrismaDomain | null };
+type DomainRecord = {
+  name: string | null;
+};
+
+type ProfileRecord = {
+  name: string;
+  title: string;
+  bio: string;
+  availability: string | null;
+  heroTitle: string | null;
+  heroIntro: string | null;
+  quickPitch: string | null;
+  about: string | null;
+  highlights: string[];
+  email: string;
+  phone: string | null;
+  location: string | null;
+  photoUrl: string | null;
+  linkedin: string | null;
+  github: string | null;
+};
+
+type ServiceRecord = {
+  title: string;
+  description: string;
+  icon: string | null;
+  features: string[];
+  domain: DomainRecord | null;
+};
+
+type ProjectRecord = {
+  slug: string;
+  title: string;
+  category: string;
+  year: string | null;
+  description: string;
+  longDescription: string | null;
+  imageUrl: string | null;
+  technologies: string[];
+  processSummary: string | null;
+  processSteps: string[];
+  demoUrl: string | null;
+  githubUrl: string | null;
+  featured: boolean;
+  createdAt: Date;
+  domain: DomainRecord | null;
+};
+
+type SocialLinkRecord = {
+  label: string;
+  value: string;
+  href: string;
+};
+
+type SiteStatRecord = {
+  label: string;
+  value: string;
+};
+
+type BlogPostRecord = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  type: string | null;
+  category: string;
+  publishedAt: Date;
+  readTime: string | null;
+  tags: string[];
+  tools: string[];
+  content: string[];
+  contentBlocks: unknown;
+  coverImageUrl: string | null;
+  videoUrl: string | null;
+  githubUrl: string | null;
+  downloadUrl: string | null;
+  ctaLabel: string | null;
+  ctaUrl: string | null;
+};
 
 function inferProjectCategories(domainName: string | null, technologies: string[]): ProjectCategory[] {
   const source = `${domainName || ""} ${technologies.join(" ")}`;
@@ -162,7 +229,7 @@ function normalizeBlogBlocks(value: unknown): BlogContentBlock[] {
     }, []);
 }
 
-function toProfileContactLinks(profile: PrismaProfile | null) {
+function toProfileContactLinks(profile: ProfileRecord | null) {
   if (!profile) {
     return defaultSiteContent.socialLinks;
   }
@@ -226,12 +293,12 @@ export async function getPortfolioContent(): Promise<SiteContent> {
         orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
       }),
     ])) as [
-      PrismaProfile | null,
+      ProfileRecord | null,
       ServiceRecord[],
       ProjectRecord[],
-      PrismaSocialLink[],
-      PrismaSiteStat[],
-      PrismaBlogPost[],
+      SocialLinkRecord[],
+      SiteStatRecord[],
+      BlogPostRecord[],
     ];
 
     const fallbackStats = [
@@ -296,7 +363,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
 
     const mappedSocialLinks: SiteContent["socialLinks"] =
       socialLinks.length > 0
-        ? socialLinks.map((link: PrismaSocialLink) => ({
+        ? socialLinks.map((link: SocialLinkRecord) => ({
             label: link.label,
             value: link.value,
             href: link.href,
@@ -305,7 +372,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
 
     const mappedStats: SiteContent["stats"] =
       stats.length > 0
-        ? stats.map((stat: PrismaSiteStat) => ({
+        ? stats.map((stat: SiteStatRecord) => ({
             label: stat.label,
             value: stat.value,
           }))
@@ -314,7 +381,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
     const mappedBlogPosts: SiteContent["blogPosts"] =
       blogPosts.length > 0
         ? blogPosts
-            .map((post: PrismaBlogPost) => ({
+            .map((post: BlogPostRecord) => ({
               slug: post.slug,
               title: post.title,
               excerpt: post.excerpt,
