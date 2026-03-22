@@ -1,3 +1,12 @@
+import type {
+  BlogPost as PrismaBlogPost,
+  Domain as PrismaDomain,
+  Profile as PrismaProfile,
+  Project as PrismaProject,
+  Service as PrismaService,
+  SiteStat as PrismaSiteStat,
+  SocialLink as PrismaSocialLink,
+} from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import {
   defaultSiteContent,
@@ -69,6 +78,9 @@ const CATEGORY_RULES: Array<{ id: ProjectCategory; patterns: RegExp[] }> = [
   { id: "automation", patterns: [/automatisation/i, /automation/i, /n8n/i, /workflow/i] },
   { id: "web", patterns: [/web/i, /react/i, /next/i, /node/i, /spring/i, /laravel/i, /django/i] },
 ];
+
+type ServiceRecord = PrismaService & { domain: PrismaDomain | null };
+type ProjectRecord = PrismaProject & { domain: PrismaDomain | null };
 
 function inferProjectCategories(domainName: string | null, technologies: string[]): ProjectCategory[] {
   const source = `${domainName || ""} ${technologies.join(" ")}`;
@@ -150,7 +162,7 @@ function normalizeBlogBlocks(value: unknown): BlogContentBlock[] {
     }, []);
 }
 
-function toProfileContactLinks(profile: Awaited<ReturnType<typeof prisma.profile.findFirst>>) {
+function toProfileContactLinks(profile: PrismaProfile | null) {
   if (!profile) {
     return defaultSiteContent.socialLinks;
   }
@@ -189,7 +201,7 @@ function toDateSafe(value: string) {
 
 export async function getPortfolioContent(): Promise<SiteContent> {
   try {
-    const [profile, services, projects, socialLinks, stats, blogPosts] = await Promise.all([
+    const [profile, services, projects, socialLinks, stats, blogPosts] = (await Promise.all([
       prisma.profile.findFirst(),
       prisma.service.findMany({
         where: { isActive: true },
@@ -213,7 +225,14 @@ export async function getPortfolioContent(): Promise<SiteContent> {
         where: { isPublished: true },
         orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
       }),
-    ]);
+    ])) as [
+      PrismaProfile | null,
+      ServiceRecord[],
+      ProjectRecord[],
+      PrismaSocialLink[],
+      PrismaSiteStat[],
+      PrismaBlogPost[],
+    ];
 
     const fallbackStats = [
       { label: "Projets publics", value: String(projects.length || defaultSiteContent.projects.length) },
@@ -223,7 +242,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
 
     const mappedProjects: SiteContent["projects"] =
       projects.length > 0
-        ? projects.map((project, index) => {
+        ? projects.map((project: ProjectRecord, index: number) => {
             const inferredCategories = inferProjectCategories(project.domain?.name || null, project.technologies || []);
             const requestedCategory = String(project.category || "").toLowerCase();
             const validRequestedCategory = VALID_PROJECT_CATEGORIES.includes(requestedCategory as ProjectCategory)
@@ -265,7 +284,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
 
     const mappedServices: SiteContent["services"] =
       services.length > 0
-        ? services.map((service) => ({
+        ? services.map((service: ServiceRecord) => ({
             title: service.title,
             summary: service.description,
             bullets: (service.features || []).filter(Boolean).slice(0, 3),
@@ -277,7 +296,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
 
     const mappedSocialLinks: SiteContent["socialLinks"] =
       socialLinks.length > 0
-        ? socialLinks.map((link) => ({
+        ? socialLinks.map((link: PrismaSocialLink) => ({
             label: link.label,
             value: link.value,
             href: link.href,
@@ -286,7 +305,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
 
     const mappedStats: SiteContent["stats"] =
       stats.length > 0
-        ? stats.map((stat) => ({
+        ? stats.map((stat: PrismaSiteStat) => ({
             label: stat.label,
             value: stat.value,
           }))
@@ -295,7 +314,7 @@ export async function getPortfolioContent(): Promise<SiteContent> {
     const mappedBlogPosts: SiteContent["blogPosts"] =
       blogPosts.length > 0
         ? blogPosts
-            .map((post) => ({
+            .map((post: PrismaBlogPost) => ({
               slug: post.slug,
               title: post.title,
               excerpt: post.excerpt,
