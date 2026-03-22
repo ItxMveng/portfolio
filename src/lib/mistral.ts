@@ -1,17 +1,5 @@
 import { supabase } from './supabase';
 
-const viteEnv =
-  typeof import.meta !== 'undefined'
-    ? (import.meta as ImportMeta & {
-        env?: Record<string, string | undefined>;
-      }).env
-    : undefined;
-
-const MISTRAL_API_KEY =
-  viteEnv?.VITE_MISTRAL_API_KEY ??
-  process.env.NEXT_PUBLIC_MISTRAL_API_KEY ??
-  process.env.VITE_MISTRAL_API_KEY ??
-  '';
 const MISTRAL_ENDPOINT = '/api/mistral';
 const MODEL = 'mistral-large-latest';
 
@@ -222,12 +210,6 @@ export async function callMistral(
   systemPrompt: string,
   onChunk?: (chunk: string) => void,
 ): Promise<string> {
-  if (!MISTRAL_API_KEY && typeof window !== 'undefined') {
-    console.warn(
-      'Aucune cle Mistral detectee cote client. Le proxy serveur sera utilise si configure.',
-    );
-  }
-
   const response = await fetch(MISTRAL_ENDPOINT, {
     method: 'POST',
     headers: {
