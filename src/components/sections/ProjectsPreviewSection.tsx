@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { SectionLabel, SectionTitle, Tag } from '../../components/ui';
 import { useProjects } from '../../hooks/useProjects';
 import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../lib/animations';
+import { normalizeExternalUrlField } from '../../lib/external-links';
 
 const Section = styled.section`
   padding: 6rem 0;
@@ -311,7 +312,7 @@ export function ProjectsPreviewSection() {
                   <ProjectLinkGroup>
                     {project.github_url && (
                       <IconLink
-                        href={project.github_url}
+                        href={normalizeExternalUrlField(project.github_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="GitHub"
@@ -321,7 +322,7 @@ export function ProjectsPreviewSection() {
                     )}
                     {project.live_url && (
                       <IconLink
-                        href={project.live_url}
+                        href={normalizeExternalUrlField(project.live_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Site en ligne"

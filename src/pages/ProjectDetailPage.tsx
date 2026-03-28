@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { BlockRenderer } from '../components/blocks/BlockRenderer';
 import { SEOHead } from '../components/layout/SEOHead';
 import { Spinner, Tag } from '../components/ui';
+import { normalizeProjectUrls } from '../lib/external-links';
 import { supabase } from '../lib/supabase';
 import { fadeUp, staggerContainer, staggerItem } from '../lib/animations';
 import type { Project } from '../types';
@@ -318,7 +319,7 @@ export default function ProjectDetailPage() {
       .single()
       .then(({ data, error }) => {
         if (error || !data) setProject(null);
-        else setProject(data);
+        else setProject(normalizeProjectUrls(data as Project));
         setLoading(false);
       });
   }, [slug]);

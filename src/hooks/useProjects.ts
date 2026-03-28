@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { normalizeProjectUrls } from '../lib/external-links';
 import { supabase } from '../lib/supabase';
 import type { Project } from '../types';
 
@@ -13,7 +14,7 @@ export function useProjects(adminMode = false) {
       .order('display_order', { ascending: true });
     if (!adminMode) query = query.eq('published', true);
     const { data } = await query;
-    setProjects(data ?? []);
+    setProjects((data ?? []).map((project) => normalizeProjectUrls(project as Project)));
     setLoading(false);
   }, [adminMode]);
 
@@ -22,19 +23,25 @@ export function useProjects(adminMode = false) {
   }, [fetch]);
 
   const create = async (project: Omit<Project, 'id' | 'created_at' | 'updated_at'>) => {
-    const { data, error } = await supabase.from('projects').insert(project).select().single();
-    if (!error && data) setProjects((prev) => [...prev, data]);
+    const normalizedProject = normalizeProjectUrls(project);
+    const { data, error } = await supabase.from('projects').insert(normalizedProject).select().single();
+    if (!error && data) setProjects((prev) => [...prev, normalizeProjectUrls(data as Project)]);
     return { data, error };
   };
 
   const update = async (id: string, updates: Partial<Project>) => {
+    const normalizedUpdates = normalizeProjectUrls(updates);
     const { data, error } = await supabase
       .from('projects')
-      .update({ ...updates, updated_at: new Date().toISOString() })
+      .update({ ...normalizedUpdates, updated_at: new Date().toISOString() })
       .eq('id', id)
       .select()
       .single();
-    if (!error && data) setProjects((prev) => prev.map((p) => (p.id === id ? data : p)));
+    if (!error && data) {
+      setProjects((prev) =>
+        prev.map((project) => (project.id === id ? normalizeProjectUrls(data as Project) : project))
+      );
+    }
     return { data, error };
   };
 

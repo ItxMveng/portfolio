@@ -7,6 +7,7 @@ import { SEOHead } from '../components/layout/SEOHead';
 import { SectionLabel, SectionTitle, Tag } from '../components/ui';
 import { useProjects } from '../hooks/useProjects';
 import { staggerContainer, staggerItem } from '../lib/animations';
+import { normalizeExternalUrlField } from '../lib/external-links';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -474,7 +475,7 @@ export default function ProjectsPage() {
                         <IconLinks>
                           {project.github_url && (
                             <IconLink
-                              href={project.github_url}
+                              href={normalizeExternalUrlField(project.github_url)}
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label="GitHub"
@@ -485,7 +486,7 @@ export default function ProjectsPage() {
                           )}
                           {project.live_url && (
                             <IconLink
-                              href={project.live_url}
+                              href={normalizeExternalUrlField(project.live_url)}
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label="Site en ligne"

@@ -23,6 +23,7 @@ import styled from 'styled-components';
 import { BlockEditor } from '../../components/blocks/BlockEditor';
 import { BlockRenderer } from '../../components/blocks/BlockRenderer';
 import { useMedia } from '../../hooks/useMedia';
+import { normalizeProjectUrls } from '../../lib/external-links';
 import { supabase } from '../../lib/supabase';
 import { staggerContainer, staggerItem } from '../../lib/animations';
 import type { Project } from '../../types';
@@ -669,6 +670,8 @@ export default function ProjectEditor() {
     setSaving(true);
     setFeedback(null);
 
+    const normalizedForm = normalizeProjectUrls(form);
+
     if (isNew) {
       const { data: orderData } = await supabase
         .from('projects')
@@ -678,7 +681,7 @@ export default function ProjectEditor() {
         .maybeSingle();
 
       const payload = {
-        ...form,
+        ...normalizedForm,
         display_order: (orderData?.display_order ?? 0) + 1,
       };
 
@@ -695,12 +698,13 @@ export default function ProjectEditor() {
     } else {
       const { error } = await supabase
         .from('projects')
-        .update({ ...form, updated_at: new Date().toISOString() })
+        .update({ ...normalizedForm, updated_at: new Date().toISOString() })
         .eq('id', id);
 
       if (error) {
         setFeedback({ type: 'error', msg: error.message });
       } else {
+        setForm(normalizedForm);
         setFeedback({ type: 'success', msg: 'Projet mis à jour !' });
         setSaved(true);
         window.setTimeout(() => setSaved(false), 3000);

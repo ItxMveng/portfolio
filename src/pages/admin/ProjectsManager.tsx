@@ -17,6 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProjects } from '../../hooks/useProjects';
 import { staggerContainer, staggerItem } from '../../lib/animations';
+import { normalizeExternalUrlField } from '../../lib/external-links';
 
 const PageHeader = styled.div`
   display: flex;
@@ -532,7 +533,7 @@ export default function ProjectsManager() {
                     </ActionBtn>
                     {project.live_url && (
                       <IconLink
-                        href={project.live_url}
+                        href={normalizeExternalUrlField(project.live_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Voir en ligne"
@@ -542,7 +543,7 @@ export default function ProjectsManager() {
                     )}
                     {project.github_url && (
                       <IconLink
-                        href={project.github_url}
+                        href={normalizeExternalUrlField(project.github_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Voir le code"
