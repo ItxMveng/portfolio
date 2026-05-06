@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  Mail,
-  MapPin,
-  Send,
-} from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Mail, MapPin, Send } from 'lucide-react';
 import styled from 'styled-components';
 import { Input, SectionLabel, SectionTitle, Textarea } from '../../components/ui';
 import { useMessages } from '../../hooks/useMessages';
 import { useProfile } from '../../hooks/useProfile';
 import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../lib/animations';
 
+/* Section 1 → blanc */
 const Section = styled.section`
   padding: 6rem 0;
   background: ${({ theme }) => theme.colors.bg};
@@ -24,7 +18,7 @@ const Section = styled.section`
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.surfaceBorder}, transparent);
+    background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.divider} 30%, ${({ theme }) => theme.colors.divider} 70%, transparent);
   }
 `;
 
@@ -32,17 +26,13 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: 0 2rem;
-  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) { padding: 0 2rem; }
 `;
 
 const ContactGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem;
-
+  gap: 3.5rem;
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr 1fr;
     align-items: start;
@@ -50,70 +40,57 @@ const ContactGrid = styled.div`
 `;
 
 const ContactLeft = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  display: flex; flex-direction: column; gap: 2rem;
 `;
 
 const ContactHook = styled.p`
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   line-height: 1.75;
 `;
 
-const ContactInfoList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+const InfoList = styled.div`
+  display: flex; flex-direction: column; gap: 0.875rem;
 `;
 
-const ContactInfoItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  padding: 1rem 1.25rem;
+const InfoItem = styled.div`
+  display: flex; align-items: center; gap: 0.875rem;
+  padding: 1rem 1.125rem;
   background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.lg};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
   transition: all ${({ theme }) => theme.transitions.fast};
-  box-shadow: ${({ theme }) => theme.shadows.card};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.accent}33;
-    box-shadow: ${({ theme }) => theme.shadows.cardHover};
+    border-color: ${({ theme }) => theme.colors.accent}44;
+    box-shadow: ${({ theme }) => theme.shadows.card};
     transform: translateX(4px);
   }
 `;
 
-const ContactInfoIcon = styled.div`
-  width: 38px;
-  height: 38px;
+const InfoIcon = styled.div`
+  width: 36px; height: 36px;
   border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.accentDim};
   border: 1px solid ${({ theme }) => theme.colors.accent}33;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   color: ${({ theme }) => theme.colors.accent};
   flex-shrink: 0;
 `;
 
-const ContactInfoText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+const InfoText = styled.div`
+  display: flex; flex-direction: column; gap: 0.1rem;
 `;
 
-const ContactInfoLabel = styled.span`
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+const InfoLabel = styled.span`
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-const ContactInfoValue = styled.span`
-  font-size: 0.9375rem;
+const InfoValue = styled.span`
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-weight: 500;
 `;
@@ -125,86 +102,63 @@ const ContactForm = styled.form`
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+  display: flex; flex-direction: column; gap: 1.25rem;
   box-shadow: ${({ theme }) => theme.shadows.card};
-`;
+  position: relative;
+  overflow: hidden;
 
-const FormRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    grid-template-columns: 1fr 1fr;
+  &::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
   }
 `;
 
+const FormRow = styled.div`
+  display: grid; grid-template-columns: 1fr; gap: 1rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) { grid-template-columns: 1fr 1fr; }
+`;
+
 const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
 `;
 
 const FormLabel = styled.label`
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: 0.8125rem; font-weight: 500;
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
 const SubmitButton = styled(motion.button)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   padding: 0.875rem 1.5rem;
   background: ${({ theme }) => theme.colors.accent};
-  color: #fff;
-  border: none;
+  color: #fff; border: none;
   border-radius: ${({ theme }) => theme.radii.md};
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
+  font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%;
+  box-shadow: ${({ theme }) => theme.shadows.accent};
   transition: all ${({ theme }) => theme.transitions.base};
-  width: 100%;
-  box-shadow: 0 4px 16px ${({ theme }) => theme.colors.accentGlow};
 
   &:hover:not(:disabled) {
     background: ${({ theme }) => theme.colors.accentHover};
-    box-shadow: 0 8px 28px ${({ theme }) => theme.colors.accentGlow};
-    transform: translateY(-1px);
+    box-shadow: ${({ theme }) => theme.shadows.accentStrong};
+    transform: translateY(-1px) scale(1.01);
   }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
 `;
 
-const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
+const FeedbackBanner = styled(motion.div)<{ $ok: boolean }>`
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.875rem 1.125rem;
   border-radius: ${({ theme }) => theme.radii.md};
-  font-size: 0.9375rem;
-  font-weight: 500;
-  background: ${({ $success, theme }) =>
-    $success ? theme.colors.accentDim : 'rgba(239,68,68,0.08)'};
-  color: ${({ $success, theme }) => ($success ? theme.colors.accent : theme.colors.danger)};
-  border: 1px solid
-    ${({ $success, theme }) => ($success ? theme.colors.accent + '33' : 'rgba(239,68,68,0.2)')};
+  font-size: 0.9rem; font-weight: 500;
+  background: ${({ $ok, theme }) => $ok ? theme.colors.accentDim : 'rgba(220,38,38,0.08)'};
+  color: ${({ $ok, theme }) => $ok ? theme.colors.accent : theme.colors.danger};
+  border: 1px solid ${({ $ok, theme }) => $ok ? theme.colors.accent + '33' : 'rgba(220,38,38,0.2)'};
 `;
 
-type FormState = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
+type FormState = { name: string; email: string; subject: string; message: string; };
 
-function getAvailabilityLabel(status?: string) {
+function getAvailLabel(status?: string) {
   if (status === 'open') return 'Disponible';
   if (status === 'busy') return 'Partiellement disponible';
   if (status === 'closed') return 'Indisponible';
@@ -217,13 +171,13 @@ export function ContactSection() {
   const [form, setForm] = useState<FormState>({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (status !== 'idle') setStatus('idle');
-    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setStatus('sending');
     const { error } = await send(form);
@@ -231,9 +185,9 @@ export function ContactSection() {
     if (!error) setForm({ name: '', email: '', subject: '', message: '' });
   };
 
-  const responseTime = profile?.stats?.response_time ?? '';
-  const availability = getAvailabilityLabel(profile?.status);
-  const availabilityValue = [availability, responseTime].filter(Boolean).join(' · ');
+  const avail = getAvailLabel(profile?.status);
+  const rt = profile?.stats?.response_time ?? '';
+  const availVal = [avail, rt].filter(Boolean).join(' · ');
 
   return (
     <Section id="contact">
@@ -245,49 +199,42 @@ export function ContactSection() {
             whileInView="visible"
             viewport={defaultViewport}
           >
-            <motion.div
-              variants={staggerItem}
-              style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
-            >
+            <motion.div variants={staggerItem} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <SectionLabel>Contact</SectionLabel>
-              <SectionTitle>
-                Un projet a lancer ? <span>Parlons-en.</span>
-              </SectionTitle>
+              <SectionTitle>Un projet à lancer ? <span>Parlons-en.</span></SectionTitle>
             </motion.div>
 
             <ContactHook>{profile?.contact_hook ?? ''}</ContactHook>
 
-            <ContactInfoList>
+            <InfoList>
               <motion.div variants={staggerItem}>
-                <ContactInfoItem>
-                  <ContactInfoIcon><Mail size={16} /></ContactInfoIcon>
-                  <ContactInfoText>
-                    <ContactInfoLabel>Email</ContactInfoLabel>
-                    <ContactInfoValue>{profile?.email ?? ''}</ContactInfoValue>
-                  </ContactInfoText>
-                </ContactInfoItem>
+                <InfoItem>
+                  <InfoIcon><Mail size={15} /></InfoIcon>
+                  <InfoText>
+                    <InfoLabel>Email</InfoLabel>
+                    <InfoValue>{profile?.email ?? ''}</InfoValue>
+                  </InfoText>
+                </InfoItem>
               </motion.div>
-
               <motion.div variants={staggerItem}>
-                <ContactInfoItem>
-                  <ContactInfoIcon><MapPin size={16} /></ContactInfoIcon>
-                  <ContactInfoText>
-                    <ContactInfoLabel>Localisation</ContactInfoLabel>
-                    <ContactInfoValue>{profile?.location ?? ''}</ContactInfoValue>
-                  </ContactInfoText>
-                </ContactInfoItem>
+                <InfoItem>
+                  <InfoIcon><MapPin size={15} /></InfoIcon>
+                  <InfoText>
+                    <InfoLabel>Localisation</InfoLabel>
+                    <InfoValue>{profile?.location ?? ''}</InfoValue>
+                  </InfoText>
+                </InfoItem>
               </motion.div>
-
               <motion.div variants={staggerItem}>
-                <ContactInfoItem>
-                  <ContactInfoIcon><Clock size={16} /></ContactInfoIcon>
-                  <ContactInfoText>
-                    <ContactInfoLabel>Disponibilité</ContactInfoLabel>
-                    <ContactInfoValue>{availabilityValue}</ContactInfoValue>
-                  </ContactInfoText>
-                </ContactInfoItem>
+                <InfoItem>
+                  <InfoIcon><Clock size={15} /></InfoIcon>
+                  <InfoText>
+                    <InfoLabel>Disponibilité</InfoLabel>
+                    <InfoValue>{availVal}</InfoValue>
+                  </InfoText>
+                </InfoItem>
               </motion.div>
-            </ContactInfoList>
+            </InfoList>
           </ContactLeft>
 
           <ContactRight variants={fadeUp} initial="hidden" whileInView="visible" viewport={defaultViewport}>
@@ -295,78 +242,38 @@ export function ContactSection() {
               <FormRow>
                 <FormGroup>
                   <FormLabel htmlFor="name">Nom *</FormLabel>
-                  <Input
-                    id="name"
-                    name="name"
-                    placeholder="Votre nom"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                  />
+                  <Input id="name" name="name" placeholder="Votre nom" value={form.name} onChange={handleChange} required />
                 </FormGroup>
-
                 <FormGroup>
                   <FormLabel htmlFor="email">Email *</FormLabel>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="votre@email.com"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
+                  <Input id="email" name="email" type="email" placeholder="votre@email.com" value={form.email} onChange={handleChange} required />
                 </FormGroup>
               </FormRow>
 
               <FormGroup>
                 <FormLabel htmlFor="subject">Sujet</FormLabel>
-                <Input
-                  id="subject"
-                  name="subject"
-                  placeholder="Objet de votre message"
-                  value={form.subject}
-                  onChange={handleChange}
-                />
+                <Input id="subject" name="subject" placeholder="Objet de votre message" value={form.subject} onChange={handleChange} />
               </FormGroup>
 
               <FormGroup>
                 <FormLabel htmlFor="message">Message *</FormLabel>
                 <Textarea
-                  id="message"
-                  name="message"
+                  id="message" name="message"
                   placeholder="Décrivez votre projet, besoin ou question..."
-                  value={form.message}
-                  onChange={handleChange}
-                  style={{ minHeight: '140px' }}
-                  required
+                  value={form.message} onChange={handleChange}
+                  style={{ minHeight: '130px' }} required
                 />
               </FormGroup>
 
               <AnimatePresence mode="wait">
                 {status === 'success' && (
-                  <FeedbackBanner
-                    key="success"
-                    $success
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <CheckCircle size={18} />
-                    Message envoyé ! Je vous réponds rapidement.
+                  <FeedbackBanner key="ok" $ok initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                    <CheckCircle size={17} /> Message envoyé ! Je vous réponds rapidement.
                   </FeedbackBanner>
                 )}
-
                 {status === 'error' && (
-                  <FeedbackBanner
-                    key="error"
-                    $success={false}
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <AlertCircle size={18} />
-                    Une erreur s&apos;est produite. Réessayez ou écrivez directement par email.
+                  <FeedbackBanner key="err" $ok={false} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                    <AlertCircle size={17} /> Une erreur s&apos;est produite. Réessayez ou écrivez par email.
                   </FeedbackBanner>
                 )}
               </AnimatePresence>
@@ -377,13 +284,9 @@ export function ContactSection() {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {status === 'sending' ? (
-                  <>Envoi en cours...</>
-                ) : status === 'success' ? (
-                  <><CheckCircle size={18} /> Message envoyé</>
-                ) : (
-                  <><Send size={18} /> Envoyer ma demande</>
-                )}
+                {status === 'sending' ? 'Envoi en cours...'
+                  : status === 'success' ? <><CheckCircle size={17} /> Message envoyé</>
+                  : <><Send size={17} /> Envoyer ma demande</>}
               </SubmitButton>
             </ContactForm>
           </ContactRight>

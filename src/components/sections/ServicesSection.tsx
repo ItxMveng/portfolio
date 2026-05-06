@@ -6,6 +6,7 @@ import { SectionLabel, SectionTitle } from '../../components/ui';
 import { useServices } from '../../hooks/useServices';
 import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../lib/animations';
 
+/* Section 2 → off-white */
 const Section = styled.section`
   padding: 6rem 0;
   position: relative;
@@ -14,16 +15,9 @@ const Section = styled.section`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      ${({ theme }) => theme.colors.surfaceBorder},
-      transparent
-    );
+    background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.divider} 30%, ${({ theme }) => theme.colors.divider} 70%, transparent);
   }
 `;
 
@@ -31,16 +25,13 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: 0 2rem;
-  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) { padding: 0 2rem; }
 `;
 
 const SectionHeader = styled.div`
   text-align: center;
   max-width: 600px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 3.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +39,7 @@ const SectionHeader = styled.div`
 `;
 
 const SectionDesc = styled(motion.p)`
-  font-size: 1.0625rem;
+  font-size: 1rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   line-height: 1.7;
 `;
@@ -57,10 +48,7 @@ const ServicesGrid = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) { grid-template-columns: repeat(3, 1fr); }
 `;
 
 const ServiceCard = styled(motion.div)`
@@ -68,15 +56,16 @@ const ServiceCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
-  padding: 2rem;
+  padding: 1.875rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  cursor: default;
-  overflow: hidden;
-  transition: border-color 0.35s cubic-bezier(0.16,1,0.3,1),
-              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
+  gap: 1.125rem;
   box-shadow: ${({ theme }) => theme.shadows.card};
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  overflow: hidden;
 
   &::after {
     content: '';
@@ -85,54 +74,51 @@ const ServiceCard = styled(motion.div)`
     height: 2px;
     background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
     opacity: 0;
-    transition: opacity 0.35s;
+    transition: opacity 0.3s;
   }
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.accent}33;
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
+    transform: translateY(-6px) scale(1.01);
     &::after { opacity: 1; }
   }
 `;
 
-const ServiceIconWrapper = styled.div`
-  width: 52px;
-  height: 52px;
+const ServiceIcon = styled.div`
+  width: 48px;
+  height: 48px;
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.accentDim};
   border: 1px solid ${({ theme }) => theme.colors.accent}33;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  position: relative;
-  z-index: 1;
 
   ${ServiceCard}:hover & {
     background: ${({ theme }) => theme.colors.accentDimHover};
-    border-color: ${({ theme }) => theme.colors.accent}55;
-    box-shadow: 0 0 20px ${({ theme }) => theme.colors.accentGlow};
-    transform: scale(1.08) rotate(-4deg);
+    transform: scale(1.1) rotate(-4deg);
   }
 `;
 
 const ServiceTitle = styled.h3`
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textPrimary};
   letter-spacing: -0.01em;
 `;
 
 const ServiceTagline = styled.p`
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: ${({ theme }) => theme.colors.accent};
   font-weight: 500;
 `;
 
 const ServiceDesc = styled.p`
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   line-height: 1.7;
   flex: 1;
@@ -142,13 +128,13 @@ const ServiceBullets = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 `;
 
 const ServiceBullet = styled.li`
   display: flex;
   align-items: flex-start;
-  gap: 0.6rem;
+  gap: 0.55rem;
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.textSecondary};
 
@@ -164,11 +150,11 @@ const ServiceBullet = styled.li`
 `;
 
 const ServiceWorkflow = styled.div`
-  padding: 0.6rem 0.875rem;
-  background: ${({ theme }) => theme.colors.surface};
+  padding: 0.55rem 0.825rem;
+  background: ${({ theme }) => theme.colors.bgTertiary};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.md};
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   color: ${({ theme }) => theme.colors.textMuted};
   letter-spacing: 0.02em;
@@ -181,16 +167,14 @@ const ServiceCTA = styled.a`
   font-size: 0.875rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.accent};
-  transition: gap ${({ theme }) => theme.transitions.fast};
   margin-top: auto;
   cursor: pointer;
+  transition: gap ${({ theme }) => theme.transitions.fast};
 
-  &:hover {
-    gap: 0.65rem;
-  }
+  &:hover { gap: 0.65rem; }
 `;
 
-const SectionCTARow = styled(motion.div)`
+const BottomRow = styled(motion.div)`
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -207,16 +191,15 @@ const CTAPrimary = styled.button`
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  text-decoration: none;
   background: ${({ theme }) => theme.colors.accent};
   color: #fff;
-  box-shadow: 0 4px 16px ${({ theme }) => theme.colors.accentGlow};
+  box-shadow: ${({ theme }) => theme.shadows.accent};
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px ${({ theme }) => theme.colors.accentGlow};
     background: ${({ theme }) => theme.colors.accentHover};
+    box-shadow: ${({ theme }) => theme.shadows.accentStrong};
+    transform: translateY(-2px) scale(1.02);
   }
 `;
 
@@ -228,17 +211,17 @@ const CTASecondary = styled(Link)`
   border-radius: ${({ theme }) => theme.radii.md};
   font-size: 0.9375rem;
   font-weight: 600;
-  cursor: pointer;
+  background: ${({ theme }) => theme.colors.bgCard};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  border: 1.5px solid ${({ theme }) => theme.colors.surfaceBorder};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
   transition: all ${({ theme }) => theme.transitions.base};
   text-decoration: none;
-  background: ${({ theme }) => theme.colors.surface};
-  color: ${({ theme }) => theme.colors.textPrimary};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.accent};
     color: ${({ theme }) => theme.colors.accent};
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 `;
 
@@ -248,24 +231,15 @@ function TiltCard({ children }: { children: React.ReactNode }) {
   const rotateX = useTransform(y, [-50, 50], [4, -4]);
   const rotateY = useTransform(x, [-50, 50], [-4, 4]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    x.set(e.clientX - cx);
-    y.set(e.clientY - cy);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <motion.div
       style={{ rotateX, rotateY, transformPerspective: 800 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        x.set(e.clientX - (r.left + r.width / 2));
+        y.set(e.clientY - (r.top + r.height / 2));
+      }}
+      onMouseLeave={() => { x.set(0); y.set(0); }}
     >
       {children}
     </motion.div>
@@ -274,7 +248,6 @@ function TiltCard({ children }: { children: React.ReactNode }) {
 
 export function ServicesSection() {
   const { services, loading } = useServices();
-
   if (loading || services.length === 0) return null;
 
   return (
@@ -290,11 +263,11 @@ export function ServicesSection() {
           >
             <SectionLabel>Ce que je fais</SectionLabel>
             <SectionTitle>
-              Trois prestations pour livrer <span>vite et proprement</span>
+              Trois expertises, une seule <span>ambition</span>
             </SectionTitle>
             <SectionDesc variants={staggerItem}>
-              Du developpement d&apos;application a l&apos;automatisation intelligente - chaque
-              prestation est pensee pour creer de la valeur mesurable.
+              Du développement d&apos;application à l&apos;automatisation intelligente — chaque
+              prestation crée de la valeur mesurable.
             </SectionDesc>
           </motion.div>
         </SectionHeader>
@@ -308,23 +281,18 @@ export function ServicesSection() {
           {services.map((service) => (
             <TiltCard key={service.id}>
               <ServiceCard variants={staggerItem}>
-                <ServiceIconWrapper>{service.icon}</ServiceIconWrapper>
-
+                <ServiceIcon>{service.icon}</ServiceIcon>
                 <div>
                   <ServiceTitle>{service.title}</ServiceTitle>
                   <ServiceTagline>{service.tagline}</ServiceTagline>
                 </div>
-
                 <ServiceDesc>{service.description}</ServiceDesc>
-
                 <ServiceBullets>
-                  {service.bullets.map((bullet, i) => (
-                    <ServiceBullet key={`${service.id}-bullet-${i}`}>{bullet}</ServiceBullet>
+                  {service.bullets.map((b, i) => (
+                    <ServiceBullet key={i}>{b}</ServiceBullet>
                   ))}
                 </ServiceBullets>
-
                 {service.workflow && <ServiceWorkflow>{service.workflow}</ServiceWorkflow>}
-
                 {service.cta_label && (
                   <ServiceCTA
                     href={service.cta_url || '#contact'}
@@ -343,24 +311,19 @@ export function ServicesSection() {
           ))}
         </ServicesGrid>
 
-        <SectionCTARow
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewport}
-        >
+        <BottomRow variants={fadeUp} initial="hidden" whileInView="visible" viewport={defaultViewport}>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <CTAPrimary
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               type="button"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Demarrer un projet <ArrowUpRight size={16} />
+              Démarrer un projet <ArrowUpRight size={16} />
             </CTAPrimary>
           </motion.div>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <CTASecondary to="/projects">Voir mes realisations</CTASecondary>
+            <CTASecondary to="/projects">Voir mes réalisations</CTASecondary>
           </motion.div>
-        </SectionCTARow>
+        </BottomRow>
       </Container>
     </Section>
   );

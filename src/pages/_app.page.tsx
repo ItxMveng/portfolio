@@ -1,9 +1,8 @@
 import type { AppProps } from 'next/app';
 import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { AppThemeProvider } from '../contexts/ThemeContext';
 import { ChatAssistant } from '../components/assistant/ChatAssistant';
 import { GlobalStyles } from '../styles/GlobalStyles';
-import { theme } from '../styles/theme';
 
 export default function CompatApp({ Component, pageProps, router }: AppProps) {
   const PageComponent = Component as typeof Component & {
@@ -11,7 +10,7 @@ export default function CompatApp({ Component, pageProps, router }: AppProps) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <AppThemeProvider>
       <GlobalStyles />
       {PageComponent.disableCompatRouter ? (
         <PageComponent {...pageProps} />
@@ -21,6 +20,6 @@ export default function CompatApp({ Component, pageProps, router }: AppProps) {
         </MemoryRouter>
       )}
       <ChatAssistant />
-    </ThemeProvider>
+    </AppThemeProvider>
   );
 }

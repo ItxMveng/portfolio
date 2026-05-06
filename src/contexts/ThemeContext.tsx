@@ -18,10 +18,22 @@ export function useThemeMode() {
   return useContext(ThemeModeContext);
 }
 
+function applyThemeToDom(mode: ThemeMode) {
+  const root = document.documentElement;
+  root.setAttribute('data-theme', mode);
+  if (mode === 'dark') {
+    root.classList.add('dark');
+  } else {
+    root.classList.remove('dark');
+  }
+}
+
 export function AppThemeProvider({ children }: { children: React.ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>(() => {
+    if (typeof window === 'undefined') return 'light';
     try {
-      return (localStorage.getItem('theme') as ThemeMode) ?? 'light';
+      const saved = localStorage.getItem('theme');
+      return saved === 'dark' ? 'dark' : 'light';
     } catch {
       return 'light';
     }
@@ -29,8 +41,14 @@ export function AppThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     localStorage.setItem('theme', mode);
-    document.documentElement.setAttribute('data-theme', mode);
+    applyThemeToDom(mode);
   }, [mode]);
+
+  // Synchroniser au montage (hydratation SSR)
+  useEffect(() => {
+    applyThemeToDom(mode);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggle = () => setMode((m) => (m === 'light' ? 'dark' : 'light'));
   const currentTheme = mode === 'dark' ? darkTheme : lightTheme;

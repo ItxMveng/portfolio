@@ -20,23 +20,27 @@ const NavWrapper = styled(motion.header)<{ $scrolled: boolean; $dark: boolean }>
   left: 0;
   right: 0;
   z-index: ${({ theme }) => theme.zIndex.sticky};
-  transition: all ${({ theme }) => theme.transitions.slow};
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    padding 0.3s ease,
+    border-color 0.3s ease;
 
   ${({ $scrolled, $dark }) =>
     $scrolled
       ? css`
-          background: ${$dark ? 'rgba(10,15,30,0.88)' : 'rgba(249,250,251,0.88)'};
-          backdrop-filter: blur(24px) saturate(1.8);
-          -webkit-backdrop-filter: blur(24px) saturate(1.8);
-          border-bottom: 1px solid ${$dark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.1)'};
-          padding: 0.65rem 0;
+          background: ${$dark ? 'rgba(15,23,42,0.92)' : 'rgba(255,255,255,0.92)'};
+          backdrop-filter: blur(20px) saturate(1.6);
+          -webkit-backdrop-filter: blur(20px) saturate(1.6);
+          border-bottom: 1px solid ${$dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)'};
+          padding: 0.6rem 0;
           box-shadow: ${$dark
-            ? '0 4px 32px rgba(0,0,0,0.35)'
-            : '0 4px 24px rgba(0,0,0,0.06)'};
+            ? '0 4px 24px rgba(0,0,0,0.4)'
+            : '0 2px 16px rgba(0,0,0,0.07)'};
         `
       : css`
           background: transparent;
-          padding: 1.25rem 0;
+          padding: 1.125rem 0;
         `}
 `;
 

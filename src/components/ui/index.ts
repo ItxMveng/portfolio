@@ -25,81 +25,52 @@ export const Button = styled(motion.button)<ButtonProps>`
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 
   ${({ size = 'md' }) => {
-    if (size === 'sm') {
-      return css`
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-      `;
-    }
-
-    if (size === 'lg') {
-      return css`
-        padding: 1rem 2rem;
-        font-size: 1.0625rem;
-      `;
-    }
-
-    return css`
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-      `;
+    if (size === 'sm') return css`padding: 0.5rem 1rem; font-size: 0.875rem;`;
+    if (size === 'lg') return css`padding: 1rem 2rem; font-size: 1.0625rem;`;
+    return css`padding: 0.75rem 1.5rem; font-size: 1rem;`;
   }}
 
   ${({ variant = 'primary', theme }) => {
-    if (variant === 'secondary') {
-      return css`
-        background: ${theme.colors.surface};
+    if (variant === 'secondary') return css`
+      background: ${theme.colors.bgCard};
+      color: ${theme.colors.textPrimary};
+      border: 1.5px solid ${theme.colors.surfaceBorder};
+      box-shadow: ${theme.shadows.sm};
+      &:hover {
+        background: ${theme.colors.accentDim};
+        border-color: ${theme.colors.accent}55;
+        color: ${theme.colors.accent};
+        transform: translateY(-1px);
+      }
+    `;
+    if (variant === 'ghost') return css`
+      background: transparent;
+      color: ${theme.colors.textSecondary};
+      &:hover {
         color: ${theme.colors.textPrimary};
-        border: 1px solid ${theme.colors.surfaceBorder};
-
-        &:hover {
-          background: ${theme.colors.surfaceHover};
-          border-color: ${theme.colors.accent};
-          color: ${theme.colors.accent};
-        }
-      `;
-    }
-
-    if (variant === 'ghost') {
-      return css`
-        background: transparent;
-        color: ${theme.colors.textSecondary};
-
-        &:hover {
-          color: ${theme.colors.textPrimary};
-          background: ${theme.colors.surface};
-        }
-      `;
-    }
-
-    if (variant === 'danger') {
-      return css`
-        background: rgba(239,68,68,0.1);
-        color: ${theme.colors.danger};
-        border: 1px solid rgba(239,68,68,0.2);
-
-        &:hover {
-          background: rgba(239,68,68,0.2);
-          border-color: ${theme.colors.danger};
-        }
-      `;
-    }
-
+        background: ${theme.colors.surface};
+      }
+    `;
+    if (variant === 'danger') return css`
+      background: rgba(220,38,38,0.08);
+      color: ${theme.colors.danger};
+      border: 1px solid rgba(220,38,38,0.2);
+      &:hover {
+        background: rgba(220,38,38,0.15);
+        border-color: ${theme.colors.danger};
+      }
+    `;
     return css`
-        background: ${theme.colors.accent};
-        color: #fff;
-        box-shadow: 0 4px 14px ${theme.colors.accentGlow};
-
-        &:hover {
-          background: ${theme.colors.accentHover};
-          box-shadow: 0 8px 24px ${theme.colors.accentGlow};
-          transform: translateY(-1px);
-        }
-
-        &:active {
-          transform: translateY(0);
-        }
-      `;
+      background: ${theme.colors.accent};
+      color: #fff;
+      box-shadow: ${theme.shadows.accent};
+      &:hover {
+        background: ${theme.colors.accentHover};
+        box-shadow: ${theme.shadows.accentStrong};
+        transform: translateY(-1px) scale(1.01);
+      }
+      &:active { transform: translateY(0) scale(0.99); }
+    `;
   }}
 
   &:disabled {
@@ -123,16 +94,16 @@ export const Badge = styled.span<{
   white-space: nowrap;
 
   ${({ variant = 'muted', theme }) => {
-    const variants = {
+    const v = {
       accent: css`
         background: ${theme.colors.accentDim};
-        color: ${theme.colors.accentHover};
-        border: 1px solid rgba(124,92,252,0.2);
+        color: ${theme.colors.accent};
+        border: 1px solid ${theme.colors.accent}33;
       `,
       teal: css`
         background: ${theme.colors.tealDim};
         color: ${theme.colors.teal};
-        border: 1px solid rgba(0,212,170,0.2);
+        border: 1px solid ${theme.colors.teal}33;
       `,
       muted: css`
         background: ${theme.colors.surface};
@@ -140,31 +111,31 @@ export const Badge = styled.span<{
         border: 1px solid ${theme.colors.surfaceBorder};
       `,
       success: css`
-        background: rgba(0,212,170,0.1);
+        background: ${theme.colors.accentDim};
         color: ${theme.colors.success};
-        border: 1px solid rgba(0,212,170,0.2);
+        border: 1px solid ${theme.colors.accent}33;
       `,
       warning: css`
-        background: rgba(245,158,11,0.1);
+        background: rgba(217,119,6,0.08);
         color: ${theme.colors.warning};
-        border: 1px solid rgba(245,158,11,0.2);
+        border: 1px solid rgba(217,119,6,0.2);
       `,
       danger: css`
-        background: rgba(239,68,68,0.1);
+        background: rgba(220,38,38,0.08);
         color: ${theme.colors.danger};
-        border: 1px solid rgba(239,68,68,0.2);
+        border: 1px solid rgba(220,38,38,0.2);
       `,
     };
-    return variants[variant];
+    return v[variant];
   }}
 `;
 
 export const Tag = styled.span`
   display: inline-flex;
   align-items: center;
-  padding: 0.2rem 0.6rem;
+  padding: 0.18rem 0.55rem;
   border-radius: ${({ theme }) => theme.radii.sm};
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-weight: 500;
   background: ${({ theme }) => theme.colors.surface};
@@ -182,34 +153,33 @@ export const Tag = styled.span`
 export const Card = styled(motion.div)`
   background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
-  border-radius: ${({ theme }) => theme.radii.lg};
+  border-radius: ${({ theme }) => theme.radii.xl};
   box-shadow: ${({ theme }) => theme.shadows.card};
   overflow: hidden;
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(124,92,252,0.3);
+    border-color: ${({ theme }) => theme.colors.accent}33;
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
+    transform: translateY(-4px) scale(1.01);
   }
 `;
 
 export const Input = styled.input`
   width: 100%;
   padding: 0.75rem 1rem;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  background: ${({ theme }) => theme.colors.bg};
+  border: 1.5px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.md};
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 0.9375rem;
   transition: all ${({ theme }) => theme.transitions.fast};
 
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
+  &::placeholder { color: ${({ theme }) => theme.colors.textMuted}; }
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.surfaceHover};
+    background: ${({ theme }) => theme.colors.bgCard};
     box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.accentDim};
   }
 `;
@@ -217,8 +187,8 @@ export const Input = styled.input`
 export const Textarea = styled.textarea`
   width: 100%;
   padding: 0.75rem 1rem;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  background: ${({ theme }) => theme.colors.bg};
+  border: 1.5px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.md};
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 0.9375rem;
@@ -227,20 +197,18 @@ export const Textarea = styled.textarea`
   transition: all ${({ theme }) => theme.transitions.fast};
   font-family: inherit;
 
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
+  &::placeholder { color: ${({ theme }) => theme.colors.textMuted}; }
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.surfaceHover};
+    background: ${({ theme }) => theme.colors.bgCard};
     box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.accentDim};
   }
 `;
 
 export const Divider = styled.hr`
   border: none;
-  border-top: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  border-top: 1px solid ${({ theme }) => theme.colors.divider};
   margin: 2rem 0;
 `;
 
@@ -248,24 +216,25 @@ export const SectionLabel = styled(motion.span)`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.accent};
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   &::before {
     content: '';
     display: block;
-    width: 20px;
-    height: 1px;
+    width: 18px;
+    height: 1.5px;
     background: ${({ theme }) => theme.colors.accent};
+    border-radius: 2px;
   }
 `;
 
 export const SectionTitle = styled(motion.h2)`
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-size: clamp(1.625rem, 3.5vw, 2.5rem);
   font-weight: 800;
   line-height: 1.15;
   color: ${({ theme }) => theme.colors.textPrimary};
@@ -276,11 +245,7 @@ export const SectionTitle = styled(motion.h2)`
   }
 `;
 
-const spin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
+const spin = keyframes`to { transform: rotate(360deg); }`;
 
 export const Spinner = styled.div<{ size?: number }>`
   width: ${({ size = 24 }) => size}px;
