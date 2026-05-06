@@ -9,6 +9,15 @@ import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../li
 const Section = styled.section`
   padding: 6rem 0;
   position: relative;
+  background: ${({ theme }) => theme.colors.bgSecondary};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.surfaceBorder}, transparent);
+  }
 `;
 
 const Container = styled.div`
@@ -51,9 +60,7 @@ const ViewAllLink = styled(Link)`
   white-space: nowrap;
   flex-shrink: 0;
 
-  &:hover {
-    gap: 0.65rem;
-  }
+  &:hover { gap: 0.65rem; }
 `;
 
 const BlogGrid = styled(motion.div)`
@@ -73,23 +80,35 @@ const BlogCard = styled(motion.div)`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all ${({ theme }) => theme.transitions.base};
+  transition: border-color 0.35s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1),
+              transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+  }
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.3);
+    border-color: ${({ theme }) => theme.colors.accent}33;
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
-    transform: translateY(-4px);
+    transform: translateY(-5px) scale(1.01);
+    &::before { opacity: 1; }
   }
 `;
 
 const BlogCover = styled.div`
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.accentDim},
-    ${({ theme }) => theme.colors.tealDim}
-  );
+  background: ${({ theme }) => theme.colors.accentDim};
   overflow: hidden;
   position: relative;
 
@@ -135,7 +154,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid ${({ theme }) => theme.colors.accent}33;
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -204,9 +223,7 @@ const ReadLink = styled(Link)`
   color: ${({ theme }) => theme.colors.accent};
   transition: gap ${({ theme }) => theme.transitions.fast};
 
-  &:hover {
-    gap: 0.5rem;
-  }
+  &:hover { gap: 0.5rem; }
 `;
 
 export function BlogPreviewSection() {

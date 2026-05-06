@@ -88,11 +88,11 @@ export const Button = styled(motion.button)<ButtonProps>`
     return css`
         background: ${theme.colors.accent};
         color: #fff;
-        box-shadow: 0 0 0 0 ${theme.colors.accentGlow};
+        box-shadow: 0 4px 14px ${theme.colors.accentGlow};
 
         &:hover {
           background: ${theme.colors.accentHover};
-          box-shadow: 0 0 24px ${theme.colors.accentGlow};
+          box-shadow: 0 8px 24px ${theme.colors.accentGlow};
           transform: translateY(-1px);
         }
 
@@ -167,15 +167,15 @@ export const Tag = styled.span`
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-weight: 500;
-  background: rgba(56,189,248,0.07);
+  background: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.textSecondary};
-  border: 1px solid rgba(56,189,248,0.14);
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
 
   &:hover {
-    background: rgba(56,189,248,0.12);
-    color: ${({ theme }) => theme.colors.blue};
-    border-color: rgba(56,189,248,0.28);
+    background: ${({ theme }) => theme.colors.accentDim};
+    color: ${({ theme }) => theme.colors.accent};
+    border-color: ${({ theme }) => theme.colors.accent}44;
   }
 `;
 
@@ -272,22 +272,7 @@ export const SectionTitle = styled(motion.h2)`
   letter-spacing: -0.03em;
 
   span {
-    background: linear-gradient(
-      135deg,
-      ${({ theme }) => theme.colors.accent} 0%,
-      #FBBF24 50%,
-      ${({ theme }) => theme.colors.blue} 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: titleGrad 5s linear infinite;
-
-    @keyframes titleGrad {
-      0%   { background-position: 0% center; }
-      100% { background-position: 200% center; }
-    }
+    color: ${({ theme }) => theme.colors.accent};
   }
 `;
 

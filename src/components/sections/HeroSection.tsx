@@ -42,8 +42,8 @@ const HeroBackground = styled(motion.div)`
     height: 700px;
     background: radial-gradient(
       ellipse at center,
-      rgba(249,115,22,0.12) 0%,
-      rgba(56,189,248,0.05) 45%,
+      ${({ theme }) => theme.colors.accentDim} 0%,
+      ${({ theme }) => theme.colors.blueDim} 45%,
       transparent 70%
     );
     filter: blur(70px);
@@ -71,8 +71,8 @@ const GridLines = styled.div`
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(249,115,22,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+    linear-gradient(${({ theme }) => theme.colors.accentDim} 1px, transparent 1px),
+    linear-gradient(90deg, ${({ theme }) => theme.colors.accentDim} 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 90% 70% at 60% 40%, black 10%, transparent 75%);
   pointer-events: none;
@@ -145,12 +145,12 @@ const OrbOuter = styled(motion.div)`
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    rgba(249,115,22,0.7),
-    rgba(56,189,248,0.6),
-    rgba(34,211,238,0.5),
-    rgba(249,115,22,0.3),
-    rgba(56,189,248,0.7),
-    rgba(249,115,22,0.7)
+    ${({ theme }) => theme.colors.accent},
+    ${({ theme }) => theme.colors.teal},
+    ${({ theme }) => theme.colors.blue},
+    ${({ theme }) => theme.colors.accentHover},
+    ${({ theme }) => theme.colors.teal},
+    ${({ theme }) => theme.colors.accent}
   );
   filter: blur(2px);
   animation: orbSpin 10s linear infinite;
@@ -167,22 +167,17 @@ const OrbInner = styled.div`
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 35% 35%,
-    rgba(249,115,22,0.25) 0%,
-    rgba(56,189,248,0.12) 40%,
-    ${({ theme }) => theme.colors.bgCard} 65%
-  );
-  border: 1px solid rgba(249,115,22,0.2);
+  background: ${({ theme }) => theme.colors.bgCard};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 1;
   box-shadow:
-    0 0 60px rgba(249,115,22,0.15),
-    0 0 120px rgba(56,189,248,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.06);
+    0 0 60px ${({ theme }) => theme.colors.accentDim},
+    0 0 120px ${({ theme }) => theme.colors.blueDim},
+    inset 0 1px 0 ${({ theme }) => theme.colors.surface};
 `;
 
 const OrbInitials = styled.div`
@@ -202,27 +197,33 @@ const FloatBadge = styled(motion.div)`
   align-items: center;
   gap: 0.45rem;
   padding: 0.45rem 0.9rem;
-  background: rgba(7, 8, 15, 0.85);
+  background: ${({ theme }) => theme.colors.bgCard};
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.8rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.textPrimary};
   white-space: nowrap;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  box-shadow: ${({ theme }) => theme.shadows.card};
 `;
 
 const SideCard = styled(motion.div)`
-  background: rgba(17,25,39,0.7);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(249,115,22,0.12);
+  background: ${({ theme }) => theme.colors.bgCard};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  transition: all ${({ theme }) => theme.transitions.base};
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.accent}40;
+    box-shadow: ${({ theme }) => theme.shadows.cardHover};
+    transform: translateY(-3px);
+  }
 `;
 
 const SideCardLabel = styled.div`
@@ -248,11 +249,10 @@ const ProfileCard = styled(motion.div)`
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 1.25rem;
-  background: rgba(17,25,39,0.6);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(249,115,22,0.15);
+  background: ${({ theme }) => theme.colors.bgCard};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: ${({ theme }) => theme.shadows.card};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 96px 1fr;
@@ -358,16 +358,16 @@ const StatusBadge = styled(motion.div)<{ $status: string }>`
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 1rem 0.4rem 0.6rem;
-  background: ${({ $status }) =>
+  background: ${({ $status, theme }) =>
     $status === 'open'
-      ? 'rgba(0,212,170,0.06)'
+      ? theme.colors.accentDim
       : $status === 'busy'
         ? 'rgba(245,158,11,0.06)'
         : 'rgba(239,68,68,0.06)'};
   border: 1px solid
-    ${({ $status }) =>
+    ${({ $status, theme }) =>
       $status === 'open'
-        ? 'rgba(0,212,170,0.2)'
+        ? theme.colors.accent + '33'
         : $status === 'busy'
           ? 'rgba(245,158,11,0.2)'
           : 'rgba(239,68,68,0.2)'};
@@ -376,7 +376,7 @@ const StatusBadge = styled(motion.div)<{ $status: string }>`
   font-weight: 500;
   color: ${({ $status, theme }) =>
     $status === 'open'
-      ? theme.colors.teal
+      ? theme.colors.accent
       : $status === 'busy'
         ? theme.colors.warning
         : theme.colors.danger};
@@ -389,7 +389,7 @@ const PulseDot = styled(motion.span)<{ $status: string }>`
   border-radius: 50%;
   background: ${({ $status, theme }) =>
     $status === 'open'
-      ? theme.colors.teal
+      ? theme.colors.accent
       : $status === 'busy'
         ? theme.colors.warning
         : theme.colors.danger};
@@ -407,23 +407,7 @@ const HeroTitle = styled(motion.h1)`
 const GradientLine = styled(motion.span)`
   display: block;
   margin-top: 0.1em;
-  background-image: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.accent} 0%,
-    #FBBF24 40%,
-    ${({ theme }) => theme.colors.blue} 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: gradientFlow 5s linear infinite;
-
-  @keyframes gradientFlow {
-    0%   { background-position: 0% center; }
-    100% { background-position: 200% center; }
-  }
+  color: ${({ theme }) => theme.colors.accent};
 `;
 
 const HeroSubtitle = styled(motion.p)`
@@ -433,109 +417,18 @@ const HeroSubtitle = styled(motion.p)`
   max-width: 600px;
 `;
 
-const HeroCTAs = styled(motion.div)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 0.5rem;
-`;
-
-const PrimaryButton = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
-  color: #fff;
-  border-radius: ${({ theme }) => theme.radii.full};
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  text-decoration: none;
-  box-shadow: 0 4px 20px rgba(249,115,22,0.3);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #FBBF24, ${({ theme }) => theme.colors.accent});
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 36px rgba(249,115,22,0.45);
-    &::before { opacity: 1; }
-  }
-
-  span { position: relative; z-index: 1; display: contents; }
-`;
-
-const SecondaryLinkButton = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  background: rgba(255,255,255,0.04);
-  color: ${({ theme }) => theme.colors.textPrimary};
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: ${({ theme }) => theme.radii.full};
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  text-decoration: none;
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    border-color: rgba(249,115,22,0.4);
-    color: ${({ theme }) => theme.colors.accent};
-    background: rgba(249,115,22,0.06);
-    transform: translateY(-2px);
-  }
-`;
-
-const SecondaryButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  background: rgba(255,255,255,0.04);
-  color: ${({ theme }) => theme.colors.textPrimary};
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: ${({ theme }) => theme.radii.full};
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    border-color: rgba(249,115,22,0.4);
-    color: ${({ theme }) => theme.colors.accent};
-    background: rgba(249,115,22,0.06);
-    transform: translateY(-2px);
-  }
-`;
-
 const StatsRow = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
   gap: 1px;
   justify-content: center;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(249,115,22,0.12);
+  background: ${({ theme }) => theme.colors.surfaceBorder};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
   overflow: hidden;
   margin-top: 0.5rem;
   width: 100%;
   max-width: 560px;
-  backdrop-filter: blur(12px);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     max-width: 480px;
@@ -549,13 +442,13 @@ const StatItem = styled(motion.div)`
   align-items: center;
   gap: 0.25rem;
   padding: 1.1rem 1.75rem;
-  background: rgba(17,25,39,0.5);
+  background: ${({ theme }) => theme.colors.bgCard};
   flex: 1;
   min-width: 120px;
   transition: background 0.2s;
 
   &:hover {
-    background: rgba(249,115,22,0.06);
+    background: ${({ theme }) => theme.colors.accentDim};
   }
 `;
 
@@ -580,21 +473,13 @@ const StatLabel = styled.div`
   gap: 0.3rem;
 `;
 
-const SkillsRow = styled(motion.div)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  justify-content: center;
-  max-width: 700px;
-`;
-
 const SkillChip = styled(motion.div)`
   display: flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.875rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.8125rem;
   font-weight: 500;
@@ -603,9 +488,9 @@ const SkillChip = styled(motion.div)`
   cursor: default;
 
   &:hover {
-    border-color: rgba(249,115,22,0.35);
+    border-color: ${({ theme }) => theme.colors.accent}66;
     color: ${({ theme }) => theme.colors.accent};
-    background: rgba(249,115,22,0.07);
+    background: ${({ theme }) => theme.colors.accentDim};
     transform: translateY(-1px);
   }
 
@@ -614,7 +499,7 @@ const SkillChip = styled(motion.div)`
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.blue});
+    background: ${({ theme }) => theme.colors.accent};
     flex-shrink: 0;
   }
 `;
@@ -665,6 +550,73 @@ const SkillsRowLeft = styled(motion.div)`
   max-width: 560px;
 `;
 
+const PrimaryButton = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: ${({ theme }) => theme.colors.accent};
+  color: #fff;
+  border-radius: ${({ theme }) => theme.radii.full};
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  text-decoration: none;
+  box-shadow: 0 4px 20px ${({ theme }) => theme.colors.accentGlow};
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 36px ${({ theme }) => theme.colors.accentGlow};
+    background: ${({ theme }) => theme.colors.accentHover};
+  }
+`;
+
+const SecondaryLinkButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  border-radius: ${({ theme }) => theme.radii.full};
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  text-decoration: none;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.accentDim};
+    transform: translateY(-2px);
+  }
+`;
+
+const SecondaryButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  border-radius: ${({ theme }) => theme.radii.full};
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.accentDim};
+    transform: translateY(-2px);
+  }
+`;
+
 const wordVariants: Variants = {
   hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
   visible: (index: number) => ({
@@ -681,7 +633,6 @@ const wordVariants: Variants = {
 
 function AnimatedWords({ text, className }: { text: string; className?: string }) {
   const words = text.split(' ').filter(Boolean);
-
   return (
     <span>
       {words.map((word, index) => (
@@ -712,9 +663,7 @@ export function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 0.25], ['0%', '25%']);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.75]);
 
-  if (loading || !profile) {
-    return null;
-  }
+  if (loading || !profile) return null;
 
   const status = profile.status ?? 'closed';
   const stats = profile.stats ?? { projects: 0, domains: 0, response_time: '' };
@@ -723,20 +672,10 @@ export function HeroSection() {
     profile.title.split('-')[1]?.trim() ||
     profile.title;
   const profileLinks = [
-    profile.github_url
-      ? { href: profile.github_url, label: 'GitHub', icon: Github }
-      : null,
-    profile.linkedin_url
-      ? { href: profile.linkedin_url, label: 'LinkedIn', icon: Linkedin }
-      : null,
-    profile.website_url
-      ? { href: profile.website_url, label: 'Site', icon: Globe }
-      : null,
-  ].filter(Boolean) as Array<{
-    href: string;
-    label: string;
-    icon: typeof Github;
-  }>;
+    profile.github_url ? { href: profile.github_url, label: 'GitHub', icon: Github } : null,
+    profile.linkedin_url ? { href: profile.linkedin_url, label: 'LinkedIn', icon: Linkedin } : null,
+    profile.website_url ? { href: profile.website_url, label: 'Site', icon: Globe } : null,
+  ].filter(Boolean) as Array<{ href: string; label: string; icon: typeof Github }>;
 
   const initials = (profile.full_name ?? '')
     .split(' ')
@@ -753,7 +692,6 @@ export function HeroSection() {
       <HeroContainer>
         <HeroContent style={{ opacity }} variants={staggerContainer} initial="hidden" animate="visible">
 
-          {/* ── Colonne gauche ── */}
           <HeroLeft>
             <StatusBadge $status={status} variants={staggerItem} whileHover={{ scale: 1.03 }}>
               <PulseDot
@@ -827,7 +765,6 @@ export function HeroSection() {
             </StatsRow>
           </HeroLeft>
 
-          {/* ── Colonne droite — visible desktop seulement ── */}
           <HeroRight>
             <OrbCard
               variants={staggerItem}
@@ -847,13 +784,12 @@ export function HeroSection() {
                 )}
               </OrbInner>
 
-              {/* Badges flottants */}
               <FloatBadge
                 style={{ top: '8%', right: '-8%' }}
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
               >
-                <span style={{ color: '#22D3EE', fontSize: '0.85rem' }}>●</span>
+                <span style={{ fontSize: '0.85rem' }}>●</span>
                 Disponible
               </FloatBadge>
 
@@ -867,12 +803,11 @@ export function HeroSection() {
               </FloatBadge>
             </OrbCard>
 
-            {/* Carte profil condensée */}
             <SideCard variants={staggerItem}>
               <SideCardLabel>Localisation</SideCardLabel>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <MapPin size={14} style={{ color: '#F97316', flexShrink: 0 }} />
-                <span style={{ fontSize: '0.9rem', color: '#EFF4FF' }}>{profile.location ?? '—'}</span>
+                <MapPin size={14} style={{ flexShrink: 0 }} />
+                <span style={{ fontSize: '0.9rem' }}>{profile.location ?? '—'}</span>
               </div>
             </SideCard>
 
@@ -889,7 +824,6 @@ export function HeroSection() {
             </SideCard>
           </HeroRight>
 
-          {/* Profile card mobile (masquée desktop) */}
           <ProfileCard variants={staggerItem}>
             <AvatarWrap>
               {profile.avatar_url ? (

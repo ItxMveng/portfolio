@@ -9,16 +9,13 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
-  :root {
-    --scrollbar-width: 0px;
-  }
-
   html {
     scroll-behavior: smooth;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   body {
@@ -28,6 +25,7 @@ export const GlobalStyles = createGlobalStyle`
     font-size: ${({ theme }) => theme.fontSizes.base};
     line-height: ${({ theme }) => theme.lineHeights.normal};
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::-webkit-scrollbar { width: 6px; }
@@ -40,7 +38,7 @@ export const GlobalStyles = createGlobalStyle`
 
   ::selection {
     background: ${({ theme }) => theme.colors.accentDim};
-    color: ${({ theme }) => theme.colors.accentHover};
+    color: ${({ theme }) => theme.colors.accent};
   }
 
   a {
@@ -89,10 +87,10 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   @keyframes auroraShift {
-    0%   { background-position: 0% 0%;   filter: hue-rotate(0deg); }
-    33%  { background-position: 60% 40%; filter: hue-rotate(8deg); }
-    66%  { background-position: 30% 80%; filter: hue-rotate(-6deg); }
-    100% { background-position: 0% 0%;   filter: hue-rotate(0deg); }
+    0%   { background-position: 0% 0%;   }
+    33%  { background-position: 60% 40%; }
+    66%  { background-position: 30% 80%; }
+    100% { background-position: 0% 0%;   }
   }
 
   body::before {
@@ -100,25 +98,19 @@ export const GlobalStyles = createGlobalStyle`
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 90% 60% at 20% -5%,  rgba(249,115,22,0.09)  0%, transparent 55%),
-      radial-gradient(ellipse 70% 50% at 85% 15%,  rgba(56,189,248,0.08)  0%, transparent 50%),
-      radial-gradient(ellipse 60% 55% at 50% 90%,  rgba(34,211,238,0.06)  0%, transparent 50%),
-      radial-gradient(ellipse 80% 40% at 10% 70%,  rgba(249,115,22,0.05)  0%, transparent 50%);
+      ${({ theme }) =>
+        theme.isDark
+          ? `radial-gradient(ellipse 80% 50% at 20% -5%,  rgba(16,185,129,0.07)  0%, transparent 55%),
+             radial-gradient(ellipse 60% 45% at 85% 15%,  rgba(96,165,250,0.06)  0%, transparent 50%),
+             radial-gradient(ellipse 55% 50% at 50% 90%,  rgba(45,212,191,0.05)  0%, transparent 50%)`
+          : `radial-gradient(ellipse 80% 50% at 20% -5%,  rgba(16,185,129,0.06)  0%, transparent 55%),
+             radial-gradient(ellipse 60% 45% at 85% 15%,  rgba(37,99,235,0.04)  0%, transparent 50%),
+             radial-gradient(ellipse 55% 50% at 50% 90%,  rgba(13,148,136,0.04)  0%, transparent 50%)`};
     background-size: 200% 200%;
     animation: auroraShift 20s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 0;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
+    transition: opacity 0.3s ease;
   }
 
   #root {
@@ -129,8 +121,8 @@ export const GlobalStyles = createGlobalStyle`
   code:not([class]) {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: 0.875em;
-    background: rgba(124,92,252,0.12);
-    color: ${({ theme }) => theme.colors.accentHover};
+    background: ${({ theme }) => theme.colors.accentDim};
+    color: ${({ theme }) => theme.colors.accent};
     padding: 0.15em 0.45em;
     border-radius: 4px;
   }

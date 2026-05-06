@@ -49,10 +49,13 @@ const FooterLogo = styled(NavLink)`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textPrimary};
   letter-spacing: -0.02em;
+  transition: opacity 0.2s;
 
-  span {
-    color: ${({ theme }) => theme.colors.accent};
-  }
+  .zap-icon { color: ${({ theme }) => theme.colors.accent}; }
+
+  span { color: ${({ theme }) => theme.colors.accent}; }
+
+  &:hover { opacity: 0.85; }
 `;
 
 const FooterBio = styled.p`
@@ -116,9 +119,7 @@ const FooterRouteLink = styled(NavLink)`
   align-items: center;
   gap: 0.25rem;
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.textPrimary};
-  }
+  &:hover { color: ${({ theme }) => theme.colors.accent}; }
 `;
 
 const FooterHashLink = styled.button`
@@ -130,9 +131,7 @@ const FooterHashLink = styled.button`
   gap: 0.25rem;
   text-align: left;
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.textPrimary};
-  }
+  &:hover { color: ${({ theme }) => theme.colors.accent}; }
 `;
 
 const FooterBottom = styled.div`
@@ -162,9 +161,7 @@ const AdminLink = styled(NavLink)`
   align-items: center;
   gap: 0.25rem;
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.textSecondary};
-  }
+  &:hover { color: ${({ theme }) => theme.colors.textSecondary}; }
 `;
 
 export function Footer() {
@@ -189,29 +186,19 @@ export function Footer() {
           <FooterTop>
             <FooterBrand>
               <FooterLogo to="/">
-                <Zap size={16} />
+                <Zap size={16} className="zap-icon" />
                 {profile?.full_name ?? ''}
                 <span>.</span>
               </FooterLogo>
               <FooterBio>{profile?.title ?? ''}</FooterBio>
               <SocialLinks>
                 {profile?.github_url && (
-                  <SocialLink
-                    href={profile.github_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub"
-                  >
+                  <SocialLink href={profile.github_url} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <Github size={16} />
                   </SocialLink>
                 )}
                 {profile?.linkedin_url && (
-                  <SocialLink
-                    href={profile.linkedin_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
-                  >
+                  <SocialLink href={profile.linkedin_url} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <Linkedin size={16} />
                   </SocialLink>
                 )}

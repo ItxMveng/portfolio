@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, Moon, Sun, X, Zap } from 'lucide-react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { useThemeMode } from '../../contexts/ThemeContext';
 import { useProfile } from '../../hooks/useProfile';
 
 const NAV_LINKS = [
@@ -13,7 +14,7 @@ const NAV_LINKS = [
   { label: 'Contact', to: '/#contact' },
 ];
 
-const NavWrapper = styled(motion.header)<{ $scrolled: boolean }>`
+const NavWrapper = styled(motion.header)<{ $scrolled: boolean; $dark: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -21,15 +22,17 @@ const NavWrapper = styled(motion.header)<{ $scrolled: boolean }>`
   z-index: ${({ theme }) => theme.zIndex.sticky};
   transition: all ${({ theme }) => theme.transitions.slow};
 
-  ${({ $scrolled, theme }) =>
+  ${({ $scrolled, $dark }) =>
     $scrolled
       ? css`
-          background: rgba(7, 8, 15, 0.82);
+          background: ${$dark ? 'rgba(10,15,30,0.88)' : 'rgba(249,250,251,0.88)'};
           backdrop-filter: blur(24px) saturate(1.8);
           -webkit-backdrop-filter: blur(24px) saturate(1.8);
-          border-bottom: 1px solid rgba(249,115,22,0.1);
+          border-bottom: 1px solid ${$dark ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.1)'};
           padding: 0.65rem 0;
-          box-shadow: 0 4px 32px rgba(0,0,0,0.35);
+          box-shadow: ${$dark
+            ? '0 4px 32px rgba(0,0,0,0.35)'
+            : '0 4px 24px rgba(0,0,0,0.06)'};
         `
       : css`
           background: transparent;
@@ -66,10 +69,7 @@ const Logo = styled(NavLink)`
   }
 
   span {
-    background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.accent};
   }
 
   &:hover { opacity: 0.85; }
@@ -95,13 +95,13 @@ const navLinkStyles = css<{ $active?: boolean }>`
   border-radius: ${({ theme }) => theme.radii.full};
   transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
   cursor: pointer;
-  background: ${({ $active }) => $active ? 'rgba(249,115,22,0.08)' : 'transparent'};
-  border: 1px solid ${({ $active }) => $active ? 'rgba(249,115,22,0.2)' : 'transparent'};
+  background: ${({ $active, theme }) => $active ? theme.colors.accentDim : 'transparent'};
+  border: 1px solid ${({ $active, theme }) => $active ? theme.colors.accent + '33' : 'transparent'};
 
   &:hover {
     color: ${({ theme }) => theme.colors.textPrimary};
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.08);
+    background: ${({ theme }) => theme.colors.surface};
+    border-color: ${({ theme }) => theme.colors.surfaceBorder};
   }
 `;
 
@@ -137,12 +137,11 @@ const AvailabilityBadge = styled(motion.div)<{ $status: string }>`
   ${({ $status, theme }) => {
     if ($status === 'open') {
       return css`
-        background: rgba(0, 212, 170, 0.08);
-        color: ${theme.colors.teal};
-        border-color: rgba(0, 212, 170, 0.2);
+        background: ${theme.colors.accentDim};
+        color: ${theme.colors.accent};
+        border-color: ${theme.colors.accent}33;
       `;
     }
-
     if ($status === 'busy') {
       return css`
         background: rgba(245, 158, 11, 0.08);
@@ -150,7 +149,6 @@ const AvailabilityBadge = styled(motion.div)<{ $status: string }>`
         border-color: rgba(245, 158, 11, 0.2);
       `;
     }
-
     return css`
       background: rgba(239, 68, 68, 0.08);
       color: ${theme.colors.danger};
@@ -165,27 +163,47 @@ const PulseDot = styled(motion.span)<{ $status: string }>`
   border-radius: 50%;
   background: ${({ $status, theme }) =>
     $status === 'open'
-      ? theme.colors.teal
+      ? theme.colors.accent
       : $status === 'busy'
         ? theme.colors.warning
         : theme.colors.danger};
   flex-shrink: 0;
 `;
 
+const ThemeToggle = styled(motion.button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: ${({ theme }) => theme.radii.full};
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  transition: all ${({ theme }) => theme.transitions.fast};
+  flex-shrink: 0;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.accent};
+    border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.accentDim};
+  }
+`;
+
 const ContactButton = styled.button`
   padding: 0.5rem 1.25rem;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
+  background: ${({ theme }) => theme.colors.accent};
   color: #fff;
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.875rem;
   font-weight: 600;
   transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
-  box-shadow: 0 2px 12px rgba(249,115,22,0.25);
+  box-shadow: 0 2px 12px ${({ theme }) => theme.colors.accentGlow};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(249,115,22,0.4);
-    filter: brightness(1.08);
+    box-shadow: 0 6px 24px ${({ theme }) => theme.colors.accentGlow};
+    background: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 
@@ -217,13 +235,12 @@ const MobileMenu = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(7,8,15,0.97);
+  background: ${({ theme }) => theme.isDark ? 'rgba(10,15,30,0.98)' : 'rgba(249,250,251,0.98)'};
   backdrop-filter: blur(24px);
   z-index: ${({ theme }) => theme.zIndex.modal};
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  border-left: 1px solid rgba(249,115,22,0.1);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
@@ -281,14 +298,14 @@ const MobileContactButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
+  background: ${({ theme }) => theme.colors.accent};
   color: #fff;
   border-radius: ${({ theme }) => theme.radii.xl};
   font-size: 1.0625rem;
   font-weight: 600;
   margin-top: 1rem;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(249,115,22,0.3);
+  box-shadow: 0 4px 20px ${({ theme }) => theme.colors.accentGlow};
 `;
 
 const mobileMenuVariants: Variants = {
@@ -324,9 +341,11 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { profile } = useProfile();
+  const { mode, toggle } = useThemeMode();
   const location = useLocation();
   const navigate = useNavigate();
   const firstName = profile?.full_name?.trim().split(/\s+/)[0] ?? '';
+  const isDark = mode === 'dark';
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -349,7 +368,6 @@ export function Navbar() {
 
   const navigateToHash = (hashTarget: string) => {
     navigate(`/#${hashTarget}`);
-
     if (location.pathname === '/') {
       requestAnimationFrame(() => {
         document.getElementById(hashTarget)?.scrollIntoView({ behavior: 'smooth' });
@@ -361,13 +379,14 @@ export function Navbar() {
     <>
       <NavWrapper
         $scrolled={scrolled}
+        $dark={isDark}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <NavContainer>
           <Logo to="/">
-            <Zap size={16} color="#F97316" />
+            <Zap size={16} color="currentColor" style={{ color: 'var(--accent-color)' }} />
             <span className="logo-name">{firstName}</span>
             <span>.</span>
           </Logo>
@@ -412,6 +431,27 @@ export function Navbar() {
               </AvailabilityBadge>
             )}
 
+            <ThemeToggle
+              onClick={toggle}
+              aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              type="button"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={mode}
+                  initial={{ opacity: 0, rotate: -30, scale: 0.6 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 30, scale: 0.6 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ display: 'flex', alignItems: 'center' }}
+                >
+                  {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                </motion.span>
+              </AnimatePresence>
+            </ThemeToggle>
+
             <ContactButton onClick={() => navigateToHash('contact')} type="button">
               Me contacter
             </ContactButton>
@@ -437,17 +477,27 @@ export function Navbar() {
           >
             <MobileMenuHeader>
               <Logo to="/" onClick={() => setMobileOpen(false)}>
-                <Zap size={16} color="#F97316" />
+                <Zap size={16} />
                 <span className="logo-name">{firstName}</span>
                 <span>.</span>
               </Logo>
-              <MobileMenuButton
-                onClick={() => setMobileOpen(false)}
-                aria-label="Fermer le menu"
-                type="button"
-              >
-                <X size={20} />
-              </MobileMenuButton>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <ThemeToggle
+                  onClick={toggle}
+                  aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                >
+                  {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                </ThemeToggle>
+                <MobileMenuButton
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Fermer le menu"
+                  type="button"
+                >
+                  <X size={20} />
+                </MobileMenuButton>
+              </div>
             </MobileMenuHeader>
 
             <MobileNavLinks>

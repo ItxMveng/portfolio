@@ -16,22 +16,15 @@ import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../li
 
 const Section = styled.section`
   padding: 6rem 0;
-  background: ${({ theme }) => theme.colors.bgSecondary};
+  background: ${({ theme }) => theme.colors.bg};
   position: relative;
 
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      ${({ theme }) => theme.colors.surfaceBorder},
-      transparent
-    );
+    background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.surfaceBorder}, transparent);
   }
 `;
 
@@ -83,10 +76,12 @@ const ContactInfoItem = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.lg};
   transition: all ${({ theme }) => theme.transitions.fast};
+  box-shadow: ${({ theme }) => theme.shadows.card};
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.3);
-    background: ${({ theme }) => theme.colors.bgCardHover};
+    border-color: ${({ theme }) => theme.colors.accent}33;
+    box-shadow: ${({ theme }) => theme.shadows.cardHover};
+    transform: translateX(4px);
   }
 `;
 
@@ -95,7 +90,7 @@ const ContactInfoIcon = styled.div`
   height: 38px;
   border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid ${({ theme }) => theme.colors.accent}33;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,6 +128,7 @@ const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  box-shadow: ${({ theme }) => theme.shadows.card};
 `;
 
 const FormRow = styled.div`
@@ -172,10 +168,12 @@ const SubmitButton = styled(motion.button)`
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.base};
   width: 100%;
+  box-shadow: 0 4px 16px ${({ theme }) => theme.colors.accentGlow};
 
   &:hover:not(:disabled) {
     background: ${({ theme }) => theme.colors.accentHover};
-    box-shadow: 0 0 24px ${({ theme }) => theme.colors.accentGlow};
+    box-shadow: 0 8px 28px ${({ theme }) => theme.colors.accentGlow};
+    transform: translateY(-1px);
   }
 
   &:disabled {
@@ -192,11 +190,11 @@ const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
   border-radius: ${({ theme }) => theme.radii.md};
   font-size: 0.9375rem;
   font-weight: 500;
-  background: ${({ $success }) =>
-    $success ? 'rgba(0,212,170,0.08)' : 'rgba(239,68,68,0.08)'};
-  color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
+  background: ${({ $success, theme }) =>
+    $success ? theme.colors.accentDim : 'rgba(239,68,68,0.08)'};
+  color: ${({ $success, theme }) => ($success ? theme.colors.accent : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(0,212,170,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success, theme }) => ($success ? theme.colors.accent + '33' : 'rgba(239,68,68,0.2)')};
 `;
 
 type FormState = {
@@ -220,27 +218,17 @@ export function ContactSection() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (status !== 'idle') {
-      setStatus('idle');
-    }
-
+    if (status !== 'idle') setStatus('idle');
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (!form.name || !form.email || !form.message) {
-      return;
-    }
-
+    if (!form.name || !form.email || !form.message) return;
     setStatus('sending');
     const { error } = await send(form);
     setStatus(error ? 'error' : 'success');
-
-    if (!error) {
-      setForm({ name: '', email: '', subject: '', message: '' });
-    }
+    if (!error) setForm({ name: '', email: '', subject: '', message: '' });
   };
 
   const responseTime = profile?.stats?.response_time ?? '';
@@ -272,9 +260,7 @@ export function ContactSection() {
             <ContactInfoList>
               <motion.div variants={staggerItem}>
                 <ContactInfoItem>
-                  <ContactInfoIcon>
-                    <Mail size={16} />
-                  </ContactInfoIcon>
+                  <ContactInfoIcon><Mail size={16} /></ContactInfoIcon>
                   <ContactInfoText>
                     <ContactInfoLabel>Email</ContactInfoLabel>
                     <ContactInfoValue>{profile?.email ?? ''}</ContactInfoValue>
@@ -284,9 +270,7 @@ export function ContactSection() {
 
               <motion.div variants={staggerItem}>
                 <ContactInfoItem>
-                  <ContactInfoIcon>
-                    <MapPin size={16} />
-                  </ContactInfoIcon>
+                  <ContactInfoIcon><MapPin size={16} /></ContactInfoIcon>
                   <ContactInfoText>
                     <ContactInfoLabel>Localisation</ContactInfoLabel>
                     <ContactInfoValue>{profile?.location ?? ''}</ContactInfoValue>
@@ -296,9 +280,7 @@ export function ContactSection() {
 
               <motion.div variants={staggerItem}>
                 <ContactInfoItem>
-                  <ContactInfoIcon>
-                    <Clock size={16} />
-                  </ContactInfoIcon>
+                  <ContactInfoIcon><Clock size={16} /></ContactInfoIcon>
                   <ContactInfoText>
                     <ContactInfoLabel>Disponibilité</ContactInfoLabel>
                     <ContactInfoValue>{availabilityValue}</ContactInfoValue>
@@ -398,13 +380,9 @@ export function ContactSection() {
                 {status === 'sending' ? (
                   <>Envoi en cours...</>
                 ) : status === 'success' ? (
-                  <>
-                    <CheckCircle size={18} /> Message envoyé
-                  </>
+                  <><CheckCircle size={18} /> Message envoyé</>
                 ) : (
-                  <>
-                    <Send size={18} /> Envoyer ma demande
-                  </>
+                  <><Send size={18} /> Envoyer ma demande</>
                 )}
               </SubmitButton>
             </ContactForm>

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, ExternalLink, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import { normalizeExternalUrlField } from '../../lib/external-links';
 
 const Section = styled.section`
   padding: 6rem 0;
-  background: ${({ theme }) => theme.colors.bgSecondary};
+  background: ${({ theme }) => theme.colors.bg};
   position: relative;
 
   &::before {
@@ -84,31 +84,33 @@ const ProjectsGrid = styled(motion.div)`
 `;
 
 const ProjectCard = styled(motion.div)`
-  background: rgba(17,25,39,0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: ${({ theme }) => theme.colors.bgCard};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  transition: border-color 0.35s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1),
+              transform 0.35s cubic-bezier(0.16,1,0.3,1);
   cursor: pointer;
   position: relative;
+  box-shadow: ${({ theme }) => theme.shadows.card};
 
   &::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(249,115,22,0.25), transparent);
+    height: 2px;
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
     opacity: 0;
     transition: opacity 0.35s;
     z-index: 1;
   }
 
   &:hover {
-    border-color: rgba(249,115,22,0.2);
-    box-shadow: 0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(249,115,22,0.12);
+    border-color: ${({ theme }) => theme.colors.accent}33;
+    box-shadow: ${({ theme }) => theme.shadows.cardHover};
     transform: translateY(-6px);
     &::before { opacity: 1; }
   }
@@ -117,10 +119,10 @@ const ProjectCard = styled(motion.div)`
 const ProjectCover = styled.div<{ $hasCover: boolean }>`
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: ${({ $hasCover }) =>
+  background: ${({ $hasCover, theme }) =>
     $hasCover
       ? 'transparent'
-      : 'linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(56,189,248,0.12) 50%, rgba(34,211,238,0.08) 100%)'};
+      : theme.colors.accentDim};
   position: relative;
   overflow: hidden;
 
@@ -151,8 +153,7 @@ const CategoryBadge = styled.div`
   top: 0.75rem;
   left: 0.75rem;
   padding: 0.25rem 0.65rem;
-  background: rgba(10, 10, 15, 0.8);
-  backdrop-filter: blur(8px);
+  background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
@@ -248,6 +249,34 @@ const YearBadge = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
 `;
 
+function TiltCard({ children }: { children: React.ReactNode }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-60, 60], [3, -3]);
+  const rotateY = useTransform(x, [-60, 60], [-3, 3]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set(e.clientX - (rect.left + rect.width / 2));
+    y.set(e.clientY - (rect.top + rect.height / 2));
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function ProjectsPreviewSection() {
   const { projects, loading } = useProjects();
   const latest = [...projects]
@@ -288,69 +317,71 @@ export function ProjectsPreviewSection() {
           viewport={defaultViewport}
         >
           {latest.map((project) => (
-            <ProjectCard key={project.id} variants={staggerItem}>
-              <ProjectCover $hasCover={!!project.cover_url}>
-                {project.cover_url ? (
-                  <img src={project.cover_url} alt={project.title} loading="lazy" />
-                ) : (
-                  <CoverPlaceholder>
-                    {project.category === 'AI' ? '🤖' : project.category === 'Web' ? '🌐' : '⚡'}
-                  </CoverPlaceholder>
-                )}
-                <CategoryBadge>{project.category}</CategoryBadge>
-              </ProjectCover>
+            <TiltCard key={project.id}>
+              <ProjectCard variants={staggerItem}>
+                <ProjectCover $hasCover={!!project.cover_url}>
+                  {project.cover_url ? (
+                    <img src={project.cover_url} alt={project.title} loading="lazy" />
+                  ) : (
+                    <CoverPlaceholder>
+                      {project.category === 'AI' ? '🤖' : project.category === 'Web' ? '🌐' : '⚡'}
+                    </CoverPlaceholder>
+                  )}
+                  <CategoryBadge>{project.category}</CategoryBadge>
+                </ProjectCover>
 
-              <ProjectBody>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    gap: '0.5rem',
-                  }}
-                >
-                  <ProjectTitle>{project.title}</ProjectTitle>
-                  <YearBadge>{new Date(project.created_at).getFullYear()}</YearBadge>
-                </div>
+                <ProjectBody>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    <ProjectTitle>{project.title}</ProjectTitle>
+                    <YearBadge>{new Date(project.created_at).getFullYear()}</YearBadge>
+                  </div>
 
-                <ProjectDesc>{project.short_description}</ProjectDesc>
+                  <ProjectDesc>{project.short_description}</ProjectDesc>
 
-                <TechStack>
-                  {project.tech_stack.slice(0, 4).map((tech) => (
-                    <Tag key={`${project.id}-${tech}`}>{tech}</Tag>
-                  ))}
-                  {project.tech_stack.length > 4 && <Tag>+{project.tech_stack.length - 4}</Tag>}
-                </TechStack>
+                  <TechStack>
+                    {project.tech_stack.slice(0, 4).map((tech) => (
+                      <Tag key={`${project.id}-${tech}`}>{tech}</Tag>
+                    ))}
+                    {project.tech_stack.length > 4 && <Tag>+{project.tech_stack.length - 4}</Tag>}
+                  </TechStack>
 
-                <ProjectLinks>
-                  <ProjectLinkGroup>
-                    {project.github_url && (
-                      <IconLink
-                        href={normalizeExternalUrlField(project.github_url)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="GitHub"
-                      >
-                        <Github size={14} />
-                      </IconLink>
-                    )}
-                    {project.live_url && (
-                      <IconLink
-                        href={normalizeExternalUrlField(project.live_url)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Site en ligne"
-                      >
-                        <ExternalLink size={14} />
-                      </IconLink>
-                    )}
-                  </ProjectLinkGroup>
-                  <DetailLink to={`/projects/${project.slug}`}>
-                    Voir le projet <ArrowUpRight size={13} />
-                  </DetailLink>
-                </ProjectLinks>
-              </ProjectBody>
-            </ProjectCard>
+                  <ProjectLinks>
+                    <ProjectLinkGroup>
+                      {project.github_url && (
+                        <IconLink
+                          href={normalizeExternalUrlField(project.github_url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="GitHub"
+                        >
+                          <Github size={14} />
+                        </IconLink>
+                      )}
+                      {project.live_url && (
+                        <IconLink
+                          href={normalizeExternalUrlField(project.live_url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Site en ligne"
+                        >
+                          <ExternalLink size={14} />
+                        </IconLink>
+                      )}
+                    </ProjectLinkGroup>
+                    <DetailLink to={`/projects/${project.slug}`}>
+                      Voir le projet <ArrowUpRight size={13} />
+                    </DetailLink>
+                  </ProjectLinks>
+                </ProjectBody>
+              </ProjectCard>
+            </TiltCard>
           ))}
         </ProjectsGrid>
       </Container>

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +9,22 @@ import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../li
 const Section = styled.section`
   padding: 6rem 0;
   position: relative;
+  background: ${({ theme }) => theme.colors.bgSecondary};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      ${({ theme }) => theme.colors.surfaceBorder},
+      transparent
+    );
+  }
 `;
 
 const Container = styled.div`
@@ -49,9 +65,8 @@ const ServicesGrid = styled(motion.div)`
 
 const ServiceCard = styled(motion.div)`
   position: relative;
-  background: rgba(17,25,39,0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: ${({ theme }) => theme.colors.bgCard};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: 2rem;
   display: flex;
@@ -59,38 +74,24 @@ const ServiceCard = styled(motion.div)`
   gap: 1.25rem;
   cursor: default;
   overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(249,115,22,0.08),
-      transparent 55%
-    );
-    opacity: 0;
-    transition: opacity 0.35s ease;
-  }
+  transition: border-color 0.35s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: ${({ theme }) => theme.shadows.card};
 
   &::after {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(249,115,22,0.3), transparent);
+    height: 2px;
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
     opacity: 0;
     transition: opacity 0.35s;
   }
 
   &:hover {
-    border-color: rgba(249,115,22,0.2);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(249,115,22,0.15);
-    transform: translateY(-6px);
-
-    &::before { opacity: 1; }
-    &::after  { opacity: 1; }
+    border-color: ${({ theme }) => theme.colors.accent}33;
+    box-shadow: ${({ theme }) => theme.shadows.cardHover};
+    &::after { opacity: 1; }
   }
 `;
 
@@ -98,8 +99,8 @@ const ServiceIconWrapper = styled.div`
   width: 52px;
   height: 52px;
   border-radius: ${({ theme }) => theme.radii.lg};
-  background: rgba(249,115,22,0.08);
-  border: 1px solid rgba(249,115,22,0.18);
+  background: ${({ theme }) => theme.colors.accentDim};
+  border: 1px solid ${({ theme }) => theme.colors.accent}33;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,9 +111,9 @@ const ServiceIconWrapper = styled.div`
   z-index: 1;
 
   ${ServiceCard}:hover & {
-    background: rgba(249,115,22,0.14);
-    border-color: rgba(249,115,22,0.3);
-    box-shadow: 0 0 20px rgba(249,115,22,0.15);
+    background: ${({ theme }) => theme.colors.accentDimHover};
+    border-color: ${({ theme }) => theme.colors.accent}55;
+    box-shadow: 0 0 20px ${({ theme }) => theme.colors.accentGlow};
     transform: scale(1.08) rotate(-4deg);
   }
 `;
@@ -208,14 +209,14 @@ const CTAPrimary = styled.button`
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
   text-decoration: none;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
+  background: ${({ theme }) => theme.colors.accent};
   color: #fff;
-  box-shadow: 0 4px 16px rgba(249,115,22,0.25);
+  box-shadow: 0 4px 16px ${({ theme }) => theme.colors.accentGlow};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(249,115,22,0.4);
-    filter: brightness(1.07);
+    box-shadow: 0 8px 28px ${({ theme }) => theme.colors.accentGlow};
+    background: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 
@@ -240,6 +241,36 @@ const CTASecondary = styled(Link)`
     transform: translateY(-1px);
   }
 `;
+
+function TiltCard({ children }: { children: React.ReactNode }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-50, 50], [4, -4]);
+  const rotateY = useTransform(x, [-50, 50], [-4, 4]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    x.set(e.clientX - cx);
+    y.set(e.clientY - cy);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      style={{ rotateX, rotateY, transformPerspective: 800 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function ServicesSection() {
   const { services, loading } = useServices();
@@ -275,50 +306,40 @@ export function ServicesSection() {
           viewport={defaultViewport}
         >
           {services.map((service) => (
-            <ServiceCard
-              key={service.id}
-              variants={staggerItem}
-              whileHover={{ y: -4, rotateX: 1.5, rotateY: -1.5 }}
-              onMouseMove={(event) => {
-                const card = event.currentTarget;
-                const rect = card.getBoundingClientRect();
-                const x = ((event.clientX - rect.left) / rect.width) * 100;
-                const y = ((event.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--mouse-x', `${x}%`);
-                card.style.setProperty('--mouse-y', `${y}%`);
-              }}
-            >
-              <ServiceIconWrapper>{service.icon}</ServiceIconWrapper>
+            <TiltCard key={service.id}>
+              <ServiceCard variants={staggerItem}>
+                <ServiceIconWrapper>{service.icon}</ServiceIconWrapper>
 
-              <div>
-                <ServiceTitle>{service.title}</ServiceTitle>
-                <ServiceTagline>{service.tagline}</ServiceTagline>
-              </div>
+                <div>
+                  <ServiceTitle>{service.title}</ServiceTitle>
+                  <ServiceTagline>{service.tagline}</ServiceTagline>
+                </div>
 
-              <ServiceDesc>{service.description}</ServiceDesc>
+                <ServiceDesc>{service.description}</ServiceDesc>
 
-              <ServiceBullets>
-                {service.bullets.map((bullet, i) => (
-                  <ServiceBullet key={`${service.id}-bullet-${i}`}>{bullet}</ServiceBullet>
-                ))}
-              </ServiceBullets>
+                <ServiceBullets>
+                  {service.bullets.map((bullet, i) => (
+                    <ServiceBullet key={`${service.id}-bullet-${i}`}>{bullet}</ServiceBullet>
+                  ))}
+                </ServiceBullets>
 
-              {service.workflow && <ServiceWorkflow>{service.workflow}</ServiceWorkflow>}
+                {service.workflow && <ServiceWorkflow>{service.workflow}</ServiceWorkflow>}
 
-              {service.cta_label && (
-                <ServiceCTA
-                  href={service.cta_url || '#contact'}
-                  onClick={(e) => {
-                    if (!service.cta_url) {
-                      e.preventDefault();
-                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                >
-                  {service.cta_label} <ArrowUpRight size={14} />
-                </ServiceCTA>
-              )}
-            </ServiceCard>
+                {service.cta_label && (
+                  <ServiceCTA
+                    href={service.cta_url || '#contact'}
+                    onClick={(e) => {
+                      if (!service.cta_url) {
+                        e.preventDefault();
+                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                  >
+                    {service.cta_label} <ArrowUpRight size={14} />
+                  </ServiceCTA>
+                )}
+              </ServiceCard>
+            </TiltCard>
           ))}
         </ServicesGrid>
 
