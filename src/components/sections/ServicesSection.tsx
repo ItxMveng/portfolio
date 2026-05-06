@@ -49,8 +49,9 @@ const ServicesGrid = styled(motion.div)`
 
 const ServiceCard = styled(motion.div)`
   position: relative;
-  background: ${({ theme }) => theme.colors.bgCard};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  background: rgba(17,25,39,0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: 2rem;
   display: flex;
@@ -58,7 +59,7 @@ const ServiceCard = styled(motion.div)`
   gap: 1.25rem;
   cursor: default;
   overflow: hidden;
-  transition: all ${({ theme }) => theme.transitions.base};
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
 
   &::before {
     content: '';
@@ -66,21 +67,30 @@ const ServiceCard = styled(motion.div)`
     inset: 0;
     background: radial-gradient(
       circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(124, 92, 252, 0.06),
-      transparent 60%
+      rgba(249,115,22,0.08),
+      transparent 55%
     );
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.35s ease;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(249,115,22,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
   }
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.3);
-    box-shadow: ${({ theme }) => theme.shadows.cardHover};
-    transform: translateY(-4px);
+    border-color: rgba(249,115,22,0.2);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(249,115,22,0.15);
+    transform: translateY(-6px);
 
-    &::before {
-      opacity: 1;
-    }
+    &::before { opacity: 1; }
+    &::after  { opacity: 1; }
   }
 `;
 
@@ -88,13 +98,23 @@ const ServiceIconWrapper = styled.div`
   width: 52px;
   height: 52px;
   border-radius: ${({ theme }) => theme.radii.lg};
-  background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  background: rgba(249,115,22,0.08);
+  border: 1px solid rgba(249,115,22,0.18);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+  z-index: 1;
+
+  ${ServiceCard}:hover & {
+    background: rgba(249,115,22,0.14);
+    border-color: rgba(249,115,22,0.3);
+    box-shadow: 0 0 20px rgba(249,115,22,0.15);
+    transform: scale(1.08) rotate(-4deg);
+  }
 `;
 
 const ServiceTitle = styled.h3`
@@ -182,19 +202,20 @@ const CTAPrimary = styled.button`
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
-  border-radius: ${({ theme }) => theme.radii.md};
+  border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all ${({ theme }) => theme.transitions.base};
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
   text-decoration: none;
-  background: ${({ theme }) => theme.colors.accent};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
   color: #fff;
+  box-shadow: 0 4px 16px rgba(249,115,22,0.25);
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accentHover};
-    box-shadow: 0 0 24px ${({ theme }) => theme.colors.accentGlow};
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(249,115,22,0.4);
+    filter: brightness(1.07);
   }
 `;
 

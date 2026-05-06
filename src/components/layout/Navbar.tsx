@@ -24,15 +24,16 @@ const NavWrapper = styled(motion.header)<{ $scrolled: boolean }>`
   ${({ $scrolled, theme }) =>
     $scrolled
       ? css`
-          background: rgba(10, 10, 15, 0.85);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border-bottom: 1px solid ${theme.colors.surfaceBorder};
-          padding: 0.75rem 0;
+          background: rgba(7, 8, 15, 0.82);
+          backdrop-filter: blur(24px) saturate(1.8);
+          -webkit-backdrop-filter: blur(24px) saturate(1.8);
+          border-bottom: 1px solid rgba(249,115,22,0.1);
+          padding: 0.65rem 0;
+          box-shadow: 0 4px 32px rgba(0,0,0,0.35);
         `
       : css`
           background: transparent;
-          padding: 1.5rem 0;
+          padding: 1.25rem 0;
         `}
 `;
 
@@ -54,20 +55,24 @@ const Logo = styled(NavLink)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.0625rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.textPrimary};
-  letter-spacing: -0.02em;
-  transition: color ${({ theme }) => theme.transitions.fast};
+  letter-spacing: -0.03em;
   flex-shrink: 0;
+  transition: opacity 0.2s;
+
+  .logo-name {
+    color: ${({ theme }) => theme.colors.textPrimary};
+  }
 
   span {
-    color: ${({ theme }) => theme.colors.accent};
+    background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-  }
+  &:hover { opacity: 0.85; }
 `;
 
 const DesktopNav = styled.nav`
@@ -82,35 +87,22 @@ const DesktopNav = styled.nav`
 
 const navLinkStyles = css<{ $active?: boolean }>`
   position: relative;
-  padding: 0.5rem 0.875rem;
-  font-size: 0.9375rem;
+  padding: 0.45rem 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: ${({ $active, theme }) =>
     $active ? theme.colors.textPrimary : theme.colors.textSecondary};
-  border-radius: ${({ theme }) => theme.radii.md};
-  transition: all ${({ theme }) => theme.transitions.fast};
+  border-radius: ${({ theme }) => theme.radii.full};
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
   cursor: pointer;
+  background: ${({ $active }) => $active ? 'rgba(249,115,22,0.08)' : 'transparent'};
+  border: 1px solid ${({ $active }) => $active ? 'rgba(249,115,22,0.2)' : 'transparent'};
 
   &:hover {
     color: ${({ theme }) => theme.colors.textPrimary};
-    background: ${({ theme }) => theme.colors.surface};
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.08);
   }
-
-  ${({ $active, theme }) =>
-    $active &&
-    css`
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 4px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: ${theme.colors.accent};
-      }
-    `}
 `;
 
 const DesktopRouteLink = styled(NavLink)<{ $active?: boolean }>`
@@ -182,17 +174,18 @@ const PulseDot = styled(motion.span)<{ $status: string }>`
 
 const ContactButton = styled.button`
   padding: 0.5rem 1.25rem;
-  background: ${({ theme }) => theme.colors.accent};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
   color: #fff;
-  border-radius: ${({ theme }) => theme.radii.md};
+  border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.875rem;
   font-weight: 600;
-  transition: all ${({ theme }) => theme.transitions.base};
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 2px 12px rgba(249,115,22,0.25);
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accentHover};
-    box-shadow: 0 0 20px ${({ theme }) => theme.colors.accentGlow};
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(249,115,22,0.4);
+    filter: brightness(1.08);
   }
 `;
 
@@ -224,11 +217,13 @@ const MobileMenu = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: ${({ theme }) => theme.colors.bg};
+  background: rgba(7,8,15,0.97);
+  backdrop-filter: blur(24px);
   z-index: ${({ theme }) => theme.zIndex.modal};
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+  border-left: 1px solid rgba(249,115,22,0.1);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
@@ -286,13 +281,14 @@ const MobileContactButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: ${({ theme }) => theme.colors.accent};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, #FBBF24);
   color: #fff;
-  border-radius: ${({ theme }) => theme.radii.lg};
+  border-radius: ${({ theme }) => theme.radii.xl};
   font-size: 1.0625rem;
   font-weight: 600;
   margin-top: 1rem;
   cursor: pointer;
+  box-shadow: 0 4px 20px rgba(249,115,22,0.3);
 `;
 
 const mobileMenuVariants: Variants = {
@@ -371,8 +367,8 @@ export function Navbar() {
       >
         <NavContainer>
           <Logo to="/">
-            <Zap size={18} />
-            {firstName}
+            <Zap size={16} color="#F97316" />
+            <span className="logo-name">{firstName}</span>
             <span>.</span>
           </Logo>
 
@@ -441,8 +437,8 @@ export function Navbar() {
           >
             <MobileMenuHeader>
               <Logo to="/" onClick={() => setMobileOpen(false)}>
-                <Zap size={18} />
-                {firstName}
+                <Zap size={16} color="#F97316" />
+                <span className="logo-name">{firstName}</span>
                 <span>.</span>
               </Logo>
               <MobileMenuButton

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
   *, *::before, *::after {
     box-sizing: border-box;
@@ -88,18 +88,37 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  @keyframes auroraShift {
+    0%   { background-position: 0% 0%;   filter: hue-rotate(0deg); }
+    33%  { background-position: 60% 40%; filter: hue-rotate(8deg); }
+    66%  { background-position: 30% 80%; filter: hue-rotate(-6deg); }
+    100% { background-position: 0% 0%;   filter: hue-rotate(0deg); }
+  }
+
   body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
+    inset: 0;
     background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124,92,252,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,170,0.06) 0%, transparent 50%);
+      radial-gradient(ellipse 90% 60% at 20% -5%,  rgba(249,115,22,0.09)  0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 85% 15%,  rgba(56,189,248,0.08)  0%, transparent 50%),
+      radial-gradient(ellipse 60% 55% at 50% 90%,  rgba(34,211,238,0.06)  0%, transparent 50%),
+      radial-gradient(ellipse 80% 40% at 10% 70%,  rgba(249,115,22,0.05)  0%, transparent 50%);
+    background-size: 200% 200%;
+    animation: auroraShift 20s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
   }
 
   #root {

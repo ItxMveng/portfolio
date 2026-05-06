@@ -167,15 +167,15 @@ export const Tag = styled.span`
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   font-weight: 500;
-  background: rgba(124,92,252,0.08);
+  background: rgba(56,189,248,0.07);
   color: ${({ theme }) => theme.colors.textSecondary};
-  border: 1px solid rgba(124,92,252,0.15);
-  transition: all ${({ theme }) => theme.transitions.fast};
+  border: 1px solid rgba(56,189,248,0.14);
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accentDim};
-    color: ${({ theme }) => theme.colors.accentHover};
-    border-color: rgba(124,92,252,0.3);
+    background: rgba(56,189,248,0.12);
+    color: ${({ theme }) => theme.colors.blue};
+    border-color: rgba(56,189,248,0.28);
   }
 `;
 
@@ -265,21 +265,29 @@ export const SectionLabel = styled(motion.span)`
 `;
 
 export const SectionTitle = styled(motion.h2)`
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
   color: ${({ theme }) => theme.colors.textPrimary};
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 
   span {
     background: linear-gradient(
       135deg,
-      ${({ theme }) => theme.colors.accent},
-      ${({ theme }) => theme.colors.teal}
+      ${({ theme }) => theme.colors.accent} 0%,
+      #FBBF24 50%,
+      ${({ theme }) => theme.colors.blue} 100%
     );
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: titleGrad 5s linear infinite;
+
+    @keyframes titleGrad {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
   }
 `;
 

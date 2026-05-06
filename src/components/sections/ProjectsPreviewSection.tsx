@@ -84,29 +84,43 @@ const ProjectsGrid = styled(motion.div)`
 `;
 
 const ProjectCard = styled(motion.div)`
-  background: ${({ theme }) => theme.colors.bgCard};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  background: rgba(17,25,39,0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: ${({ theme }) => theme.radii.xl};
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all ${({ theme }) => theme.transitions.base};
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
   cursor: pointer;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(249,115,22,0.25), transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
+    z-index: 1;
+  }
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.3);
-    box-shadow: ${({ theme }) => theme.shadows.cardHover};
-    transform: translateY(-4px);
+    border-color: rgba(249,115,22,0.2);
+    box-shadow: 0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(249,115,22,0.12);
+    transform: translateY(-6px);
+    &::before { opacity: 1; }
   }
 `;
 
 const ProjectCover = styled.div<{ $hasCover: boolean }>`
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: ${({ $hasCover, theme }) =>
+  background: ${({ $hasCover }) =>
     $hasCover
       ? 'transparent'
-      : `linear-gradient(135deg, ${theme.colors.accentDim}, ${theme.colors.tealDim})`};
+      : 'linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(56,189,248,0.12) 50%, rgba(34,211,238,0.08) 100%)'};
   position: relative;
   overflow: hidden;
 
@@ -114,11 +128,11 @@ const ProjectCover = styled.div<{ $hasCover: boolean }>`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform ${({ theme }) => theme.transitions.slow};
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
 
   ${ProjectCard}:hover & img {
-    transform: scale(1.05);
+    transform: scale(1.06);
   }
 `;
 
