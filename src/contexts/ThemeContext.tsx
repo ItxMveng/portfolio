@@ -10,7 +10,7 @@ interface ThemeModeContextValue {
 }
 
 const ThemeModeContext = createContext<ThemeModeContextValue>({
-  mode: 'light',
+  mode: 'dark',
   toggle: () => {},
 });
 
@@ -30,12 +30,13 @@ function applyThemeToDom(mode: ThemeMode) {
 
 export function AppThemeProvider({ children }: { children: React.ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') return 'light';
+    if (typeof window === 'undefined') return 'dark';
     try {
       const saved = localStorage.getItem('theme');
-      return saved === 'dark' ? 'dark' : 'light';
+      if (saved === 'light') return 'light';
+      return 'dark';
     } catch {
-      return 'light';
+      return 'dark';
     }
   });
 

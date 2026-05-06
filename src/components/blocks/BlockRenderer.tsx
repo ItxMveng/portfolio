@@ -24,6 +24,9 @@ const ProseWrapper = styled.div`
   font-size: 1rem;
   line-height: 1.8;
   color: ${({ theme }) => theme.colors.textSecondary};
+  min-width: 0;
+  overflow-x: hidden;
+  word-break: break-word;
 `;
 
 const H1 = styled.h1`

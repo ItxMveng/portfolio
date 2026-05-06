@@ -123,6 +123,11 @@ const HeroLeft = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 1.25rem;
+  order: 2;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    order: 1;
+  }
 `;
 
 /* ── Badge disponibilité ── */
@@ -346,12 +351,15 @@ const StatLab = styled.div`
 
 /* ── Colonne droite ── */
 const HeroRight = styled.div`
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: center;
+  order: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    display: flex;
+    align-items: flex-start;
+    order: 2;
   }
 `;
 
@@ -360,13 +368,20 @@ const ProfileCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.xl};
-  padding: 1.5rem;
+  padding: 1.25rem;
   box-shadow: ${({ theme }) => theme.shadows.card};
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
   position: relative;
   overflow: hidden;
+  width: 220px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: 1.5rem;
+    gap: 1.25rem;
+    width: auto;
+  }
 
   &::before {
     content: '';
@@ -384,11 +399,16 @@ const OrbWrap = styled.div`
   display: flex;
   justify-content: center;
   padding: 0.5rem 0;
+  height: 90px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    height: 110px;
+  }
 `;
 
 const OrbOuter = styled(motion.div)`
-  width: 100px;
-  height: 100px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
@@ -404,6 +424,11 @@ const OrbOuter = styled(motion.div)`
   left: 50%;
   transform: translate(-50%, -50%);
 
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: 100px;
+    height: 100px;
+  }
+
   @keyframes orbSpin {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to   { transform: translate(-50%, -50%) rotate(360deg); }
@@ -411,8 +436,8 @@ const OrbOuter = styled(motion.div)`
 `;
 
 const OrbInner = styled.div`
-  width: 86px;
-  height: 86px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.bgCard};
   border: 1.5px solid ${({ theme }) => theme.colors.surfaceBorder};
@@ -421,10 +446,16 @@ const OrbInner = styled.div`
   justify-content: center;
   position: relative;
   z-index: 1;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: ${({ theme }) => theme.colors.accent};
   overflow: hidden;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: 86px;
+    height: 86px;
+    font-size: 1.75rem;
+  }
 
   img {
     width: 100%;
@@ -448,9 +479,13 @@ const ProfileRole = styled.div`
 `;
 
 const ProfileLinks = styled.div`
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0.5rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: flex;
+  }
 `;
 
 const ProfileLink = styled.a`
@@ -484,11 +519,15 @@ const InfoCard = styled(motion.div)`
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: 0.875rem 1rem;
   box-shadow: ${({ theme }) => theme.shadows.sm};
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.625rem;
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.textSecondary};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: flex;
+  }
 
   svg { color: ${({ theme }) => theme.colors.accent}; flex-shrink: 0; }
 `;
@@ -683,7 +722,7 @@ export function HeroSection() {
               variants={staggerItem}
               whileHover={{ y: -4, boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}
             >
-              <OrbWrap style={{ height: 110 }}>
+              <OrbWrap>
                 <OrbOuter />
                 <OrbInner>
                   {profile.avatar_url ? (

@@ -22,13 +22,16 @@ export default function Document() {
               (function() {
                 try {
                   var t = localStorage.getItem('theme');
-                  if (t === 'dark') {
+                  if (t === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                  } else {
                     document.documentElement.setAttribute('data-theme', 'dark');
                     document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.setAttribute('data-theme', 'light');
                   }
-                } catch(e) {}
+                } catch(e) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  document.documentElement.classList.add('dark');
+                }
               })();
             `,
           }}

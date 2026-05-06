@@ -14,14 +14,19 @@ import type { Project } from '../types';
 const PageWrapper = styled.div`
   min-height: 100vh;
   padding-top: 80px;
+  overflow-x: hidden;
 `;
 
 const HeroSection = styled.div`
   position: relative;
   width: 100%;
-  height: 420px;
+  height: 280px;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.bgSecondary};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 380px;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     height: 520px;
@@ -61,9 +66,13 @@ const HeroContent = styled(motion.div)`
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 2.5rem 1.5rem;
+  padding: 1.25rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 2rem 1.5rem;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     padding: 3rem 2rem;
@@ -152,19 +161,28 @@ const SecondaryHeroLink = styled(HeroLink)`
 const ContentLayout = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem 6rem;
+  padding: 2rem 1rem 4rem;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 2rem;
+  overflow: hidden;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 2.5rem 1.5rem 5rem;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr 300px;
     padding: 4rem 2rem 6rem;
+    gap: 3rem;
     align-items: start;
   }
 `;
 
-const MainContent = styled(motion.article)``;
+const MainContent = styled(motion.article)`
+  min-width: 0;
+  overflow: hidden;
+`;
 
 const Sidebar = styled(motion.aside)`
   display: flex;
