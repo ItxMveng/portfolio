@@ -52,11 +52,11 @@ export const Button = styled(motion.button)<ButtonProps>`
       }
     `;
     if (variant === 'danger') return css`
-      background: rgba(220,38,38,0.08);
+      background: rgba(192,57,43,0.08);
       color: ${theme.colors.danger};
-      border: 1px solid rgba(220,38,38,0.2);
+      border: 1px solid rgba(192,57,43,0.2);
       &:hover {
-        background: rgba(220,38,38,0.15);
+        background: rgba(192,57,43,0.15);
         border-color: ${theme.colors.danger};
       }
     `;
@@ -101,9 +101,9 @@ export const Badge = styled.span<{
         border: 1px solid ${theme.colors.accent}33;
       `,
       teal: css`
-        background: ${theme.colors.tealDim};
-        color: ${theme.colors.teal};
-        border: 1px solid ${theme.colors.teal}33;
+        background: ${'rgba(30,142,90,0.1)'};
+        color: ${theme.colors.success};
+        border: 1px solid ${theme.colors.success}33;
       `,
       muted: css`
         background: ${theme.colors.surface};
@@ -116,14 +116,14 @@ export const Badge = styled.span<{
         border: 1px solid ${theme.colors.accent}33;
       `,
       warning: css`
-        background: rgba(217,119,6,0.08);
+        background: rgba(183,121,31,0.08);
         color: ${theme.colors.warning};
-        border: 1px solid rgba(217,119,6,0.2);
+        border: 1px solid rgba(183,121,31,0.2);
       `,
       danger: css`
-        background: rgba(220,38,38,0.08);
+        background: rgba(192,57,43,0.08);
         color: ${theme.colors.danger};
-        border: 1px solid rgba(220,38,38,0.2);
+        border: 1px solid rgba(192,57,43,0.2);
       `,
     };
     return v[variant];

@@ -86,7 +86,7 @@ const SkillNum = styled.div`
   height: 24px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.3);
+  border: 1px solid rgba(201,162,4, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,17 +126,17 @@ const IconBtn = styled.button<{ $danger?: boolean; $active?: boolean }>`
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.fast};
   color: ${({ $danger, $active, theme }) =>
-    $danger ? theme.colors.danger : $active ? theme.colors.teal : theme.colors.textMuted};
+    $danger ? theme.colors.danger : $active ? theme.colors.success : theme.colors.textMuted};
 
   &:hover {
     background: ${({ $danger, $active }) =>
       $danger
-        ? 'rgba(239,68,68,0.12)'
+        ? 'rgba(192,57,43,0.12)'
         : $active
-          ? 'rgba(219,39,119,0.1)'
-          : 'rgba(120,53,15,0.06)'};
+          ? 'rgba(30,142,90,0.1)'
+          : 'rgba(30,38,53,0.06)'};
     color: ${({ $danger, $active, theme }) =>
-      $danger ? theme.colors.danger : $active ? theme.colors.teal : theme.colors.textPrimary};
+      $danger ? theme.colors.danger : $active ? theme.colors.success : theme.colors.textPrimary};
   }
 
   &:disabled {
@@ -156,9 +156,9 @@ const SaveBtn = styled(motion.button)<{ $saved: boolean }>`
   cursor: pointer;
   border: 1px solid;
   background: ${({ $saved, theme }) =>
-    $saved ? 'rgba(219,39,119,0.1)' : theme.colors.accent};
-  color: ${({ $saved, theme }) => ($saved ? theme.colors.teal : '#fff')};
-  border-color: ${({ $saved }) => ($saved ? 'rgba(219,39,119,0.25)' : 'transparent')};
+    $saved ? 'rgba(30,142,90,0.1)' : theme.colors.accent};
+  color: ${({ $saved, theme }) => ($saved ? theme.colors.success : '#fff')};
+  border-color: ${({ $saved }) => ($saved ? 'rgba(30,142,90,0.25)' : 'transparent')};
 
   &:disabled {
     opacity: 0.5;

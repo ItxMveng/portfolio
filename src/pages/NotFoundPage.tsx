@@ -22,7 +22,7 @@ const Code = styled(motion.div)`
   background: linear-gradient(
     135deg,
     ${({ theme }) => theme.colors.accent},
-    ${({ theme }) => theme.colors.teal}
+    ${({ theme }) => theme.colors.gold}
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

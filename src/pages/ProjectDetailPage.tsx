@@ -50,7 +50,7 @@ const HeroPlaceholder = styled.div`
   background: linear-gradient(
     135deg,
     ${({ theme }) => theme.colors.accentDim},
-    ${({ theme }) => theme.colors.tealDim}
+    ${({ theme }) => theme.colors.goldDim}
   );
   opacity: 0.5;
 `;
@@ -97,7 +97,7 @@ const HeroCategory = styled.span`
   display: inline-flex;
   padding: 0.2rem 0.75rem;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.3);
+  border: 1px solid rgba(201,162,4, 0.3);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 700;

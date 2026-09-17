@@ -109,7 +109,7 @@ const Para = styled.p`
   code {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: 0.875em;
-    background: rgba(234,88,12, 0.12);
+    background: rgba(201,162,4, 0.12);
     color: ${({ theme }) => theme.colors.accentHover};
     padding: 0.15em 0.45em;
     border-radius: 4px;
@@ -212,14 +212,14 @@ const CodeHeader = styled.div`
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.6rem 1rem;
-  background: #24140b;
+  background: #151C28;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 `;
 
 const CodeFilename = styled.span`
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
-  color: rgba(255, 237, 213, 0.75);
+  color: rgba(230, 234, 242, 0.75);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -242,7 +242,7 @@ const CodeLang = styled.span`
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #FDBA74;
+  color: #E8C34A;
 `;
 
 const CodeDots = styled.div`
@@ -267,14 +267,14 @@ const CopyButton = styled(motion.button)`
   border-radius: ${({ theme }) => theme.radii.sm};
   font-size: 0.75rem;
   font-weight: 500;
-  color: rgba(255, 237, 213, 0.8);
+  color: rgba(230, 234, 242, 0.85);
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     color: #fff;
     border-color: ${({ theme }) => theme.colors.accent};
-    background: rgba(249, 115, 22, 0.25);
+    background: rgba(201,162,4, 0.25);
   }
 `;
 
@@ -364,10 +364,10 @@ const DecisionChoice = styled.div`
 `;
 
 const DecisionTradeoff = styled(DecisionChoice)`
-  background: ${({ theme }) => theme.colors.blueDim};
+  background: ${({ theme }) => theme.colors.goldDim};
 
   > svg {
-    color: #b45309;
+    color: #B7791F;
   }
 `;
 
@@ -401,30 +401,30 @@ const AlternativesList = styled.ul`
 const calloutConfig = {
   info: {
     icon: Info,
-    bg: 'rgba(249,115,22,0.07)',
-    border: 'rgba(249,115,22,0.28)',
-    accent: '#EA580C',
+    bg: 'rgba(201,162,4,0.07)',
+    border: 'rgba(201,162,4,0.28)',
+    accent: '#323B4C',
     label: 'Info',
   },
   warning: {
     icon: AlertTriangle,
-    bg: 'rgba(245,158,11,0.09)',
-    border: 'rgba(217,119,6,0.3)',
-    accent: '#B45309',
+    bg: 'rgba(201,162,4,0.09)',
+    border: 'rgba(183,121,31,0.3)',
+    accent: '#B7791F',
     label: 'Attention',
   },
   danger: {
     icon: AlertCircle,
-    bg: 'rgba(239,68,68,0.07)',
-    border: 'rgba(239,68,68,0.25)',
-    accent: '#DC2626',
+    bg: 'rgba(192,57,43,0.07)',
+    border: 'rgba(192,57,43,0.25)',
+    accent: '#C0392B',
     label: 'Important',
   },
   tip: {
     icon: Lightbulb,
-    bg: 'rgba(219,39,119,0.07)',
-    border: 'rgba(219,39,119,0.25)',
-    accent: '#DB2777',
+    bg: 'rgba(30,142,90,0.07)',
+    border: 'rgba(30,142,90,0.25)',
+    accent: '#1E8E5A',
     label: 'Conseil',
   },
 } as const;
@@ -498,7 +498,7 @@ const FileIconWrap = styled.div`
   height: 40px;
   border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -566,7 +566,7 @@ const StepsCount = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
   color: ${({ theme }) => theme.colors.accent};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   padding: 0.1rem 0.5rem;
   border-radius: ${({ theme }) => theme.radii.full};
 `;
@@ -594,7 +594,7 @@ const StepRowHeader = styled.button`
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(234,88,12, 0.04);
+    background: rgba(201,162,4, 0.04);
   }
 `;
 
@@ -603,7 +603,7 @@ const StepNum = styled.div`
   height: 28px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.3);
+  border: 1px solid rgba(201,162,4, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -676,47 +676,47 @@ const StepBodyCode = styled.pre`
 
 const codeTheme = {
   'code[class*="language-"]': {
-    color: '#fdecdc',
+    color: '#E6EAF2',
     fontFamily: '"JetBrains Mono", "Fira Code", monospace',
     fontSize: '0.875rem',
     lineHeight: '1.75',
     background: 'transparent',
   },
   'pre[class*="language-"]': {
-    background: '#1c0f08',
+    background: '#1B2230',
     padding: '1.25rem 1.5rem',
     margin: '0',
     overflow: 'auto',
   },
-  comment: { color: '#9a7864', fontStyle: 'italic' },
-  prolog: { color: '#9a7864' },
-  doctype: { color: '#9a7864' },
-  cdata: { color: '#9a7864' },
-  punctuation: { color: '#c9a68f' },
-  property: { color: '#FF8A3D' },
-  tag: { color: '#FF8A3D' },
-  constant: { color: '#FF8A3D' },
-  symbol: { color: '#FF8A3D' },
-  deleted: { color: '#f87171' },
-  boolean: { color: '#FACC15' },
-  number: { color: '#FACC15' },
-  selector: { color: '#FDBA74' },
-  'attr-name': { color: '#FDBA74' },
-  string: { color: '#FDBA74' },
-  char: { color: '#FDBA74' },
-  builtin: { color: '#FDBA74' },
-  inserted: { color: '#FDBA74' },
-  operator: { color: '#e7c9b5' },
-  entity: { color: '#e7c9b5', cursor: 'help' },
-  url: { color: '#e7c9b5' },
-  variable: { color: '#fdecdc' },
-  atrule: { color: '#F472B6' },
-  'attr-value': { color: '#FDBA74' },
-  function: { color: '#F472B6' },
-  'class-name': { color: '#FACC15' },
-  keyword: { color: '#FF8A3D', fontStyle: 'italic' },
-  regex: { color: '#FACC15' },
-  important: { color: '#FACC15', fontWeight: 'bold' },
+  comment: { color: '#7A8598', fontStyle: 'italic' },
+  prolog: { color: '#7A8598' },
+  doctype: { color: '#7A8598' },
+  cdata: { color: '#7A8598' },
+  punctuation: { color: '#B8C0CE' },
+  property: { color: '#E8C34A' },
+  tag: { color: '#E8C34A' },
+  constant: { color: '#E8C34A' },
+  symbol: { color: '#E8C34A' },
+  deleted: { color: '#E8867A' },
+  boolean: { color: '#F0C24B' },
+  number: { color: '#F0C24B' },
+  selector: { color: '#9FD8BE' },
+  'attr-name': { color: '#9FD8BE' },
+  string: { color: '#9FD8BE' },
+  char: { color: '#9FD8BE' },
+  builtin: { color: '#9FD8BE' },
+  inserted: { color: '#9FD8BE' },
+  operator: { color: '#D3DAE5' },
+  entity: { color: '#D3DAE5', cursor: 'help' },
+  url: { color: '#D3DAE5' },
+  variable: { color: '#E6EAF2' },
+  atrule: { color: '#8FB8E8' },
+  'attr-value': { color: '#9FD8BE' },
+  function: { color: '#8FB8E8' },
+  'class-name': { color: '#F0C24B' },
+  keyword: { color: '#E8C34A', fontStyle: 'italic' },
+  regex: { color: '#F0C24B' },
+  important: { color: '#F0C24B', fontWeight: 'bold' },
 };
 
 function isYouTube(url: string) {
@@ -781,7 +781,7 @@ function CodeBlock({ block }: { block: Block }) {
         style={codeTheme as never}
         showLineNumbers
         lineNumberStyle={{
-          color: '#6b4a38',
+          color: '#5A6577',
           fontSize: '0.75rem',
           paddingRight: '1.25rem',
           userSelect: 'none',

@@ -138,17 +138,17 @@ const IconBtn = styled.button<{ $danger?: boolean; $active?: boolean }>`
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.fast};
   color: ${({ $danger, $active, theme }) =>
-    $danger ? theme.colors.danger : $active ? theme.colors.teal : theme.colors.textMuted};
+    $danger ? theme.colors.danger : $active ? theme.colors.success : theme.colors.textMuted};
 
   &:hover {
     background: ${({ $danger, $active }) =>
       $danger
-        ? 'rgba(239,68,68,0.12)'
+        ? 'rgba(192,57,43,0.12)'
         : $active
-          ? 'rgba(219,39,119,0.1)'
-          : 'rgba(120,53,15,0.05)'};
+          ? 'rgba(30,142,90,0.1)'
+          : 'rgba(30,38,53,0.05)'};
     color: ${({ $danger, $active, theme }) =>
-      $danger ? theme.colors.danger : $active ? theme.colors.teal : theme.colors.textPrimary};
+      $danger ? theme.colors.danger : $active ? theme.colors.success : theme.colors.textPrimary};
   }
 
   &:disabled {
@@ -168,9 +168,9 @@ const SaveServiceBtn = styled(motion.button)<{ $saved: boolean }>`
   cursor: pointer;
   border: 1px solid;
   transition: all ${({ theme }) => theme.transitions.fast};
-  background: ${({ $saved, theme }) => ($saved ? 'rgba(219,39,119,0.1)' : theme.colors.accent)};
-  color: ${({ $saved, theme }) => ($saved ? theme.colors.teal : '#fff')};
-  border-color: ${({ $saved }) => ($saved ? 'rgba(219,39,119,0.25)' : 'transparent')};
+  background: ${({ $saved, theme }) => ($saved ? 'rgba(30,142,90,0.1)' : theme.colors.accent)};
+  color: ${({ $saved, theme }) => ($saved ? theme.colors.success : '#fff')};
+  border-color: ${({ $saved }) => ($saved ? 'rgba(30,142,90,0.25)' : 'transparent')};
 
   &:disabled {
     opacity: 0.5;
@@ -320,7 +320,7 @@ const RemoveBulletBtn = styled.button`
   flex-shrink: 0;
 
   &:hover {
-    background: rgba(239,68,68,0.12);
+    background: rgba(192,57,43,0.12);
     color: ${({ theme }) => theme.colors.danger};
   }
 `;
@@ -335,10 +335,10 @@ const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
   font-weight: 500;
   margin-bottom: 1rem;
   background: ${({ $success }) =>
-    $success ? 'rgba(219,39,119,0.08)' : 'rgba(239,68,68,0.08)'};
-  color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
+    $success ? 'rgba(30,142,90,0.08)' : 'rgba(192,57,43,0.08)'};
+  color: ${({ $success, theme }) => ($success ? theme.colors.success : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(219,39,119,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success }) => ($success ? 'rgba(30,142,90,0.2)' : 'rgba(192,57,43,0.2)')};
 `;
 
 const EmptyState = styled(motion.div)`

@@ -23,7 +23,7 @@ const PageWrapper = styled.div`
     transform: translate(-50%, -60%);
     width: 700px;
     height: 500px;
-    background: radial-gradient(ellipse at center, rgba(234,88,12, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(201,162,4, 0.12) 0%, transparent 70%);
     filter: blur(60px);
     pointer-events: none;
   }
@@ -147,8 +147,8 @@ const ErrorBanner = styled(motion.div)`
   align-items: center;
   gap: 0.6rem;
   padding: 0.875rem 1rem;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(192,57,43, 0.08);
+  border: 1px solid rgba(192,57,43, 0.2);
   border-radius: ${({ theme }) => theme.radii.md};
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.danger};

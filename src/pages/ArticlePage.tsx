@@ -36,7 +36,7 @@ const ProgressBar = styled(motion.div)`
   background: linear-gradient(
     to right,
     ${({ theme }) => theme.colors.accent},
-    ${({ theme }) => theme.colors.teal}
+    ${({ theme }) => theme.colors.gold}
   );
   transform-origin: left;
   z-index: ${({ theme }) => theme.zIndex.sticky + 1};
@@ -55,7 +55,7 @@ const ArticleHero = styled.div`
     transform: translateX(-50%);
     width: 800px;
     height: 400px;
-    background: radial-gradient(ellipse at center, rgba(234,88,12, 0.1) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(201,162,4, 0.1) 0%, transparent 70%);
     filter: blur(40px);
     pointer-events: none;
   }
@@ -104,7 +104,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;

@@ -110,7 +110,7 @@ const ContactForm = styled.form`
   &::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.gold});
   }
 `;
 
@@ -151,9 +151,9 @@ const FeedbackBanner = styled(motion.div)<{ $ok: boolean }>`
   padding: 0.875rem 1.125rem;
   border-radius: ${({ theme }) => theme.radii.md};
   font-size: 0.9rem; font-weight: 500;
-  background: ${({ $ok, theme }) => $ok ? theme.colors.accentDim : 'rgba(220,38,38,0.08)'};
+  background: ${({ $ok, theme }) => $ok ? theme.colors.accentDim : 'rgba(192,57,43,0.08)'};
   color: ${({ $ok, theme }) => $ok ? theme.colors.accent : theme.colors.danger};
-  border: 1px solid ${({ $ok, theme }) => $ok ? theme.colors.accent + '33' : 'rgba(220,38,38,0.2)'};
+  border: 1px solid ${({ $ok, theme }) => $ok ? theme.colors.accent + '33' : 'rgba(192,57,43,0.2)'};
 `;
 
 type FormState = { name: string; email: string; subject: string; message: string; };

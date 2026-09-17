@@ -135,7 +135,7 @@ const ActionBtn = styled.button<{ $danger?: boolean }>`
 
   &:hover:not(:disabled) {
     background: ${({ $danger, theme }) =>
-      $danger ? 'rgba(239,68,68,0.12)' : theme.colors.surface};
+      $danger ? 'rgba(192,57,43,0.12)' : theme.colors.surface};
     color: ${({ $danger, theme }) =>
       $danger ? theme.colors.danger : theme.colors.textPrimary};
   }
@@ -299,7 +299,7 @@ const StepNum = styled.span`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.accent};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   width: 20px;
   height: 20px;
   border-radius: 50%;

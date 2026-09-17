@@ -81,9 +81,9 @@ const Btn = styled(motion.button)<{ $variant?: 'primary' | 'secondary' | 'succes
     $variant === 'primary'
       ? `background:${theme.colors.accent};color:#fff;border-color:transparent;`
       : $variant === 'success'
-        ? `background:rgba(219,39,119,0.1);color:${theme.colors.teal};border-color:rgba(219,39,119,0.25);`
+        ? `background:rgba(30,142,90,0.1);color:${theme.colors.success};border-color:rgba(30,142,90,0.25);`
         : $variant === 'danger'
-          ? `background:rgba(239,68,68,0.08);color:${theme.colors.danger};border-color:rgba(239,68,68,0.2);`
+          ? `background:rgba(192,57,43,0.08);color:${theme.colors.danger};border-color:rgba(192,57,43,0.2);`
           : `background:${theme.colors.surface};color:${theme.colors.textSecondary};border-color:${theme.colors.surfaceBorder};`}
   &:disabled {
     opacity: 0.5;
@@ -230,10 +230,10 @@ const TagChip = styled.span`
   align-items: center;
   gap: 0.3rem;
   padding: 0.2rem 0.6rem;
-  background: ${({ theme }) => theme.colors.tealDim};
-  border: 1px solid rgba(219,39,119,0.2);
+  background: ${({ theme }) => 'rgba(30,142,90,0.1)'};
+  border: 1px solid rgba(30,142,90,0.2);
   border-radius: ${({ theme }) => theme.radii.full};
-  color: ${({ theme }) => theme.colors.teal};
+  color: ${({ theme }) => theme.colors.success};
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
   button {
@@ -327,8 +327,8 @@ const CoverDanger = styled.button`
   gap: 0.4rem;
   padding: 0.55rem 0.8rem;
   border-radius: ${({ theme }) => theme.radii.md};
-  background: rgba(239,68,68,0.08);
-  border: 1px solid rgba(239,68,68,0.2);
+  background: rgba(192,57,43,0.08);
+  border: 1px solid rgba(192,57,43,0.2);
   color: ${({ theme }) => theme.colors.danger};
   font-size: 0.75rem;
   font-weight: 600;
@@ -352,7 +352,7 @@ const PreviewCategory = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(234,88,12,0.2);
+  border: 1px solid rgba(201,162,4,0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -384,7 +384,7 @@ const Toggle = styled.button<{ $active: boolean }>`
   width: 100%;
   border-radius: ${({ theme }) => theme.radii.md};
   border: 1px solid
-    ${({ $active, theme }) => ($active ? 'rgba(234,88,12,0.3)' : theme.colors.surfaceBorder)};
+    ${({ $active, theme }) => ($active ? 'rgba(201,162,4,0.3)' : theme.colors.surfaceBorder)};
   background: ${({ $active, theme }) => ($active ? theme.colors.accentDim : theme.colors.surface)};
   color: ${({ $active, theme }) => ($active ? theme.colors.accent : theme.colors.textSecondary)};
   font-size: 0.8125rem;
@@ -401,10 +401,10 @@ const Banner = styled(motion.div)<{ $success: boolean }>`
   font-size: 0.875rem;
   font-weight: 500;
   background: ${({ $success }) =>
-    $success ? 'rgba(219,39,119,0.08)' : 'rgba(239,68,68,0.08)'};
-  color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
+    $success ? 'rgba(30,142,90,0.08)' : 'rgba(192,57,43,0.08)'};
+  color: ${({ $success, theme }) => ($success ? theme.colors.success : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(219,39,119,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success }) => ($success ? 'rgba(30,142,90,0.2)' : 'rgba(192,57,43,0.2)')};
 `;
 const Loading = styled.div`
   padding: 2rem;

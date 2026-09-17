@@ -74,7 +74,7 @@ const BlogCard = styled(motion.div)`
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.gold});
     opacity: 0;
     transition: opacity 0.3s;
     z-index: 1;

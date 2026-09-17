@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom';
 import type { Variants } from 'framer-motion';
 import {
   ArrowRight,
-  Bot,
   Download,
   Github,
   Linkedin,
   Mail,
   MapPin,
   Globe,
-  Zap,
 } from 'lucide-react';
 import styled from 'styled-components';
 import { useProfile } from '../../hooks/useProfile';
@@ -50,7 +48,7 @@ const BlobBlue = styled.div`
   bottom: 5%;
   left: -5%;
   border-radius: 50%;
-  background: radial-gradient(circle, ${({ theme }) => theme.colors.blueDim} 0%, transparent 70%);
+  background: radial-gradient(circle, ${({ theme }) => theme.colors.goldDim} 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   animation: blobFloat 18s ease-in-out infinite reverse;
@@ -80,7 +78,7 @@ const VerticalAccent = styled.div`
     to bottom,
     transparent 0%,
     ${({ theme }) => theme.colors.accent} 30%,
-    ${({ theme }) => theme.colors.teal} 70%,
+    ${({ theme }) => theme.colors.gold} 70%,
     transparent 100%
   );
   opacity: 0.35;
@@ -145,8 +143,8 @@ const StatusBadge = styled(motion.div)<{ $status: string }>`
     $status === 'open'
       ? theme.colors.accentDim
       : $status === 'busy'
-        ? 'rgba(217,119,6,0.08)'
-        : 'rgba(220,38,38,0.08)'};
+        ? 'rgba(183,121,31,0.08)'
+        : 'rgba(192,57,43,0.08)'};
   color: ${({ $status, theme }) =>
     $status === 'open'
       ? theme.colors.accent
@@ -157,8 +155,8 @@ const StatusBadge = styled(motion.div)<{ $status: string }>`
     $status === 'open'
       ? theme.colors.accent + '44'
       : $status === 'busy'
-        ? 'rgba(217,119,6,0.25)'
-        : 'rgba(220,38,38,0.25)'};
+        ? 'rgba(183,121,31,0.25)'
+        : 'rgba(192,57,43,0.25)'};
 `;
 
 const PulseDot = styled(motion.span)<{ $status: string }>`
@@ -183,9 +181,16 @@ const HeroTitle = styled(motion.h1)`
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
+/* Le titre du profil est une phrase : il reste sous le nom, plus petit et doré. */
 const AccentLine = styled.span`
-  color: ${({ theme }) => theme.colors.accent};
   display: block;
+  margin-top: 0.6rem;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: ${({ theme }) => theme.colors.textAccent};
 `;
 
 /* ── Sous-titre ── */
@@ -388,7 +393,7 @@ const ProfileCard = styled(motion.div)`
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.teal});
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.gold});
   }
 `;
 
@@ -413,8 +418,8 @@ const OrbOuter = styled(motion.div)`
   background: conic-gradient(
     from 0deg,
     ${({ theme }) => theme.colors.accent},
-    ${({ theme }) => theme.colors.teal},
-    ${({ theme }) => theme.colors.blue},
+    ${({ theme }) => theme.colors.gold},
+    ${({ theme }) => theme.colors.gold},
     ${({ theme }) => theme.colors.accent}
   );
   filter: blur(1px);
@@ -583,16 +588,10 @@ function AnimatedTitle({ text }: { text: string }) {
 }
 
 function getStatusLabel(s: string) {
-  if (s === 'open') return 'Disponible';
+  if (s === 'open') return 'En recherche de stage';
   if (s === 'busy') return 'Partiellement dispo';
   return 'Indisponible';
 }
-
-const SPECIALTY_BADGES = [
-  { label: 'Full Stack', icon: Zap },
-  { label: 'IA & Agents', icon: Bot },
-  { label: 'Automatisation', icon: ArrowRight },
-];
 
 export function HeroSection() {
   const { profile, loading } = useProfile();
@@ -653,23 +652,18 @@ export function HeroSection() {
               <AnimatedTitle text={profile.full_name ?? ''} />
               <AccentLine>
                 <motion.span variants={staggerItem} custom={3} style={{ display: 'block' }}>
-                  Full Stack Developer
+                  {profile.title || 'Élève-ingénieur en informatique — logiciel & IA'}
                 </motion.span>
               </AccentLine>
             </HeroTitle>
 
             <HeroSub variants={staggerItem}>
-              Je conçois des applications modernes, intelligentes et automatisées — de l&apos;interface utilisateur jusqu&apos;à l&apos;intégration IA.
+              {profile.bio ||
+                "Je conçois des applications modernes, intelligentes et automatisées — de l'interface utilisateur jusqu'à l'intégration IA."}
             </HeroSub>
 
             <SkillBadges variants={staggerItem}>
-              {SPECIALTY_BADGES.map(({ label, icon: Icon }) => (
-                <SkillBadge key={label} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Icon size={13} />
-                  {label}
-                </SkillBadge>
-              ))}
-              {skills.slice(0, 4).map((s) => (
+              {skills.slice(0, 5).map((s) => (
                 <SkillBadge key={s.id} whileHover={{ scale: 1.05 }}>
                   {s.label}
                 </SkillBadge>
@@ -735,7 +729,7 @@ export function HeroSection() {
 
               <div>
                 <ProfileName>{profile.full_name}</ProfileName>
-                <ProfileRole>{profile.title || 'Full Stack Developer · IA & Automatisation'}</ProfileRole>
+                <ProfileRole>{profile.title || 'Élève-ingénieur en informatique'}</ProfileRole>
               </div>
 
               {profileLinks.length > 0 && (

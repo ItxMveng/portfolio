@@ -26,7 +26,7 @@ const PageHeader = styled.section`
     transform: translateX(-50%);
     width: 600px;
     height: 300px;
-    background: radial-gradient(ellipse at center, rgba(234,88,12, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(201,162,4, 0.12) 0%, transparent 70%);
     filter: blur(40px);
     pointer-events: none;
   }
@@ -111,18 +111,18 @@ const TagPill = styled(motion.button)<{ $active: boolean }>`
   ${({ $active, theme }) =>
     $active
       ? `
-        background: ${theme.colors.tealDim};
-        color: ${theme.colors.teal};
-        border-color: rgba(219,39,119,0.3);
+        background: ${theme.colors.goldDim};
+        color: ${theme.colors.gold};
+        border-color: rgba(30,142,90,0.3);
       `
       : `
         background: transparent;
         color: ${theme.colors.textMuted};
         border-color: ${theme.colors.surfaceBorder};
         &:hover {
-          border-color: ${theme.colors.teal};
-          color: ${theme.colors.teal};
-          background: ${theme.colors.tealDim};
+          border-color: ${theme.colors.gold};
+          color: ${theme.colors.gold};
+          background: ${theme.colors.goldDim};
         }
       `}
 `;
@@ -206,7 +206,7 @@ const FeaturedCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(234,88,12, 0.35);
+    border-color: rgba(201,162,4, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
   }
 
@@ -221,7 +221,7 @@ const FeaturedCover = styled.div`
   background: linear-gradient(
     135deg,
     ${({ theme }) => theme.colors.accentDim},
-    ${({ theme }) => theme.colors.tealDim}
+    ${({ theme }) => theme.colors.goldDim}
   );
   position: relative;
 
@@ -285,7 +285,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -365,7 +365,7 @@ const BlogCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(234,88,12, 0.3);
+    border-color: rgba(201,162,4, 0.3);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
     transform: translateY(-4px);
   }
@@ -378,7 +378,7 @@ const BlogCover = styled.div`
   background: linear-gradient(
     135deg,
     ${({ theme }) => theme.colors.accentDim},
-    ${({ theme }) => theme.colors.tealDim}
+    ${({ theme }) => theme.colors.goldDim}
   );
   position: relative;
 

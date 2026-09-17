@@ -4,6 +4,7 @@ export const GlobalStyles = createGlobalStyle`
   :root {
     color-scheme: light;
     --accent: ${({ theme }) => theme.colors.accent};
+    --gold: ${({ theme }) => theme.colors.gold};
     --color-text-primary: ${({ theme }) => theme.colors.textPrimary};
     --color-text-secondary: ${({ theme }) => theme.colors.textSecondary};
     --color-text-muted: ${({ theme }) => theme.colors.textMuted};
@@ -34,6 +35,11 @@ export const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: ${({ theme }) => theme.fonts.display};
+    letter-spacing: -0.015em;
+  }
+
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: ${({ theme }) => theme.colors.bg}; }
   ::-webkit-scrollbar-thumb {
@@ -44,7 +50,7 @@ export const GlobalStyles = createGlobalStyle`
 
   ::selection {
     background: ${({ theme }) => theme.colors.accentDim};
-    color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 
   a {
@@ -100,7 +106,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: 0.875em;
     background: ${({ theme }) => theme.colors.accentDim};
-    color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.textAccent};
     padding: 0.15em 0.45em;
     border-radius: 4px;
   }
@@ -125,7 +131,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .blob-blue {
-    background: radial-gradient(circle, ${({ theme }) => theme.colors.blue}, transparent 70%);
+    background: radial-gradient(circle, ${({ theme }) => theme.colors.gold}, transparent 70%);
   }
 
   /* Animations */

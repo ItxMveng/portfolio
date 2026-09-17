@@ -13,8 +13,8 @@ import { useProfile } from '../../hooks/useProfile';
 import { AssistantError, callAssistant } from '../../lib/mistral';
 
 const pulse = keyframes`
-  0%, 100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(234,88,12,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,4,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(201,162,4,0); }
 `;
 
 const blink = keyframes`
@@ -37,7 +37,7 @@ const FloatButton = styled(motion.button)<{ $hasUnread: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 24px rgba(234,88,12,0.45);
+  box-shadow: 0 4px 24px rgba(201,162,4,0.45);
   animation: ${({ $hasUnread }) =>
     $hasUnread ? css`${pulse} 2s ease-in-out infinite` : 'none'};
 
@@ -84,8 +84,8 @@ const ChatWindow = styled(motion.div)`
   flex-direction: column;
   overflow: hidden;
   box-shadow:
-    0 24px 64px rgba(120, 53, 15, 0.22),
-    0 0 0 1px rgba(234,88,12, 0.15),
+    0 24px 64px rgba(30,38,53, 0.22),
+    0 0 0 1px rgba(201,162,4, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   @media (max-width: 480px) {
@@ -106,8 +106,8 @@ const ChatHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   background: linear-gradient(
     135deg,
-    rgba(234,88,12, 0.15),
-    rgba(219,39,119, 0.08)
+    rgba(201,162,4, 0.15),
+    rgba(30,142,90, 0.08)
   );
   flex-shrink: 0;
 `;
@@ -286,10 +286,10 @@ const WelcomeCard = styled(motion.div)`
   border-radius: ${({ theme }) => theme.radii.lg};
   background: linear-gradient(
     135deg,
-    rgba(234,88,12, 0.08),
-    rgba(219,39,119, 0.05)
+    rgba(201,162,4, 0.08),
+    rgba(30,142,90, 0.05)
   );
-  border: 1px solid rgba(234,88,12, 0.15);
+  border: 1px solid rgba(201,162,4, 0.15);
 `;
 
 const WelcomeTitle = styled.div`
@@ -317,7 +317,7 @@ const SuggestionsRow = styled.div`
 const SuggestionChip = styled(motion.button)`
   padding: 0.3rem 0.75rem;
   border-radius: ${({ theme }) => theme.radii.full};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
   font-size: 0.75rem;
@@ -327,8 +327,8 @@ const SuggestionChip = styled(motion.button)`
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(234,88,12, 0.2);
-    border-color: rgba(234,88,12, 0.4);
+    background: rgba(201,162,4, 0.2);
+    border-color: rgba(201,162,4, 0.4);
   }
 `;
 

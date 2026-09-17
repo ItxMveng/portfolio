@@ -104,17 +104,17 @@ const ActionButton = styled(motion.button)<{ $variant?: 'primary' | 'secondary' 
         `;
       case 'success':
         return `
-          background: rgba(219,39,119,0.1);
-          color: ${theme.colors.teal};
-          border-color: rgba(219,39,119,0.25);
-          &:hover { background: rgba(219,39,119,0.18); }
+          background: rgba(30,142,90,0.1);
+          color: ${theme.colors.success};
+          border-color: rgba(30,142,90,0.25);
+          &:hover { background: rgba(30,142,90,0.18); }
         `;
       case 'danger':
         return `
-          background: rgba(239,68,68,0.08);
+          background: rgba(192,57,43,0.08);
           color: ${theme.colors.danger};
-          border-color: rgba(239,68,68,0.2);
-          &:hover { background: rgba(239,68,68,0.15); }
+          border-color: rgba(192,57,43,0.2);
+          &:hover { background: rgba(192,57,43,0.15); }
         `;
       default:
         return `
@@ -313,7 +313,7 @@ const TagChip = styled.span`
   gap: 0.3rem;
   padding: 0.2rem 0.6rem;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
@@ -436,9 +436,9 @@ const OverlayActionButton = styled.button`
   border-radius: ${({ theme }) => theme.radii.md};
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(239, 68, 68, 0.08);
+  background: rgba(192,57,43, 0.08);
   color: ${({ theme }) => theme.colors.danger};
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(192,57,43, 0.2);
   cursor: pointer;
 `;
 
@@ -468,7 +468,7 @@ const Toggle = styled.button<{ $active: boolean }>`
   color: ${({ $active, theme }) =>
     $active ? theme.colors.accent : theme.colors.textSecondary};
   border-color: ${({ $active, theme }) =>
-    $active ? 'rgba(234,88,12,0.3)' : theme.colors.surfaceBorder};
+    $active ? 'rgba(201,162,4,0.3)' : theme.colors.surfaceBorder};
 `;
 
 const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
@@ -481,10 +481,10 @@ const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
   font-weight: 500;
   margin-bottom: 1rem;
   background: ${({ $success }) =>
-    $success ? 'rgba(219,39,119,0.08)' : 'rgba(239,68,68,0.08)'};
-  color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
+    $success ? 'rgba(30,142,90,0.08)' : 'rgba(192,57,43,0.08)'};
+  color: ${({ $success, theme }) => ($success ? theme.colors.success : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(219,39,119,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success }) => ($success ? 'rgba(30,142,90,0.2)' : 'rgba(192,57,43,0.2)')};
 `;
 
 const LoadingState = styled.div`

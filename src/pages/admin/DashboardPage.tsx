@@ -57,7 +57,7 @@ const StatCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(234,88,12, 0.3);
+    border-color: rgba(201,162,4, 0.3);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
   }
 `;
@@ -98,7 +98,7 @@ const StatLabel = styled.div`
 const StatTrend = styled.div<{ $positive: boolean }>`
   font-size: 0.75rem;
   font-weight: 600;
-  color: ${({ $positive, theme }) => ($positive ? theme.colors.teal : theme.colors.textMuted)};
+  color: ${({ $positive, theme }) => ($positive ? theme.colors.success : theme.colors.textMuted)};
   display: flex;
   align-items: center;
   gap: 0.2rem;
@@ -173,7 +173,7 @@ const MessageRow = styled.div<{ $unread: boolean }>`
   gap: 0.875rem;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
-  background: ${({ $unread }) => ($unread ? 'rgba(234,88,12,0.03)' : 'transparent')};
+  background: ${({ $unread }) => ($unread ? 'rgba(201,162,4,0.03)' : 'transparent')};
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:last-child {
@@ -190,7 +190,7 @@ const MessageAvatar = styled.div`
   height: 34px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.2);
+  border: 1px solid rgba(201,162,4, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,7 +299,7 @@ const QuickActionIcon = styled.div<{ $color: string }>`
 
 const InlineBadge = styled.span`
   margin-left: auto;
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(201,162,4, 0.12);
   color: ${({ theme }) => theme.colors.warning};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.6875rem;
@@ -378,21 +378,21 @@ export default function DashboardPage() {
       label: 'Projets publiés',
       value: stats.projects,
       icon: FolderOpen,
-      color: '#EA580C',
+      color: '#323B4C',
       trend: 'En ligne',
     },
     {
       label: 'Articles publiés',
       value: stats.posts,
       icon: FileText,
-      color: '#DB2777',
+      color: '#1E8E5A',
       trend: 'Actifs',
     },
     {
       label: 'Messages reçus',
       value: stats.messages,
       icon: MessageSquare,
-      color: '#f59e0b',
+      color: '#C9A204',
       trend: `${stats.unread} non lus`,
     },
     {
@@ -499,7 +499,7 @@ export default function DashboardPage() {
             </PanelHeader>
             <QuickActions>
               <QuickAction to="/admin/projects/new">
-                <QuickActionIcon $color="#EA580C">
+                <QuickActionIcon $color="#323B4C">
                   <Plus size={15} />
                 </QuickActionIcon>
                 Nouveau projet
@@ -507,7 +507,7 @@ export default function DashboardPage() {
               </QuickAction>
 
               <QuickAction to="/admin/blog/new">
-                <QuickActionIcon $color="#DB2777">
+                <QuickActionIcon $color="#1E8E5A">
                   <Plus size={15} />
                 </QuickActionIcon>
                 Nouvel article
@@ -515,7 +515,7 @@ export default function DashboardPage() {
               </QuickAction>
 
               <QuickAction to="/admin/messages">
-                <QuickActionIcon $color="#f59e0b">
+                <QuickActionIcon $color="#C9A204">
                   <MessageSquare size={15} />
                 </QuickActionIcon>
                 Voir les messages

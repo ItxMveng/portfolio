@@ -55,9 +55,9 @@ const MarkAllButton = styled(motion.button)`
   white-space: nowrap;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.teal};
-    color: ${({ theme }) => theme.colors.teal};
-    background: ${({ theme }) => theme.colors.tealDim};
+    border-color: ${({ theme }) => theme.colors.success};
+    color: ${({ theme }) => theme.colors.success};
+    background: ${({ theme }) => 'rgba(30,142,90,0.1)'};
   }
 `;
 
@@ -162,13 +162,13 @@ const MessageItem = styled(motion.div)<{ $unread: boolean; $selected: boolean }>
     $selected
       ? theme.colors.accentDim
       : $unread
-        ? 'rgba(234,88,12,0.03)'
+        ? 'rgba(201,162,4,0.03)'
         : 'transparent'};
   border-left: 3px solid ${({ $selected, $unread, theme }) =>
     $selected
       ? theme.colors.accent
       : $unread
-        ? 'rgba(234,88,12,0.3)'
+        ? 'rgba(201,162,4,0.3)'
         : 'transparent'};
 
   &:last-child {
@@ -188,7 +188,7 @@ const MessageAvatar = styled.div<{ $unread: boolean }>`
   background: ${({ $unread, theme }) =>
     $unread ? theme.colors.accentDim : theme.colors.surface};
   border: 1px solid ${({ $unread, theme }) =>
-    $unread ? 'rgba(234,88,12,0.25)' : theme.colors.surfaceBorder};
+    $unread ? 'rgba(201,162,4,0.25)' : theme.colors.surfaceBorder};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -326,15 +326,15 @@ const DetailActionBtn = styled.button<{ $danger?: boolean }>`
   cursor: pointer;
   border: 1px solid;
   transition: all ${({ theme }) => theme.transitions.fast};
-  background: ${({ $danger }) => ($danger ? 'rgba(239,68,68,0.08)' : 'transparent')};
+  background: ${({ $danger }) => ($danger ? 'rgba(192,57,43,0.08)' : 'transparent')};
   color: ${({ $danger, theme }) =>
     $danger ? theme.colors.danger : theme.colors.textMuted};
   border-color: ${({ $danger }) =>
-    $danger ? 'rgba(239,68,68,0.2)' : 'rgba(120,53,15,0.08)'};
+    $danger ? 'rgba(192,57,43,0.2)' : 'rgba(30,38,53,0.08)'};
 
   &:hover {
     background: ${({ $danger }) =>
-      $danger ? 'rgba(239,68,68,0.15)' : 'rgba(120,53,15,0.06)'};
+      $danger ? 'rgba(192,57,43,0.15)' : 'rgba(30,38,53,0.06)'};
     color: ${({ $danger, theme }) =>
       $danger ? theme.colors.danger : theme.colors.textPrimary};
     border-color: currentColor;

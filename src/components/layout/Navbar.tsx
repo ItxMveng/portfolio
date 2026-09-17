@@ -33,7 +33,7 @@ const NavWrapper = styled(motion.header)<{ $scrolled: boolean }>`
           -webkit-backdrop-filter: blur(20px) saturate(1.6);
           border-bottom: 1px solid rgba(154, 52, 18, 0.1);
           padding: 0.6rem 0;
-          box-shadow: 0 2px 18px rgba(234, 88, 12, 0.08);
+          box-shadow: 0 2px 18px rgba(201,162,4, 0.08);
         `
       : css`
           background: transparent;
@@ -145,15 +145,15 @@ const AvailabilityBadge = styled(motion.div)<{ $status: string }>`
     }
     if ($status === 'busy') {
       return css`
-        background: rgba(245, 158, 11, 0.08);
+        background: rgba(201,162,4, 0.08);
         color: ${theme.colors.warning};
-        border-color: rgba(245, 158, 11, 0.2);
+        border-color: rgba(201,162,4, 0.2);
       `;
     }
     return css`
-      background: rgba(239, 68, 68, 0.08);
+      background: rgba(192,57,43, 0.08);
       color: ${theme.colors.danger};
-      border-color: rgba(239, 68, 68, 0.2);
+      border-color: rgba(192,57,43, 0.2);
     `;
   }}
 `;
@@ -313,7 +313,7 @@ const mobileItemVariants: Variants = {
 };
 
 function getStatusLabel(status: string) {
-  if (status === 'open') return 'Disponible';
+  if (status === 'open') return 'Ouvert aux stages';
   if (status === 'busy') return 'Occupe';
   return 'Indisponible';
 }

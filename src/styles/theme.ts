@@ -11,18 +11,19 @@ export interface Theme {
     surfaceHover: string;
     surfaceBorder: string;
     surfaceBorderHover: string;
-    // Accent orange
+    // Accent navy (actions) — cf. bandeau du CV
     accent: string;
     accentHover: string;
     accentDim: string;
     accentDimHover: string;
     accentGlow: string;
-    // Secondaires : blue = mangue, teal = framboise
-    blue: string;
-    blueDim: string;
-    blueGlow: string;
-    teal: string;
-    tealDim: string;
+    // Secondaires : gold = or du CV (highlights), navyDeep = aplats sombres
+    gold: string;
+    goldSoft: string;
+    goldDim: string;
+    goldGlow: string;
+    navyDeep: string;
+    onAccent: string;
     // Textes
     textPrimary: string;
     textSecondary: string;
@@ -42,6 +43,7 @@ export interface Theme {
   };
   fonts: {
     sans: string;
+    display: string;
     mono: string;
   };
   fontSizes: {
@@ -61,7 +63,8 @@ export interface Theme {
   };
   gradients: {
     brand: string;
-    warm: string;
+    gold: string;
+    navy: string;
     soft: string;
   };
   shadows: {
@@ -90,7 +93,8 @@ export interface Theme {
 
 const shared: Omit<Theme, 'colors' | 'shadows' | 'gradients'> = {
   fonts: {
-    sans: "'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif",
+    sans: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    display: "'Poppins', 'Montserrat', -apple-system, sans-serif",
     mono: "'JetBrains Mono', 'Fira Code', monospace",
   },
   fontSizes: {
@@ -116,58 +120,62 @@ const shared: Omit<Theme, 'colors' | 'shadows' | 'gradients'> = {
   zIndex: { base: 0, raised: 10, dropdown: 100, sticky: 200, overlay: 300, modal: 400, toast: 500 },
 };
 
-/* Thème unique « orange fruité » : crème chaude, mandarine, mangue, framboise. */
+/* Thème unique repris du CV : navy #323B4C, or #C9A204, gris #4D4D4F sur blanc. */
 export const theme: Theme = {
   ...shared,
   colors: {
-    bg: '#FFF8F1',
-    bgSecondary: '#FFF0E1',
-    bgTertiary: '#FFE6CC',
+    bg: '#FFFFFF',
+    bgSecondary: '#F5F7FA',
+    bgTertiary: '#ECEFF5',
     bgCard: '#FFFFFF',
-    bgCardHover: '#FFFBF6',
-    surface: 'rgba(234,88,12,0.045)',
-    surfaceHover: 'rgba(234,88,12,0.09)',
-    surfaceBorder: 'rgba(154,52,18,0.13)',
-    surfaceBorderHover: 'rgba(234,88,12,0.45)',
-    accent: '#EA580C',
-    accentHover: '#C2410C',
-    accentDim: 'rgba(249,115,22,0.12)',
-    accentDimHover: 'rgba(249,115,22,0.2)',
-    accentGlow: 'rgba(249,115,22,0.38)',
-    blue: '#F59E0B',
-    blueDim: 'rgba(245,158,11,0.16)',
-    blueGlow: 'rgba(245,158,11,0.32)',
-    teal: '#DB2777',
-    tealDim: 'rgba(219,39,119,0.1)',
-    textPrimary: '#2B1408',
-    textSecondary: '#5C3A26',
-    textMuted: '#86624D',
-    textAccent: '#C2410C',
-    success: '#16A34A',
-    warning: '#D97706',
-    danger: '#DC2626',
-    info: '#EA580C',
-    calloutInfo: 'rgba(249,115,22,0.08)',
-    calloutWarning: 'rgba(245,158,11,0.1)',
-    calloutDanger: 'rgba(220,38,38,0.07)',
-    calloutTip: 'rgba(219,39,119,0.07)',
-    divider: 'rgba(120,53,15,0.09)',
+    bgCardHover: '#FAFBFD',
+    surface: 'rgba(50,59,76,0.04)',
+    surfaceHover: 'rgba(50,59,76,0.08)',
+    surfaceBorder: 'rgba(50,59,76,0.14)',
+    surfaceBorderHover: 'rgba(201,162,4,0.55)',
+    // Accent : navy du CV — le texte blanc reste lisible dessus
+    accent: '#323B4C',
+    accentHover: '#232C3C',
+    // Dims dorés : pastille or + texte navy, comme les tags du CV
+    accentDim: 'rgba(201,162,4,0.14)',
+    accentDimHover: 'rgba(201,162,4,0.24)',
+    accentGlow: 'rgba(201,162,4,0.35)',
+    gold: '#C9A204',
+    goldSoft: '#E8C34A',
+    goldDim: 'rgba(201,162,4,0.14)',
+    goldGlow: 'rgba(201,162,4,0.4)',
+    navyDeep: '#1E2635',
+    onAccent: '#1E2635',
+    textPrimary: '#1E2635',
+    textSecondary: '#4D4D4F',
+    textMuted: '#646C7B',
+    textAccent: '#8A6E02',
+    success: '#1E8E5A',
+    warning: '#B7791F',
+    danger: '#C0392B',
+    info: '#323B4C',
+    calloutInfo: 'rgba(50,59,76,0.06)',
+    calloutWarning: 'rgba(201,162,4,0.12)',
+    calloutDanger: 'rgba(192,57,43,0.07)',
+    calloutTip: 'rgba(201,162,4,0.1)',
+    divider: 'rgba(50,59,76,0.1)',
   },
   gradients: {
-    brand: 'linear-gradient(135deg, #FF8A1F 0%, #F2600C 55%, #E0356B 100%)',
-    warm: 'linear-gradient(135deg, #FFB020 0%, #FF7A1A 100%)',
-    soft: 'linear-gradient(135deg, rgba(255,176,32,0.14) 0%, rgba(242,96,12,0.1) 55%, rgba(224,53,107,0.08) 100%)',
+    brand: 'linear-gradient(135deg, #3C4860 0%, #2A3345 60%, #1E2635 100%)',
+    gold: 'linear-gradient(135deg, #E8C34A 0%, #C9A204 55%, #A8850A 100%)',
+    navy: 'linear-gradient(160deg, #323B4C 0%, #1E2635 100%)',
+    soft: 'linear-gradient(135deg, rgba(201,162,4,0.14) 0%, rgba(50,59,76,0.08) 100%)',
   },
   shadows: {
-    sm: '0 1px 2px rgba(120,53,15,0.06)',
-    md: '0 4px 10px rgba(120,53,15,0.07), 0 2px 4px rgba(120,53,15,0.05)',
-    lg: '0 12px 30px rgba(120,53,15,0.1), 0 4px 10px rgba(120,53,15,0.06)',
-    card: '0 1px 3px rgba(120,53,15,0.06), 0 6px 18px rgba(120,53,15,0.05)',
-    cardHover: '0 14px 40px rgba(234,88,12,0.16), 0 3px 10px rgba(120,53,15,0.07)',
-    cardRaised: '0 24px 60px rgba(234,88,12,0.18), 0 8px 22px rgba(120,53,15,0.08)',
-    accent: '0 6px 22px rgba(242,96,12,0.3)',
-    accentStrong: '0 10px 40px rgba(242,96,12,0.42)',
-    glow: '0 0 70px rgba(255,138,31,0.18)',
-    blue: '0 4px 20px rgba(245,158,11,0.22)',
+    sm: '0 1px 2px rgba(30,38,53,0.06)',
+    md: '0 4px 10px rgba(30,38,53,0.08), 0 2px 4px rgba(30,38,53,0.05)',
+    lg: '0 12px 30px rgba(30,38,53,0.12), 0 4px 10px rgba(30,38,53,0.06)',
+    card: '0 1px 3px rgba(30,38,53,0.07), 0 6px 18px rgba(30,38,53,0.05)',
+    cardHover: '0 14px 38px rgba(30,38,53,0.16), 0 3px 10px rgba(201,162,4,0.12)',
+    cardRaised: '0 24px 60px rgba(30,38,53,0.2), 0 8px 22px rgba(30,38,53,0.08)',
+    accent: '0 6px 22px rgba(50,59,76,0.28)',
+    accentStrong: '0 10px 38px rgba(50,59,76,0.4)',
+    glow: '0 0 70px rgba(201,162,4,0.22)',
+    blue: '0 4px 20px rgba(201,162,4,0.25)',
   },
 };

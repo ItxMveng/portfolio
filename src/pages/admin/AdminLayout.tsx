@@ -207,7 +207,7 @@ const UserAvatar = styled.div`
   height: 28px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(234,88,12, 0.3);
+  border: 1px solid rgba(201,162,4, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,7 +264,7 @@ const FooterButton = styled.button`
 const DangerButton = styled(FooterButton)`
   &:hover {
     color: ${({ theme }) => theme.colors.danger};
-    background: rgba(239, 68, 68, 0.08);
+    background: rgba(192,57,43, 0.08);
   }
 `;
 
