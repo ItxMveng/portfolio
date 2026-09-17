@@ -1,7 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    color-scheme: light;
+    --accent: ${({ theme }) => theme.colors.accent};
+    --color-text-primary: ${({ theme }) => theme.colors.textPrimary};
+    --color-text-secondary: ${({ theme }) => theme.colors.textSecondary};
+    --color-text-muted: ${({ theme }) => theme.colors.textMuted};
+    --color-bg-card: ${({ theme }) => theme.colors.bgCard};
+    --color-surface-border: ${({ theme }) => theme.colors.surfaceBorder};
+  }
 
   *, *::before, *::after {
     box-sizing: border-box;
@@ -15,21 +23,6 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-  }
-
-  /* Transitions globales thème */
-  body,
-  body * {
-    transition:
-      background-color 0.25s ease,
-      border-color 0.25s ease,
-      color 0.25s ease,
-      box-shadow 0.25s ease;
-  }
-
-  /* Exception : animations framer-motion ne doivent pas être ralenties */
-  [data-framer-motion] {
-    transition: none !important;
   }
 
   body {
@@ -124,7 +117,7 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 50%;
     filter: blur(80px);
     pointer-events: none;
-    opacity: ${({ theme }) => theme.isDark ? 0.18 : 0.12};
+    opacity: 0.16;
   }
 
   .blob-green {

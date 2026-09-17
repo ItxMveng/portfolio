@@ -57,7 +57,7 @@ const StatCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.3);
+    border-color: rgba(234,88,12, 0.3);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
   }
 `;
@@ -173,7 +173,7 @@ const MessageRow = styled.div<{ $unread: boolean }>`
   gap: 0.875rem;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
-  background: ${({ $unread }) => ($unread ? 'rgba(124,92,252,0.03)' : 'transparent')};
+  background: ${({ $unread }) => ($unread ? 'rgba(234,88,12,0.03)' : 'transparent')};
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:last-child {
@@ -190,7 +190,7 @@ const MessageAvatar = styled.div`
   height: 34px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,14 +378,14 @@ export default function DashboardPage() {
       label: 'Projets publiés',
       value: stats.projects,
       icon: FolderOpen,
-      color: '#7c5cfc',
+      color: '#EA580C',
       trend: 'En ligne',
     },
     {
       label: 'Articles publiés',
       value: stats.posts,
       icon: FileText,
-      color: '#00d4aa',
+      color: '#DB2777',
       trend: 'Actifs',
     },
     {
@@ -499,7 +499,7 @@ export default function DashboardPage() {
             </PanelHeader>
             <QuickActions>
               <QuickAction to="/admin/projects/new">
-                <QuickActionIcon $color="#7c5cfc">
+                <QuickActionIcon $color="#EA580C">
                   <Plus size={15} />
                 </QuickActionIcon>
                 Nouveau projet
@@ -507,7 +507,7 @@ export default function DashboardPage() {
               </QuickAction>
 
               <QuickAction to="/admin/blog/new">
-                <QuickActionIcon $color="#00d4aa">
+                <QuickActionIcon $color="#DB2777">
                   <Plus size={15} />
                 </QuickActionIcon>
                 Nouvel article

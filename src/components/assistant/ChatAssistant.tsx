@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -8,15 +9,12 @@ import {
   Sparkles,
   Zap,
 } from 'lucide-react';
-import {
-  buildPortfolioContext,
-  buildSystemPrompt,
-  callMistral,
-} from '../../lib/mistral';
+import { useProfile } from '../../hooks/useProfile';
+import { AssistantError, callAssistant } from '../../lib/mistral';
 
 const pulse = keyframes`
-  0%, 100% { box-shadow: 0 0 0 0 rgba(124,92,252,0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(124,92,252,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(234,88,12,0); }
 `;
 
 const blink = keyframes`
@@ -33,13 +31,13 @@ const FloatButton = styled(motion.button)<{ $hasUnread: boolean }>`
   height: 58px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg, #7c5cfc, #00d4aa);
+  background: ${({ theme }) => theme.gradients.brand};
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 24px rgba(124,92,252,0.45);
+  box-shadow: 0 4px 24px rgba(234,88,12,0.45);
   animation: ${({ $hasUnread }) =>
     $hasUnread ? css`${pulse} 2s ease-in-out infinite` : 'none'};
 
@@ -86,8 +84,8 @@ const ChatWindow = styled(motion.div)`
   flex-direction: column;
   overflow: hidden;
   box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(124, 92, 252, 0.15),
+    0 24px 64px rgba(120, 53, 15, 0.22),
+    0 0 0 1px rgba(234,88,12, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   @media (max-width: 480px) {
@@ -108,8 +106,8 @@ const ChatHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   background: linear-gradient(
     135deg,
-    rgba(124, 92, 252, 0.15),
-    rgba(0, 212, 170, 0.08)
+    rgba(234,88,12, 0.15),
+    rgba(219,39,119, 0.08)
   );
   flex-shrink: 0;
 `;
@@ -120,7 +118,7 @@ const AvatarRing = styled.div`
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #7c5cfc, #00d4aa);
+  background: ${({ theme }) => theme.gradients.brand};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,7 +132,7 @@ const OnlineDot = styled.div`
   height: 10px;
   border: 2px solid ${({ theme }) => theme.colors.bgCard};
   border-radius: 50%;
-  background: ${({ theme }) => theme.colors.teal};
+  background: ${({ theme }) => theme.colors.success};
 `;
 
 const HeaderInfo = styled.div`
@@ -151,7 +149,7 @@ const HeaderName = styled.div`
 const HeaderStatus = styled.div`
   font-size: 0.6875rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.teal};
+  color: ${({ theme }) => theme.colors.success};
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -161,7 +159,7 @@ const HeaderStatus = styled.div`
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: ${({ theme }) => theme.colors.teal};
+    background: ${({ theme }) => theme.colors.success};
   }
 `;
 
@@ -231,7 +229,7 @@ const BubbleContent = styled.div<{ $role: 'user' | 'assistant' }>`
   ${({ $role, theme }) =>
     $role === 'user'
       ? `
-        background: linear-gradient(135deg, ${theme.colors.accent}, #6347e0);
+        background: ${theme.gradients.brand};
         color: #fff;
       `
       : `
@@ -239,6 +237,18 @@ const BubbleContent = styled.div<{ $role: 'user' | 'assistant' }>`
         border: 1px solid ${theme.colors.surfaceBorder};
         color: ${theme.colors.textSecondary};
       `}
+
+  strong {
+    font-weight: 700;
+    color: inherit;
+  }
+
+  a {
+    color: ${({ $role, theme }) => ($role === 'user' ? '#fff' : theme.colors.accentHover)};
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 `;
 
 const BubbleTime = styled.div`
@@ -276,10 +286,10 @@ const WelcomeCard = styled(motion.div)`
   border-radius: ${({ theme }) => theme.radii.lg};
   background: linear-gradient(
     135deg,
-    rgba(124, 92, 252, 0.08),
-    rgba(0, 212, 170, 0.05)
+    rgba(234,88,12, 0.08),
+    rgba(219,39,119, 0.05)
   );
-  border: 1px solid rgba(124, 92, 252, 0.15);
+  border: 1px solid rgba(234,88,12, 0.15);
 `;
 
 const WelcomeTitle = styled.div`
@@ -297,10 +307,6 @@ const WelcomeText = styled.div`
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
-const ErrorText = styled(WelcomeText)`
-  color: ${({ theme }) => theme.colors.danger};
-`;
-
 const SuggestionsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -311,7 +317,7 @@ const SuggestionsRow = styled.div`
 const SuggestionChip = styled(motion.button)`
   padding: 0.3rem 0.75rem;
   border-radius: ${({ theme }) => theme.radii.full};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
   font-size: 0.75rem;
@@ -321,8 +327,8 @@ const SuggestionChip = styled(motion.button)`
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(124, 92, 252, 0.2);
-    border-color: rgba(124, 92, 252, 0.4);
+    background: rgba(234,88,12, 0.2);
+    border-color: rgba(234,88,12, 0.4);
   }
 `;
 
@@ -411,7 +417,7 @@ const SendButton = styled(motion.button)<{ $disabled: boolean }>`
   background: ${({ $disabled, theme }) =>
     $disabled
       ? theme.colors.surface
-      : `linear-gradient(135deg, ${theme.colors.accent}, #6347e0)`};
+      : `${theme.gradients.brand}`};
   color: ${({ $disabled, theme }) =>
     $disabled ? theme.colors.textMuted : '#fff'};
   box-shadow: ${({ $disabled, theme }) =>
@@ -440,6 +446,42 @@ const INITIAL_SUGGESTIONS = [
   'Parle-moi de ton experience',
   'Tu es disponible pour un CDI ?',
 ];
+
+const INLINE_MARKDOWN = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+/** Rendu Markdown minimal (gras + liens) en éléments React : aucune injection HTML possible. */
+function renderRichText(text: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(INLINE_MARKDOWN)) {
+    const index = match.index ?? 0;
+    if (index > lastIndex) nodes.push(text.slice(lastIndex, index));
+
+    const [raw, bold, label, href] = match;
+    if (bold) {
+      nodes.push(<strong key={index}>{bold}</strong>);
+    } else if (href && /^(https?:\/\/|mailto:|\/(?!\/))/.test(href)) {
+      const external = /^https?:/.test(href);
+      nodes.push(
+        <a
+          key={index}
+          href={href}
+          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {label}
+        </a>,
+      );
+    } else {
+      nodes.push(raw);
+    }
+
+    lastIndex = index + raw.length;
+  }
+
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex));
+  return nodes;
+}
 
 function formatTime(date: Date) {
   return date.toLocaleTimeString('fr-FR', {
@@ -478,11 +520,8 @@ export function ChatAssistant() {
   const [messages, setMessages] = useState<EnrichedMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [contextLoaded, setContextLoaded] = useState(false);
-  const [contextText, setContextText] = useState('');
-  const [systemPrompt, setSystemPrompt] = useState('');
   const [hasUnread, setHasUnread] = useState(false);
-  const [contextError, setContextError] = useState<string | null>(null);
+  const { profile } = useProfile();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -499,10 +538,7 @@ export function ChatAssistant() {
     return () => window.clearTimeout(timer);
   }, [isOpen]);
 
-  const ownerName = useMemo(() => {
-    const name = contextText.match(/Nom : (.+)/)?.[1]?.trim();
-    return name?.split(' ')[0] || "l'assistant";
-  }, [contextText]);
+  const ownerName = profile?.full_name?.trim().split(/\s+/)[0] || 'ce portfolio';
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -512,34 +548,13 @@ export function ChatAssistant() {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  const loadContext = useCallback(async (force = false) => {
-    if (contextLoaded && !force) return;
-
-    setContextError(null);
-
-    try {
-      const context = await buildPortfolioContext();
-      setContextText(context);
-      setSystemPrompt(buildSystemPrompt(context));
-      setContextLoaded(true);
-    } catch (error) {
-      setContextLoaded(false);
-      setContextError(
-        error instanceof Error
-          ? error.message
-          : 'Impossible de charger le contexte.',
-      );
-    }
-  }, [contextLoaded]);
-
   const handleOpen = useCallback(async () => {
     setIsOpen(true);
     setHasUnread(false);
-    await loadContext();
     window.setTimeout(() => {
       inputRef.current?.focus();
     }, 300);
-  }, [loadContext]);
+  }, []);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -548,11 +563,8 @@ export function ChatAssistant() {
   const handleReset = useCallback(async () => {
     setMessages([]);
     setInput('');
-    setContextLoaded(false);
-    setContextError(null);
-    await loadContext(true);
     inputRef.current?.focus();
-  }, [loadContext]);
+  }, []);
 
   const handleContactCTA = useCallback(() => {
     setIsOpen(false);
@@ -568,7 +580,7 @@ export function ChatAssistant() {
 
   const sendMessage = useCallback(async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || isLoading || !contextLoaded) return;
+    if (!trimmed || isLoading) return;
 
     const userMessage: EnrichedMessage = {
       id: `user-${Date.now()}`,
@@ -599,7 +611,7 @@ export function ChatAssistant() {
         content: message.content,
       }));
 
-      await callMistral(historyForApi, systemPrompt, (chunk) => {
+      await callAssistant(historyForApi, (chunk) => {
         setMessages((previous) =>
           previous.map((message) =>
             message.id === assistantId
@@ -627,9 +639,9 @@ export function ChatAssistant() {
             ? {
                 ...message,
                 content:
-                  error instanceof Error && error.message.includes('Cle API')
-                    ? "La cle API Mistral n'est pas configuree."
-                    : "Desole, une erreur s'est produite. Vous pouvez reessayer ou passer par le formulaire de contact.",
+                  error instanceof AssistantError && error.status === 429
+                    ? error.message
+                    : "Désolé, une erreur s'est produite. Vous pouvez réessayer ou passer par le formulaire de contact.",
                 isStreaming: false,
               }
             : message,
@@ -638,7 +650,7 @@ export function ChatAssistant() {
     } finally {
       setIsLoading(false);
     }
-  }, [contextLoaded, isLoading, messages, systemPrompt]);
+  }, [isLoading, messages]);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -703,7 +715,7 @@ export function ChatAssistant() {
               <HeaderInfo>
                 <HeaderName>Assistant IA</HeaderName>
                 <HeaderStatus>
-                  {contextLoaded ? 'En ligne - Contexte charge' : 'Chargement du contexte...'}
+                  En ligne
                 </HeaderStatus>
               </HeaderInfo>
               <HeaderActions>
@@ -730,39 +742,23 @@ export function ChatAssistant() {
                 >
                   <WelcomeTitle>
                     <Sparkles size={14} color="var(--accent)" />
-                    Bonjour ! Je suis votre assistant pour {ownerName}
+                    Bonjour ! Je suis l&apos;assistant de {ownerName}
                   </WelcomeTitle>
                   <WelcomeText>
-                    Je connais les projets, les services, les articles et les competences de ce portfolio en temps reel. Posez votre question ou choisissez un sujet pour commencer.
+                    Je connais les projets, les choix techniques, les services et les articles de ce portfolio. Posez votre question ou choisissez un sujet pour commencer.
                   </WelcomeText>
-                  {contextLoaded && (
-                    <SuggestionsRow>
-                      {INITIAL_SUGGESTIONS.map((suggestion) => (
-                        <SuggestionChip
-                          key={suggestion}
-                          onClick={() => handleSuggestion(suggestion)}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
-                        >
-                          {suggestion}
-                        </SuggestionChip>
-                      ))}
-                    </SuggestionsRow>
-                  )}
-                </WelcomeCard>
-              )}
-
-              {!contextLoaded && !contextError && (
-                <TypingBubble initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <TypingDot $delay={0} />
-                  <TypingDot $delay={200} />
-                  <TypingDot $delay={400} />
-                </TypingBubble>
-              )}
-
-              {contextError && (
-                <WelcomeCard>
-                  <ErrorText>{contextError}</ErrorText>
+                  <SuggestionsRow>
+                    {INITIAL_SUGGESTIONS.map((suggestion) => (
+                      <SuggestionChip
+                        key={suggestion}
+                        onClick={() => handleSuggestion(suggestion)}
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        {suggestion}
+                      </SuggestionChip>
+                    ))}
+                  </SuggestionsRow>
                 </WelcomeCard>
               )}
 
@@ -776,7 +772,7 @@ export function ChatAssistant() {
                     transition={{ duration: 0.2 }}
                   >
                     <BubbleContent $role={message.role}>
-                      {message.content}
+                      {message.role === 'assistant' ? renderRichText(message.content) : message.content}
                       {message.isStreaming && <StreamingCursor />}
                     </BubbleContent>
                     <BubbleTime>{formatTime(message.timestamp)}</BubbleTime>
@@ -820,21 +816,21 @@ export function ChatAssistant() {
                   event.target.style.height = `${Math.min(event.target.scrollHeight, 120)}px`;
                 }}
                 onKeyDown={handleKeyDown}
-                placeholder={contextLoaded ? 'Posez votre question...' : 'Chargement...'}
-                disabled={!contextLoaded || isLoading}
+                placeholder="Posez votre question..."
+                disabled={isLoading}
                 rows={1}
               />
               <SendButton
-                $disabled={!input.trim() || isLoading || !contextLoaded}
+                $disabled={!input.trim() || isLoading}
                 onClick={() => {
                   void sendMessage(input);
                 }}
-                disabled={!input.trim() || isLoading || !contextLoaded}
+                disabled={!input.trim() || isLoading}
                 whileHover={
-                  input.trim() && !isLoading && contextLoaded ? { scale: 1.08 } : {}
+                  input.trim() && !isLoading ? { scale: 1.08 } : {}
                 }
                 whileTap={
-                  input.trim() && !isLoading && contextLoaded ? { scale: 0.92 } : {}
+                  input.trim() && !isLoading ? { scale: 0.92 } : {}
                 }
               >
                 <Send size={15} />
@@ -842,7 +838,7 @@ export function ChatAssistant() {
             </InputArea>
 
             <PoweredBy>
-              Propulse par <span>Mistral AI</span> · Donnees en temps reel
+              Propulsé par <span>Mistral AI</span>
             </PoweredBy>
           </ChatWindow>
         )}

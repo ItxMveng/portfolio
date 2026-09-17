@@ -145,8 +145,8 @@ const IconBtn = styled.button<{ $danger?: boolean; $active?: boolean }>`
       $danger
         ? 'rgba(239,68,68,0.12)'
         : $active
-          ? 'rgba(0,212,170,0.1)'
-          : 'rgba(255,255,255,0.05)'};
+          ? 'rgba(219,39,119,0.1)'
+          : 'rgba(120,53,15,0.05)'};
     color: ${({ $danger, $active, theme }) =>
       $danger ? theme.colors.danger : $active ? theme.colors.teal : theme.colors.textPrimary};
   }
@@ -168,9 +168,9 @@ const SaveServiceBtn = styled(motion.button)<{ $saved: boolean }>`
   cursor: pointer;
   border: 1px solid;
   transition: all ${({ theme }) => theme.transitions.fast};
-  background: ${({ $saved, theme }) => ($saved ? 'rgba(0,212,170,0.1)' : theme.colors.accent)};
+  background: ${({ $saved, theme }) => ($saved ? 'rgba(219,39,119,0.1)' : theme.colors.accent)};
   color: ${({ $saved, theme }) => ($saved ? theme.colors.teal : '#fff')};
-  border-color: ${({ $saved }) => ($saved ? 'rgba(0,212,170,0.25)' : 'transparent')};
+  border-color: ${({ $saved }) => ($saved ? 'rgba(219,39,119,0.25)' : 'transparent')};
 
   &:disabled {
     opacity: 0.5;
@@ -335,10 +335,10 @@ const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
   font-weight: 500;
   margin-bottom: 1rem;
   background: ${({ $success }) =>
-    $success ? 'rgba(0,212,170,0.08)' : 'rgba(239,68,68,0.08)'};
+    $success ? 'rgba(219,39,119,0.08)' : 'rgba(239,68,68,0.08)'};
   color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(0,212,170,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success }) => ($success ? 'rgba(219,39,119,0.2)' : 'rgba(239,68,68,0.2)')};
 `;
 
 const EmptyState = styled(motion.div)`

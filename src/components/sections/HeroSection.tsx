@@ -40,7 +40,7 @@ const BlobGreen = styled.div`
   filter: blur(90px);
   pointer-events: none;
   animation: blobFloat 14s ease-in-out infinite;
-  opacity: ${({ theme }) => theme.isDark ? 0.9 : 0.7};
+  opacity: 0.9;
 `;
 
 const BlobBlue = styled.div`
@@ -54,7 +54,7 @@ const BlobBlue = styled.div`
   filter: blur(80px);
   pointer-events: none;
   animation: blobFloat 18s ease-in-out infinite reverse;
-  opacity: ${({ theme }) => theme.isDark ? 0.8 : 0.6};
+  opacity: 0.85;
 `;
 
 /* Grille légère */

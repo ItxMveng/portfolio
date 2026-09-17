@@ -23,7 +23,7 @@ const PageWrapper = styled.div`
     transform: translate(-50%, -60%);
     width: 700px;
     height: 500px;
-    background: radial-gradient(ellipse at center, rgba(124, 92, 252, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(234,88,12, 0.12) 0%, transparent 70%);
     filter: blur(60px);
     pointer-events: none;
   }

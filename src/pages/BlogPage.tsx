@@ -26,7 +26,7 @@ const PageHeader = styled.section`
     transform: translateX(-50%);
     width: 600px;
     height: 300px;
-    background: radial-gradient(ellipse at center, rgba(124, 92, 252, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(234,88,12, 0.12) 0%, transparent 70%);
     filter: blur(40px);
     pointer-events: none;
   }
@@ -113,7 +113,7 @@ const TagPill = styled(motion.button)<{ $active: boolean }>`
       ? `
         background: ${theme.colors.tealDim};
         color: ${theme.colors.teal};
-        border-color: rgba(0,212,170,0.3);
+        border-color: rgba(219,39,119,0.3);
       `
       : `
         background: transparent;
@@ -206,7 +206,7 @@ const FeaturedCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.35);
+    border-color: rgba(234,88,12, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
   }
 
@@ -285,7 +285,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -365,7 +365,7 @@ const BlogCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.3);
+    border-color: rgba(234,88,12, 0.3);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
     transform: translateY(-4px);
   }

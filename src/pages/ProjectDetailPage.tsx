@@ -97,7 +97,7 @@ const HeroCategory = styled.span`
   display: inline-flex;
   padding: 0.2rem 0.75rem;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.3);
+  border: 1px solid rgba(234,88,12, 0.3);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 700;

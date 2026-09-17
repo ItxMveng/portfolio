@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import DOMPurify from 'dompurify';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import {
   AlertCircle,
   AlertTriangle,
   Check,
+  CheckCircle2,
   ChevronDown,
+  Compass,
   Copy,
   Download,
   ExternalLink,
@@ -13,6 +16,8 @@ import {
   Info,
   Lightbulb,
   Play,
+  Scale,
+  XCircle,
 } from 'lucide-react';
 import styled from 'styled-components';
 import type { Block } from '../../types';
@@ -104,7 +109,7 @@ const Para = styled.p`
   code {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: 0.875em;
-    background: rgba(124, 92, 252, 0.12);
+    background: rgba(234,88,12, 0.12);
     color: ${({ theme }) => theme.colors.accentHover};
     padding: 0.15em 0.45em;
     border-radius: 4px;
@@ -205,9 +210,30 @@ const CodeHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   padding: 0.6rem 1rem;
-  background: rgba(10, 10, 15, 0.9);
-  border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  background: #24140b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+`;
+
+const CodeFilename = styled.span`
+  font-size: 0.75rem;
+  font-family: ${({ theme }) => theme.fonts.mono};
+  color: rgba(255, 237, 213, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+`;
+
+const CodeCaption = styled.p`
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  background: ${({ theme }) => theme.colors.bgSecondary};
+  border-top: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
 `;
 
 const CodeLang = styled.span`
@@ -216,7 +242,7 @@ const CodeLang = styled.span`
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.accent};
+  color: #FDBA74;
 `;
 
 const CodeDots = styled.div`
@@ -234,50 +260,171 @@ const CopyButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  flex-shrink: 0;
   padding: 0.3rem 0.65rem;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: ${({ theme }) => theme.radii.sm};
   font-size: 0.75rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: rgba(255, 237, 213, 0.8);
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.textPrimary};
+    color: #fff;
     border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.accentDim};
+    background: rgba(249, 115, 22, 0.25);
+  }
+`;
+
+const DecisionCard = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.375rem 1.5rem;
+  background: ${({ theme }) => theme.colors.bgCard};
+  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
+  border-left: 4px solid ${({ theme }) => theme.colors.accent};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  box-shadow: ${({ theme }) => theme.shadows.card};
+
+  @media (max-width: 480px) {
+    padding: 1.125rem 1rem;
+  }
+`;
+
+const DecisionHeader = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+`;
+
+const DecisionIcon = styled.div`
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: ${({ theme }) => theme.radii.md};
+  background: ${({ theme }) => theme.gradients.brand};
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const DecisionEyebrow = styled.div`
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textAccent};
+`;
+
+const DecisionTitle = styled.h3`
+  margin: 0.125rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  color: ${({ theme }) => theme.colors.textPrimary};
+`;
+
+const DecisionSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+`;
+
+const DecisionLabel = styled.div`
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textMuted};
+`;
+
+const DecisionText = styled.p`
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  white-space: pre-line;
+`;
+
+const DecisionChoice = styled.div`
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+  border-radius: ${({ theme }) => theme.radii.md};
+  background: ${({ theme }) => theme.colors.accentDim};
+
+  > svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: ${({ theme }) => theme.colors.accent};
+  }
+`;
+
+const DecisionTradeoff = styled(DecisionChoice)`
+  background: ${({ theme }) => theme.colors.blueDim};
+
+  > svg {
+    color: #b45309;
+  }
+`;
+
+const AlternativesList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  li {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+
+  li > svg {
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
+
+  strong {
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 `;
 
 const calloutConfig = {
   info: {
     icon: Info,
-    bg: 'rgba(59,130,246,0.07)',
-    border: 'rgba(59,130,246,0.25)',
-    accent: '#3b82f6',
+    bg: 'rgba(249,115,22,0.07)',
+    border: 'rgba(249,115,22,0.28)',
+    accent: '#EA580C',
     label: 'Info',
   },
   warning: {
     icon: AlertTriangle,
-    bg: 'rgba(245,158,11,0.07)',
-    border: 'rgba(245,158,11,0.25)',
-    accent: '#f59e0b',
+    bg: 'rgba(245,158,11,0.09)',
+    border: 'rgba(217,119,6,0.3)',
+    accent: '#B45309',
     label: 'Attention',
   },
   danger: {
     icon: AlertCircle,
     bg: 'rgba(239,68,68,0.07)',
     border: 'rgba(239,68,68,0.25)',
-    accent: '#ef4444',
+    accent: '#DC2626',
     label: 'Important',
   },
   tip: {
     icon: Lightbulb,
-    bg: 'rgba(0,212,170,0.07)',
-    border: 'rgba(0,212,170,0.25)',
-    accent: '#00d4aa',
+    bg: 'rgba(219,39,119,0.07)',
+    border: 'rgba(219,39,119,0.25)',
+    accent: '#DB2777',
     label: 'Conseil',
   },
 } as const;
@@ -351,7 +498,7 @@ const FileIconWrap = styled.div`
   height: 40px;
   border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -419,7 +566,7 @@ const StepsCount = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
   color: ${({ theme }) => theme.colors.accent};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   padding: 0.1rem 0.5rem;
   border-radius: ${({ theme }) => theme.radii.full};
 `;
@@ -447,7 +594,7 @@ const StepRowHeader = styled.button`
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(124, 92, 252, 0.04);
+    background: rgba(234,88,12, 0.04);
   }
 `;
 
@@ -456,7 +603,7 @@ const StepNum = styled.div`
   height: 28px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.3);
+  border: 1px solid rgba(234,88,12, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -529,47 +676,47 @@ const StepBodyCode = styled.pre`
 
 const codeTheme = {
   'code[class*="language-"]': {
-    color: '#e2e0f0',
+    color: '#fdecdc',
     fontFamily: '"JetBrains Mono", "Fira Code", monospace',
     fontSize: '0.875rem',
     lineHeight: '1.75',
     background: 'transparent',
   },
   'pre[class*="language-"]': {
-    background: '#0e0e16',
+    background: '#1c0f08',
     padding: '1.25rem 1.5rem',
     margin: '0',
     overflow: 'auto',
   },
-  comment: { color: '#5a5a7a', fontStyle: 'italic' },
-  prolog: { color: '#5a5a7a' },
-  doctype: { color: '#5a5a7a' },
-  cdata: { color: '#5a5a7a' },
-  punctuation: { color: '#7a7a9a' },
-  property: { color: '#7c5cfc' },
-  tag: { color: '#7c5cfc' },
-  constant: { color: '#7c5cfc' },
-  symbol: { color: '#7c5cfc' },
-  deleted: { color: '#ef4444' },
-  boolean: { color: '#f59e0b' },
-  number: { color: '#f59e0b' },
-  selector: { color: '#00d4aa' },
-  'attr-name': { color: '#00d4aa' },
-  string: { color: '#00d4aa' },
-  char: { color: '#00d4aa' },
-  builtin: { color: '#00d4aa' },
-  inserted: { color: '#00d4aa' },
-  operator: { color: '#9ca3af' },
-  entity: { color: '#9ca3af', cursor: 'help' },
-  url: { color: '#9ca3af' },
-  variable: { color: '#e2e0f0' },
-  atrule: { color: '#9b7ffd' },
-  'attr-value': { color: '#00d4aa' },
-  function: { color: '#9b7ffd' },
-  'class-name': { color: '#9b7ffd' },
-  keyword: { color: '#7c5cfc', fontStyle: 'italic' },
-  regex: { color: '#f59e0b' },
-  important: { color: '#f59e0b', fontWeight: 'bold' },
+  comment: { color: '#9a7864', fontStyle: 'italic' },
+  prolog: { color: '#9a7864' },
+  doctype: { color: '#9a7864' },
+  cdata: { color: '#9a7864' },
+  punctuation: { color: '#c9a68f' },
+  property: { color: '#FF8A3D' },
+  tag: { color: '#FF8A3D' },
+  constant: { color: '#FF8A3D' },
+  symbol: { color: '#FF8A3D' },
+  deleted: { color: '#f87171' },
+  boolean: { color: '#FACC15' },
+  number: { color: '#FACC15' },
+  selector: { color: '#FDBA74' },
+  'attr-name': { color: '#FDBA74' },
+  string: { color: '#FDBA74' },
+  char: { color: '#FDBA74' },
+  builtin: { color: '#FDBA74' },
+  inserted: { color: '#FDBA74' },
+  operator: { color: '#e7c9b5' },
+  entity: { color: '#e7c9b5', cursor: 'help' },
+  url: { color: '#e7c9b5' },
+  variable: { color: '#fdecdc' },
+  atrule: { color: '#F472B6' },
+  'attr-value': { color: '#FDBA74' },
+  function: { color: '#F472B6' },
+  'class-name': { color: '#FACC15' },
+  keyword: { color: '#FF8A3D', fontStyle: 'italic' },
+  regex: { color: '#FACC15' },
+  important: { color: '#FACC15', fontWeight: 'bold' },
 };
 
 function isYouTube(url: string) {
@@ -608,13 +755,14 @@ function CodeBlock({ block }: { block: Block }) {
   return (
     <CodeWrapper>
       <CodeHeader>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
           <CodeDots>
             <span style={{ background: '#ff5f57' }} />
             <span style={{ background: '#febc2e' }} />
             <span style={{ background: '#28c840' }} />
           </CodeDots>
           <CodeLang>{lang}</CodeLang>
+          {block.meta?.filename && <CodeFilename>{block.meta.filename}</CodeFilename>}
         </div>
         <CopyButton onClick={handleCopy} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
           {copied ? (
@@ -633,7 +781,7 @@ function CodeBlock({ block }: { block: Block }) {
         style={codeTheme as never}
         showLineNumbers
         lineNumberStyle={{
-          color: '#3a3a5a',
+          color: '#6b4a38',
           fontSize: '0.75rem',
           paddingRight: '1.25rem',
           userSelect: 'none',
@@ -642,6 +790,7 @@ function CodeBlock({ block }: { block: Block }) {
       >
         {code}
       </SyntaxHighlighter>
+      {block.meta?.caption && <CodeCaption>{block.meta.caption}</CodeCaption>}
     </CodeWrapper>
   );
 }
@@ -721,6 +870,80 @@ function StepGroupBlock({ block }: { block: Block }) {
   );
 }
 
+const SANITIZE_OPTIONS = {
+  ALLOWED_TAGS: ['a', 'b', 'strong', 'i', 'em', 'u', 's', 'code', 'br', 'p', 'ul', 'ol', 'li', 'span', 'mark', 'sub', 'sup'],
+  ALLOWED_ATTR: ['href', 'target', 'rel', 'title'],
+};
+
+function ParagraphBlock({ html }: { html: string }) {
+  // Contenu issu de la base : seule la mise en forme inline est conservée (anti-XSS stocké).
+  const clean = useMemo(() => DOMPurify.sanitize(html, SANITIZE_OPTIONS), [html]);
+  return <Para dangerouslySetInnerHTML={{ __html: clean }} />;
+}
+
+function TechDecisionBlock({ block }: { block: Block }) {
+  const meta = block.meta ?? {};
+  const alternatives = (meta.alternatives ?? []).filter((item) => item.name?.trim());
+
+  return (
+    <DecisionCard>
+      <DecisionHeader>
+        <DecisionIcon>
+          <Compass size={16} />
+        </DecisionIcon>
+        <div style={{ minWidth: 0 }}>
+          <DecisionEyebrow>Choix technique</DecisionEyebrow>
+          <DecisionTitle>{block.content}</DecisionTitle>
+        </div>
+      </DecisionHeader>
+
+      {meta.context && (
+        <DecisionSection>
+          <DecisionLabel>Contexte &amp; contraintes</DecisionLabel>
+          <DecisionText>{meta.context}</DecisionText>
+        </DecisionSection>
+      )}
+
+      {meta.choice && (
+        <DecisionChoice>
+          <CheckCircle2 size={16} />
+          <div>
+            <DecisionLabel>Solution retenue</DecisionLabel>
+            <DecisionText>{meta.choice}</DecisionText>
+          </div>
+        </DecisionChoice>
+      )}
+
+      {alternatives.length > 0 && (
+        <DecisionSection>
+          <DecisionLabel>Alternatives écartées</DecisionLabel>
+          <AlternativesList>
+            {alternatives.map((alternative, index) => (
+              <li key={`${block.id}-alt-${index}`}>
+                <XCircle size={14} />
+                <span>
+                  <strong>{alternative.name}</strong>
+                  {alternative.reason ? ` — ${alternative.reason}` : ''}
+                </span>
+              </li>
+            ))}
+          </AlternativesList>
+        </DecisionSection>
+      )}
+
+      {meta.tradeoffs && (
+        <DecisionTradeoff>
+          <Scale size={15} />
+          <div>
+            <DecisionLabel>Compromis assumé</DecisionLabel>
+            <DecisionText>{meta.tradeoffs}</DecisionText>
+          </div>
+        </DecisionTradeoff>
+      )}
+    </DecisionCard>
+  );
+}
+
 interface BlockRendererProps {
   blocks: Block[];
 }
@@ -740,7 +963,7 @@ export function BlockRenderer({ blocks }: BlockRendererProps) {
             return <H2 key={block.id} id={domId}>{block.content}</H2>;
           }
           case 'paragraph':
-            return <Para key={block.id} dangerouslySetInnerHTML={{ __html: block.content ?? '' }} />;
+            return <ParagraphBlock key={block.id} html={block.content ?? ''} />;
           case 'divider':
             return (
               <Divider key={block.id}>
@@ -823,6 +1046,8 @@ export function BlockRenderer({ blocks }: BlockRendererProps) {
           }
           case 'step_group':
             return <StepGroupBlock key={block.id} block={block} />;
+          case 'tech_decision':
+            return <TechDecisionBlock key={block.id} block={block} />;
           default:
             return null;
         }

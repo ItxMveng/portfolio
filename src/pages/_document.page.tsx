@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="fr">
       <Head>
         <meta charSet="UTF-8" />
-        <meta name="theme-color" content="#f9fafb" />
+        <meta name="theme-color" content="#FFF8F1" />
         <meta name="robots" content="index, follow" />
         <meta
           name="description"
@@ -15,26 +15,11 @@ export default function Document() {
         <meta property="og:locale" content="fr_FR" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        {/* Anti-flash : appliquer le thème avant le premier rendu */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var t = localStorage.getItem('theme');
-                  if (t === 'light') {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                  } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    document.documentElement.classList.add('dark');
-                  }
-                } catch(e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.classList.add('dark');
-                }
-              })();
-            `,
-          }}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         />
       </Head>
       <body>

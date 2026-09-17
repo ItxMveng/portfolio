@@ -104,10 +104,10 @@ const ActionButton = styled(motion.button)<{ $variant?: 'primary' | 'secondary' 
         `;
       case 'success':
         return `
-          background: rgba(0,212,170,0.1);
+          background: rgba(219,39,119,0.1);
           color: ${theme.colors.teal};
-          border-color: rgba(0,212,170,0.25);
-          &:hover { background: rgba(0,212,170,0.18); }
+          border-color: rgba(219,39,119,0.25);
+          &:hover { background: rgba(219,39,119,0.18); }
         `;
       case 'danger':
         return `
@@ -313,7 +313,7 @@ const TagChip = styled.span`
   gap: 0.3rem;
   padding: 0.2rem 0.6rem;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
@@ -468,7 +468,7 @@ const Toggle = styled.button<{ $active: boolean }>`
   color: ${({ $active, theme }) =>
     $active ? theme.colors.accent : theme.colors.textSecondary};
   border-color: ${({ $active, theme }) =>
-    $active ? 'rgba(124,92,252,0.3)' : theme.colors.surfaceBorder};
+    $active ? 'rgba(234,88,12,0.3)' : theme.colors.surfaceBorder};
 `;
 
 const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
@@ -481,10 +481,10 @@ const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
   font-weight: 500;
   margin-bottom: 1rem;
   background: ${({ $success }) =>
-    $success ? 'rgba(0,212,170,0.08)' : 'rgba(239,68,68,0.08)'};
+    $success ? 'rgba(219,39,119,0.08)' : 'rgba(239,68,68,0.08)'};
   color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(0,212,170,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success }) => ($success ? 'rgba(219,39,119,0.2)' : 'rgba(239,68,68,0.2)')};
 `;
 
 const LoadingState = styled.div`
@@ -912,7 +912,7 @@ export default function ProjectEditor() {
                         {previewBlocks.length > 0 ? (
                           <BlockRenderer blocks={previewBlocks} />
                         ) : (
-                          <p style={{ color: '#9494b0', fontSize: '0.875rem' }}>
+                          <p style={{ color: '#86624D', fontSize: '0.875rem' }}>
                             Aucun bloc ajouté.
                           </p>
                         )}

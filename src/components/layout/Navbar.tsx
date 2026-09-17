@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Menu, Moon, Sun, X, Zap } from 'lucide-react';
+import { Menu, X, Zap } from 'lucide-react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { useThemeMode } from '../../contexts/ThemeContext';
 import { useProfile } from '../../hooks/useProfile';
 
 const NAV_LINKS = [
@@ -14,7 +13,7 @@ const NAV_LINKS = [
   { label: 'Contact', to: '/#contact' },
 ];
 
-const NavWrapper = styled(motion.header)<{ $scrolled: boolean; $dark: boolean }>`
+const NavWrapper = styled(motion.header)<{ $scrolled: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -26,17 +25,15 @@ const NavWrapper = styled(motion.header)<{ $scrolled: boolean; $dark: boolean }>
     padding 0.3s ease,
     border-color 0.3s ease;
 
-  ${({ $scrolled, $dark }) =>
+  ${({ $scrolled }) =>
     $scrolled
       ? css`
-          background: ${$dark ? 'rgba(15,23,42,0.92)' : 'rgba(255,255,255,0.92)'};
+          background: rgba(255, 248, 241, 0.9);
           backdrop-filter: blur(20px) saturate(1.6);
           -webkit-backdrop-filter: blur(20px) saturate(1.6);
-          border-bottom: 1px solid ${$dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)'};
+          border-bottom: 1px solid rgba(154, 52, 18, 0.1);
           padding: 0.6rem 0;
-          box-shadow: ${$dark
-            ? '0 4px 24px rgba(0,0,0,0.4)'
-            : '0 2px 16px rgba(0,0,0,0.07)'};
+          box-shadow: 0 2px 18px rgba(234, 88, 12, 0.08);
         `
       : css`
           background: transparent;
@@ -174,29 +171,9 @@ const PulseDot = styled(motion.span)<{ $status: string }>`
   flex-shrink: 0;
 `;
 
-const ThemeToggle = styled(motion.button)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: ${({ theme }) => theme.radii.full};
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  transition: all ${({ theme }) => theme.transitions.fast};
-  flex-shrink: 0;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-    border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.accentDim};
-  }
-`;
-
 const ContactButton = styled.button`
   padding: 0.5rem 1.25rem;
-  background: ${({ theme }) => theme.colors.accent};
+  background: ${({ theme }) => theme.gradients.brand};
   color: #fff;
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.875rem;
@@ -207,7 +184,7 @@ const ContactButton = styled.button`
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 24px ${({ theme }) => theme.colors.accentGlow};
-    background: ${({ theme }) => theme.colors.accentHover};
+    filter: saturate(1.15) brightness(0.97);
   }
 `;
 
@@ -239,7 +216,7 @@ const MobileMenu = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: ${({ theme }) => theme.isDark ? 'rgba(10,15,30,0.98)' : 'rgba(249,250,251,0.98)'};
+  background: rgba(255, 248, 241, 0.98);
   backdrop-filter: blur(24px);
   z-index: ${({ theme }) => theme.zIndex.modal};
   display: flex;
@@ -345,11 +322,9 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { profile } = useProfile();
-  const { mode, toggle } = useThemeMode();
   const location = useLocation();
   const navigate = useNavigate();
   const firstName = profile?.full_name?.trim().split(/\s+/)[0] ?? '';
-  const isDark = mode === 'dark';
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -383,14 +358,13 @@ export function Navbar() {
     <>
       <NavWrapper
         $scrolled={scrolled}
-        $dark={isDark}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <NavContainer>
           <Logo to="/">
-            <Zap size={16} color="currentColor" style={{ color: 'var(--accent-color)' }} />
+            <Zap size={16} color="currentColor" style={{ color: 'var(--accent)' }} />
             <span className="logo-name">{firstName}</span>
             <span>.</span>
           </Logo>
@@ -400,7 +374,7 @@ export function Navbar() {
               link.to.startsWith('/#') ? (
                 <DesktopHashLink
                   key={link.label}
-                  $active={location.pathname === '/'}
+                  $active={location.pathname === '/' && location.hash === link.to.slice(1)}
                   onClick={() => navigateToHash(link.to.replace('/#', ''))}
                   type="button"
                 >
@@ -435,27 +409,6 @@ export function Navbar() {
               </AvailabilityBadge>
             )}
 
-            <ThemeToggle
-              onClick={toggle}
-              aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-              whileTap={{ scale: 0.9 }}
-              whileHover={{ scale: 1.05 }}
-              type="button"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={mode}
-                  initial={{ opacity: 0, rotate: -30, scale: 0.6 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 30, scale: 0.6 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ display: 'flex', alignItems: 'center' }}
-                >
-                  {isDark ? <Sun size={16} /> : <Moon size={16} />}
-                </motion.span>
-              </AnimatePresence>
-            </ThemeToggle>
-
             <ContactButton onClick={() => navigateToHash('contact')} type="button">
               Me contacter
             </ContactButton>
@@ -486,14 +439,6 @@ export function Navbar() {
                 <span>.</span>
               </Logo>
               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <ThemeToggle
-                  onClick={toggle}
-                  aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
-                  whileTap={{ scale: 0.9 }}
-                  type="button"
-                >
-                  {isDark ? <Sun size={16} /> : <Moon size={16} />}
-                </ThemeToggle>
                 <MobileMenuButton
                   onClick={() => setMobileOpen(false)}
                   aria-label="Fermer le menu"

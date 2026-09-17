@@ -26,7 +26,8 @@ export type BlockType =
   | 'callout'
   | 'divider'
   | 'file'
-  | 'step_group';
+  | 'step_group'
+  | 'tech_decision';
 
 export interface Block {
   id: string;
@@ -43,6 +44,11 @@ export interface Block {
     filesize?: string;
     variant?: 'info' | 'warning' | 'tip' | 'danger';
     steps?: { title: string; content: string; code?: string }[];
+    // tech_decision : content = intitulé du choix
+    context?: string;
+    choice?: string;
+    alternatives?: { name: string; reason?: string }[];
+    tradeoffs?: string;
   };
 }
 

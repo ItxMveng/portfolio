@@ -56,14 +56,14 @@ const SaveButton = styled(motion.button)<{ $saved: boolean }>`
   cursor: pointer;
   border: none;
   transition: all ${({ theme }) => theme.transitions.base};
-  background: ${({ $saved, theme }) => ($saved ? 'rgba(0,212,170,0.15)' : theme.colors.accent)};
+  background: ${({ $saved, theme }) => ($saved ? 'rgba(219,39,119,0.15)' : theme.colors.accent)};
   color: ${({ $saved, theme }) => ($saved ? theme.colors.teal : '#fff')};
   border: 1px solid
-    ${({ $saved }) => ($saved ? 'rgba(0,212,170,0.3)' : 'transparent')};
+    ${({ $saved }) => ($saved ? 'rgba(219,39,119,0.3)' : 'transparent')};
 
   &:hover:not(:disabled) {
     background: ${({ $saved, theme }) =>
-      $saved ? 'rgba(0,212,170,0.2)' : theme.colors.accentHover};
+      $saved ? 'rgba(219,39,119,0.2)' : theme.colors.accentHover};
     box-shadow: ${({ $saved, theme }) =>
       $saved ? 'none' : `0 0 24px ${theme.colors.accentGlow}`};
   }
@@ -348,10 +348,10 @@ const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`
   font-weight: 500;
   margin-bottom: 1rem;
   background: ${({ $success }) =>
-    $success ? 'rgba(0,212,170,0.08)' : 'rgba(239,68,68,0.08)'};
+    $success ? 'rgba(219,39,119,0.08)' : 'rgba(239,68,68,0.08)'};
   color: ${({ $success, theme }) => ($success ? theme.colors.teal : theme.colors.danger)};
   border: 1px solid
-    ${({ $success }) => ($success ? 'rgba(0,212,170,0.2)' : 'rgba(239,68,68,0.2)')};
+    ${({ $success }) => ($success ? 'rgba(219,39,119,0.2)' : 'rgba(239,68,68,0.2)')};
 `;
 
 const LoadingState = styled.div`

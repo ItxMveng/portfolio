@@ -230,7 +230,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -251,11 +251,11 @@ const StatusBadge = styled.span<{ $published: boolean }>`
   text-transform: uppercase;
   width: fit-content;
   background: ${({ $published, theme }) =>
-    $published ? 'rgba(0,212,170,0.1)' : theme.colors.surface};
+    $published ? 'rgba(219,39,119,0.1)' : theme.colors.surface};
   color: ${({ $published, theme }) =>
     $published ? theme.colors.teal : theme.colors.textMuted};
   border: 1px solid
-    ${({ $published }) => ($published ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.08)')};
+    ${({ $published }) => ($published ? 'rgba(219,39,119,0.2)' : 'rgba(120,53,15,0.08)')};
 
   &::before {
     content: '';
@@ -319,8 +319,8 @@ const ActionBtn = styled.button<{ $danger?: boolean; $active?: boolean }>`
       $danger
         ? 'rgba(239,68,68,0.12)'
         : $active
-          ? 'rgba(0,212,170,0.1)'
-          : 'rgba(255,255,255,0.06)'};
+          ? 'rgba(219,39,119,0.1)'
+          : 'rgba(120,53,15,0.06)'};
     color: ${({ $danger, $active, theme }) =>
       $danger ? theme.colors.danger : $active ? theme.colors.teal : theme.colors.textPrimary};
   }

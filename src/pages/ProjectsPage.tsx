@@ -29,7 +29,7 @@ const PageHeader = styled.section`
     height: 300px;
     background: radial-gradient(
       ellipse at center,
-      rgba(124, 92, 252, 0.12) 0%,
+      rgba(234,88,12, 0.12) 0%,
       transparent 70%
     );
     filter: blur(40px);
@@ -129,7 +129,7 @@ const ProjectCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(124, 92, 252, 0.35);
+    border-color: rgba(234,88,12, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
     transform: translateY(-4px);
   }
@@ -189,7 +189,7 @@ const FeaturedBadge = styled.div`
   right: 0.75rem;
   padding: 0.2rem 0.6rem;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.3);
+  border: 1px solid rgba(234,88,12, 0.3);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.68rem;
   font-weight: 600;

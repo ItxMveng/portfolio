@@ -207,7 +207,7 @@ const UserAvatar = styled.div`
   height: 28px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.3);
+  border: 1px solid rgba(234,88,12, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -7,6 +7,7 @@ import {
   ChevronDown,
   ChevronUp,
   Code2,
+  Compass,
   Eye,
   EyeOff,
   FileDown,
@@ -298,7 +299,7 @@ const StepNum = styled.span`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.accent};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(124, 92, 252, 0.2);
+  border: 1px solid rgba(234,88,12, 0.2);
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -411,6 +412,7 @@ const BLOCK_TYPES: { type: BlockType; label: string; icon: ReactNode }[] = [
   { type: 'divider', label: 'Séparateur', icon: <Minus size={13} /> },
   { type: 'file', label: 'Fichier', icon: <FileDown size={13} /> },
   { type: 'step_group', label: 'Étapes', icon: <ListOrdered size={13} /> },
+  { type: 'tech_decision', label: 'Choix technique', icon: <Compass size={13} /> },
 ];
 
 function getBlockLabel(type: BlockType): string {
@@ -441,6 +443,12 @@ function createBlock(type: BlockType): Block {
       return {
         ...base,
         meta: { steps: [{ title: '', content: '', code: '' }] },
+      };
+    case 'tech_decision':
+      return {
+        ...base,
+        content: '',
+        meta: { context: '', choice: '', alternatives: [{ name: '', reason: '' }], tradeoffs: '' },
       };
     default:
       return base;
@@ -624,12 +632,29 @@ function BlockEditorItem({
               </FieldSelect>
             </FieldGroup>
             <FieldGroup>
+              <FieldLabel>Fichier (optionnel)</FieldLabel>
+              <FieldInput
+                value={block.meta?.filename ?? ''}
+                onChange={(e) => setMeta({ filename: e.target.value })}
+                placeholder="src/services/matching.py"
+              />
+            </FieldGroup>
+            <FieldGroup>
               <FieldLabel>Code</FieldLabel>
               <MonoTextarea
                 value={block.content ?? ''}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="// Coller le code ici..."
                 spellCheck={false}
+              />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Explication (optionnel)</FieldLabel>
+              <FieldTextarea
+                value={block.meta?.caption ?? ''}
+                onChange={(e) => setMeta({ caption: e.target.value })}
+                placeholder="Ce que fait cet extrait et pourquoi il est écrit ainsi"
+                style={{ minHeight: '60px' }}
               />
             </FieldGroup>
           </>
@@ -759,6 +784,91 @@ function BlockEditorItem({
               <Plus size={13} /> Ajouter une etape
             </AddStepButton>
           </StepsEditorWrapper>
+        );
+      }
+      case 'tech_decision': {
+        const alternatives = block.meta?.alternatives ?? [];
+
+        const updateAlternative = (altIndex: number, field: 'name' | 'reason', value: string) =>
+          setMeta({
+            alternatives: alternatives.map((alternative, index) =>
+              index === altIndex ? { ...alternative, [field]: value } : alternative,
+            ),
+          });
+
+        return (
+          <>
+            <FieldGroup>
+              <FieldLabel>Intitulé du choix</FieldLabel>
+              <FieldInput
+                value={block.content ?? ''}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Ex. : FFT implémentée from scratch plutôt qu'une librairie"
+              />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Contexte & contraintes</FieldLabel>
+              <FieldTextarea
+                value={block.meta?.context ?? ''}
+                onChange={(e) => setMeta({ context: e.target.value })}
+                placeholder="Le problème, les contraintes (budget, perf, réseau, délais...)"
+              />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Solution retenue</FieldLabel>
+              <FieldTextarea
+                value={block.meta?.choice ?? ''}
+                onChange={(e) => setMeta({ choice: e.target.value })}
+                placeholder="Ce qui a été choisi et pourquoi"
+              />
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Alternatives écartées</FieldLabel>
+              <StepsEditorWrapper>
+                {alternatives.map((alternative, altIndex) => (
+                  <FieldRow
+                    key={`${block.id}-alt-${altIndex}`}
+                    style={{ gridTemplateColumns: '1fr 1.6fr auto', alignItems: 'center' }}
+                  >
+                    <FieldInput
+                      value={alternative.name}
+                      onChange={(e) => updateAlternative(altIndex, 'name', e.target.value)}
+                      placeholder="Option"
+                    />
+                    <FieldInput
+                      value={alternative.reason ?? ''}
+                      onChange={(e) => updateAlternative(altIndex, 'reason', e.target.value)}
+                      placeholder="Pourquoi écartée"
+                    />
+                    <ActionBtn
+                      $danger
+                      type="button"
+                      onClick={() =>
+                        setMeta({ alternatives: alternatives.filter((_, index) => index !== altIndex) })
+                      }
+                    >
+                      <Trash2 size={12} />
+                    </ActionBtn>
+                  </FieldRow>
+                ))}
+                <AddStepButton
+                  type="button"
+                  onClick={() => setMeta({ alternatives: [...alternatives, { name: '', reason: '' }] })}
+                >
+                  <Plus size={13} /> Ajouter une alternative
+                </AddStepButton>
+              </StepsEditorWrapper>
+            </FieldGroup>
+            <FieldGroup>
+              <FieldLabel>Compromis assumé</FieldLabel>
+              <FieldTextarea
+                value={block.meta?.tradeoffs ?? ''}
+                onChange={(e) => setMeta({ tradeoffs: e.target.value })}
+                placeholder="Ce que ce choix coûte (limites, dette, évolutions prévues)"
+                style={{ minHeight: '60px' }}
+              />
+            </FieldGroup>
+          </>
         );
       }
       default:

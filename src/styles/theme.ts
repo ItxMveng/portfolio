@@ -1,5 +1,4 @@
 export interface Theme {
-  isDark: boolean;
   colors: {
     // Backgrounds — système de sections alternées
     bg: string;          // section 1 (blanc / dark profond)
@@ -12,13 +11,13 @@ export interface Theme {
     surfaceHover: string;
     surfaceBorder: string;
     surfaceBorderHover: string;
-    // Accent vert
+    // Accent orange
     accent: string;
     accentHover: string;
     accentDim: string;
     accentDimHover: string;
     accentGlow: string;
-    // Secondaires
+    // Secondaires : blue = mangue, teal = framboise
     blue: string;
     blueDim: string;
     blueGlow: string;
@@ -60,6 +59,11 @@ export interface Theme {
   radii: {
     sm: string; md: string; lg: string; xl: string; '2xl': string; full: string;
   };
+  gradients: {
+    brand: string;
+    warm: string;
+    soft: string;
+  };
   shadows: {
     card: string;
     cardHover: string;
@@ -84,7 +88,7 @@ export interface Theme {
   };
 }
 
-const shared: Omit<Theme, 'isDark' | 'colors' | 'shadows'> = {
+const shared: Omit<Theme, 'colors' | 'shadows' | 'gradients'> = {
   fonts: {
     sans: "'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif",
     mono: "'JetBrains Mono', 'Fira Code', monospace",
@@ -112,106 +116,58 @@ const shared: Omit<Theme, 'isDark' | 'colors' | 'shadows'> = {
   zIndex: { base: 0, raised: 10, dropdown: 100, sticky: 200, overlay: 300, modal: 400, toast: 500 },
 };
 
-export const lightTheme: Theme = {
+/* Thème unique « orange fruité » : crème chaude, mandarine, mangue, framboise. */
+export const theme: Theme = {
   ...shared,
-  isDark: false,
   colors: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    bgTertiary: '#f1f5f9',
-    bgCard: '#ffffff',
-    bgCardHover: '#f8fafc',
-    surface: 'rgba(0,0,0,0.03)',
-    surfaceHover: 'rgba(0,0,0,0.055)',
-    surfaceBorder: 'rgba(0,0,0,0.07)',
-    surfaceBorderHover: 'rgba(5,150,105,0.4)',
-    accent: '#059669',
-    accentHover: '#047857',
-    accentDim: 'rgba(5,150,105,0.09)',
-    accentDimHover: 'rgba(5,150,105,0.16)',
-    accentGlow: 'rgba(5,150,105,0.28)',
-    blue: '#2563EB',
-    blueDim: 'rgba(37,99,235,0.08)',
-    blueGlow: 'rgba(37,99,235,0.2)',
-    teal: '#0D9488',
-    tealDim: 'rgba(13,148,136,0.09)',
-    textPrimary: '#0f172a',
-    textSecondary: '#334155',
-    textMuted: '#64748b',
-    textAccent: '#059669',
-    success: '#059669',
+    bg: '#FFF8F1',
+    bgSecondary: '#FFF0E1',
+    bgTertiary: '#FFE6CC',
+    bgCard: '#FFFFFF',
+    bgCardHover: '#FFFBF6',
+    surface: 'rgba(234,88,12,0.045)',
+    surfaceHover: 'rgba(234,88,12,0.09)',
+    surfaceBorder: 'rgba(154,52,18,0.13)',
+    surfaceBorderHover: 'rgba(234,88,12,0.45)',
+    accent: '#EA580C',
+    accentHover: '#C2410C',
+    accentDim: 'rgba(249,115,22,0.12)',
+    accentDimHover: 'rgba(249,115,22,0.2)',
+    accentGlow: 'rgba(249,115,22,0.38)',
+    blue: '#F59E0B',
+    blueDim: 'rgba(245,158,11,0.16)',
+    blueGlow: 'rgba(245,158,11,0.32)',
+    teal: '#DB2777',
+    tealDim: 'rgba(219,39,119,0.1)',
+    textPrimary: '#2B1408',
+    textSecondary: '#5C3A26',
+    textMuted: '#86624D',
+    textAccent: '#C2410C',
+    success: '#16A34A',
     warning: '#D97706',
     danger: '#DC2626',
-    info: '#2563EB',
-    calloutInfo: 'rgba(37,99,235,0.06)',
-    calloutWarning: 'rgba(217,119,6,0.06)',
-    calloutDanger: 'rgba(220,38,38,0.06)',
-    calloutTip: 'rgba(13,148,136,0.06)',
-    divider: 'rgba(15,23,42,0.06)',
+    info: '#EA580C',
+    calloutInfo: 'rgba(249,115,22,0.08)',
+    calloutWarning: 'rgba(245,158,11,0.1)',
+    calloutDanger: 'rgba(220,38,38,0.07)',
+    calloutTip: 'rgba(219,39,119,0.07)',
+    divider: 'rgba(120,53,15,0.09)',
+  },
+  gradients: {
+    brand: 'linear-gradient(135deg, #FF8A1F 0%, #F2600C 55%, #E0356B 100%)',
+    warm: 'linear-gradient(135deg, #FFB020 0%, #FF7A1A 100%)',
+    soft: 'linear-gradient(135deg, rgba(255,176,32,0.14) 0%, rgba(242,96,12,0.1) 55%, rgba(224,53,107,0.08) 100%)',
   },
   shadows: {
-    sm: '0 1px 2px rgba(0,0,0,0.04)',
-    md: '0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04)',
-    lg: '0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.05)',
-    card: '0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04)',
-    cardHover: '0 8px 30px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06)',
-    cardRaised: '0 20px 60px rgba(0,0,0,0.12), 0 6px 20px rgba(0,0,0,0.07)',
-    accent: '0 4px 20px rgba(5,150,105,0.18)',
-    accentStrong: '0 8px 40px rgba(5,150,105,0.3)',
-    glow: '0 0 60px rgba(5,150,105,0.08)',
-    blue: '0 4px 20px rgba(37,99,235,0.12)',
+    sm: '0 1px 2px rgba(120,53,15,0.06)',
+    md: '0 4px 10px rgba(120,53,15,0.07), 0 2px 4px rgba(120,53,15,0.05)',
+    lg: '0 12px 30px rgba(120,53,15,0.1), 0 4px 10px rgba(120,53,15,0.06)',
+    card: '0 1px 3px rgba(120,53,15,0.06), 0 6px 18px rgba(120,53,15,0.05)',
+    cardHover: '0 14px 40px rgba(234,88,12,0.16), 0 3px 10px rgba(120,53,15,0.07)',
+    cardRaised: '0 24px 60px rgba(234,88,12,0.18), 0 8px 22px rgba(120,53,15,0.08)',
+    accent: '0 6px 22px rgba(242,96,12,0.3)',
+    accentStrong: '0 10px 40px rgba(242,96,12,0.42)',
+    glow: '0 0 70px rgba(255,138,31,0.18)',
+    blue: '0 4px 20px rgba(245,158,11,0.22)',
   },
 };
-
-export const darkTheme: Theme = {
-  ...shared,
-  isDark: true,
-  colors: {
-    bg: '#0f172a',
-    bgSecondary: '#131f35',
-    bgTertiary: '#1a2744',
-    bgCard: '#1e293b',
-    bgCardHover: '#243350',
-    surface: 'rgba(255,255,255,0.04)',
-    surfaceHover: 'rgba(255,255,255,0.07)',
-    surfaceBorder: 'rgba(255,255,255,0.08)',
-    surfaceBorderHover: 'rgba(16,185,129,0.45)',
-    accent: '#10B981',
-    accentHover: '#34D399',
-    accentDim: 'rgba(16,185,129,0.12)',
-    accentDimHover: 'rgba(16,185,129,0.22)',
-    accentGlow: 'rgba(16,185,129,0.38)',
-    blue: '#60A5FA',
-    blueDim: 'rgba(96,165,250,0.1)',
-    blueGlow: 'rgba(96,165,250,0.3)',
-    teal: '#2DD4BF',
-    tealDim: 'rgba(45,212,191,0.1)',
-    textPrimary: '#e2e8f0',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    textAccent: '#34D399',
-    success: '#10B981',
-    warning: '#FBBF24',
-    danger: '#F87171',
-    info: '#60A5FA',
-    calloutInfo: 'rgba(96,165,250,0.07)',
-    calloutWarning: 'rgba(251,191,36,0.07)',
-    calloutDanger: 'rgba(248,113,113,0.07)',
-    calloutTip: 'rgba(45,212,191,0.07)',
-    divider: 'rgba(255,255,255,0.06)',
-  },
-  shadows: {
-    sm: '0 1px 3px rgba(0,0,0,0.3)',
-    md: '0 4px 12px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.2)',
-    lg: '0 12px 40px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3)',
-    card: '0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04)',
-    cardHover: '0 12px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(16,185,129,0.18)',
-    cardRaised: '0 24px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(16,185,129,0.25)',
-    accent: '0 4px 20px rgba(16,185,129,0.22)',
-    accentStrong: '0 8px 40px rgba(16,185,129,0.38)',
-    glow: '0 0 80px rgba(16,185,129,0.1)',
-    blue: '0 4px 20px rgba(96,165,250,0.15)',
-  },
-};
-
-export const theme = lightTheme;
