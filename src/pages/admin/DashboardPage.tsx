@@ -57,7 +57,7 @@ const StatCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(201,162,4, 0.3);
+    border-color: rgba(11,122,117, 0.3);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
   }
 `;
@@ -173,7 +173,7 @@ const MessageRow = styled.div<{ $unread: boolean }>`
   gap: 0.875rem;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
-  background: ${({ $unread }) => ($unread ? 'rgba(201,162,4,0.03)' : 'transparent')};
+  background: ${({ $unread }) => ($unread ? 'rgba(11,122,117,0.03)' : 'transparent')};
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:last-child {
@@ -190,7 +190,7 @@ const MessageAvatar = styled.div`
   height: 34px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,7 +299,7 @@ const QuickActionIcon = styled.div<{ $color: string }>`
 
 const InlineBadge = styled.span`
   margin-left: auto;
-  background: rgba(201,162,4, 0.12);
+  background: rgba(11,122,117, 0.12);
   color: ${({ theme }) => theme.colors.warning};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.6875rem;
@@ -378,7 +378,7 @@ export default function DashboardPage() {
       label: 'Projets publiés',
       value: stats.projects,
       icon: FolderOpen,
-      color: '#323B4C',
+      color: '#0B7A75',
       trend: 'En ligne',
     },
     {
@@ -392,7 +392,7 @@ export default function DashboardPage() {
       label: 'Messages reçus',
       value: stats.messages,
       icon: MessageSquare,
-      color: '#C9A204',
+      color: '#E0A800',
       trend: `${stats.unread} non lus`,
     },
     {
@@ -499,7 +499,7 @@ export default function DashboardPage() {
             </PanelHeader>
             <QuickActions>
               <QuickAction to="/admin/projects/new">
-                <QuickActionIcon $color="#323B4C">
+                <QuickActionIcon $color="#0B7A75">
                   <Plus size={15} />
                 </QuickActionIcon>
                 Nouveau projet
@@ -515,7 +515,7 @@ export default function DashboardPage() {
               </QuickAction>
 
               <QuickAction to="/admin/messages">
-                <QuickActionIcon $color="#C9A204">
+                <QuickActionIcon $color="#E0A800">
                   <MessageSquare size={15} />
                 </QuickActionIcon>
                 Voir les messages

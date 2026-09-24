@@ -21,13 +21,12 @@ const PageHeader = styled.section`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(ellipse at center, rgba(201,162,4, 0.12) 0%, transparent 70%);
-    filter: blur(40px);
+    top: -70px;
+    right: 6%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.colors.sun};
     pointer-events: none;
   }
 `;
@@ -206,7 +205,7 @@ const FeaturedCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(201,162,4, 0.35);
+    border-color: rgba(11,122,117, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
   }
 
@@ -285,7 +284,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -365,7 +364,7 @@ const BlogCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(201,162,4, 0.3);
+    border-color: rgba(11,122,117, 0.3);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
     transform: translateY(-4px);
   }

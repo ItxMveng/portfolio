@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, ExternalLink, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SectionLabel, SectionTitle, Tag } from '../../components/ui';
+import { ProjectCoverArt } from '../ui/ProjectCoverArt';
 import { useProjects } from '../../hooks/useProjects';
 import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../lib/animations';
 import { normalizeExternalUrlField } from '../../lib/external-links';
@@ -80,7 +81,7 @@ const ProjectCard = styled(motion.div)`
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.gold});
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.sun});
     opacity: 0;
     transition: opacity 0.3s;
     z-index: 1;
@@ -106,12 +107,6 @@ const ProjectCover = styled.div<{ $has: boolean }>`
     transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
   ${ProjectCard}:hover & img { transform: scale(1.06); }
-`;
-
-const CoverPlaceholder = styled.div`
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.25rem; opacity: 0.45;
 `;
 
 const CatBadge = styled.div`
@@ -243,9 +238,7 @@ export function ProjectsPreviewSection() {
                   {project.cover_url ? (
                     <img src={project.cover_url} alt={project.title} loading="lazy" />
                   ) : (
-                    <CoverPlaceholder>
-                      {project.category === 'AI' ? '🤖' : project.category === 'Web' ? '🌐' : '⚡'}
-                    </CoverPlaceholder>
+                    <ProjectCoverArt title={project.title} seed={project.slug} />
                   )}
                   <CatBadge>{project.category}</CatBadge>
                 </ProjectCover>

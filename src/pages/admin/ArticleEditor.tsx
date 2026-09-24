@@ -352,7 +352,7 @@ const PreviewCategory = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(201,162,4,0.2);
+  border: 1px solid rgba(11,122,117,0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -384,7 +384,7 @@ const Toggle = styled.button<{ $active: boolean }>`
   width: 100%;
   border-radius: ${({ theme }) => theme.radii.md};
   border: 1px solid
-    ${({ $active, theme }) => ($active ? 'rgba(201,162,4,0.3)' : theme.colors.surfaceBorder)};
+    ${({ $active, theme }) => ($active ? 'rgba(11,122,117,0.3)' : theme.colors.surfaceBorder)};
   background: ${({ $active, theme }) => ($active ? theme.colors.accentDim : theme.colors.surface)};
   color: ${({ $active, theme }) => ($active ? theme.colors.accent : theme.colors.textSecondary)};
   font-size: 0.8125rem;

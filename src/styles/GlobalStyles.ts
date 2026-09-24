@@ -4,6 +4,7 @@ export const GlobalStyles = createGlobalStyle`
   :root {
     color-scheme: light;
     --accent: ${({ theme }) => theme.colors.accent};
+    --sun: ${({ theme }) => theme.colors.sun};
     --gold: ${({ theme }) => theme.colors.gold};
     --color-text-primary: ${({ theme }) => theme.colors.textPrimary};
     --color-text-secondary: ${({ theme }) => theme.colors.textSecondary};
@@ -37,7 +38,22 @@ export const GlobalStyles = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     font-family: ${({ theme }) => theme.fonts.display};
-    letter-spacing: -0.015em;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+  }
+
+  /* Surlignage « feutre » : met en valeur un mot clé d'un titre */
+  .marker {
+    background-image: linear-gradient(
+      transparent 58%,
+      ${({ theme }) => theme.colors.sun} 58%,
+      ${({ theme }) => theme.colors.sun} 92%,
+      transparent 92%
+    );
+    padding: 0 0.12em;
+    margin: 0 -0.12em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   ::-webkit-scrollbar { width: 5px; }
@@ -49,8 +65,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   ::selection {
-    background: ${({ theme }) => theme.colors.accentDim};
-    color: ${({ theme }) => theme.colors.textPrimary};
+    background: ${({ theme }) => theme.colors.sun};
+    color: ${({ theme }) => theme.colors.ink};
   }
 
   a {
@@ -117,28 +133,19 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 4px;
   }
 
-  /* Blobs graphiques réutilisables */
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-    opacity: 0.16;
-  }
-
-  .blob-green {
-    background: radial-gradient(circle, ${({ theme }) => theme.colors.accent}, transparent 70%);
-  }
-
-  .blob-blue {
-    background: radial-gradient(circle, ${({ theme }) => theme.colors.gold}, transparent 70%);
-  }
-
   /* Animations */
-  @keyframes blobFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33%       { transform: translate(-20px, 15px) scale(1.04); }
-    66%       { transform: translate(15px, -10px) scale(0.97); }
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-14px) rotate(2deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   @keyframes fadeSlideUp {

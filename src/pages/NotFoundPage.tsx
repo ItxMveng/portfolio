@@ -22,7 +22,7 @@ const Code = styled(motion.div)`
   background: linear-gradient(
     135deg,
     ${({ theme }) => theme.colors.accent},
-    ${({ theme }) => theme.colors.gold}
+    ${({ theme }) => theme.colors.coral}
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -97,7 +97,7 @@ export default function NotFoundPage() {
         404
       </Code>
       <Title>Page introuvable</Title>
-      <Desc>La page que vous cherchez n&apos;existe pas ou a ete deplacee.</Desc>
+      <Desc>La page que vous cherchez n&apos;existe pas ou a été déplacée.</Desc>
       <Actions>
         <PrimaryLink to="/">
           <Home size={16} /> Retour a l&apos;accueil

@@ -313,7 +313,7 @@ const TagChip = styled.span`
   gap: 0.3rem;
   padding: 0.2rem 0.6rem;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.75rem;
   font-family: ${({ theme }) => theme.fonts.mono};
@@ -468,7 +468,7 @@ const Toggle = styled.button<{ $active: boolean }>`
   color: ${({ $active, theme }) =>
     $active ? theme.colors.accent : theme.colors.textSecondary};
   border-color: ${({ $active, theme }) =>
-    $active ? 'rgba(201,162,4,0.3)' : theme.colors.surfaceBorder};
+    $active ? 'rgba(11,122,117,0.3)' : theme.colors.surfaceBorder};
 `;
 
 const FeedbackBanner = styled(motion.div)<{ $success: boolean }>`

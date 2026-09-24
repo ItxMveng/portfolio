@@ -162,13 +162,13 @@ const MessageItem = styled(motion.div)<{ $unread: boolean; $selected: boolean }>
     $selected
       ? theme.colors.accentDim
       : $unread
-        ? 'rgba(201,162,4,0.03)'
+        ? 'rgba(11,122,117,0.03)'
         : 'transparent'};
   border-left: 3px solid ${({ $selected, $unread, theme }) =>
     $selected
       ? theme.colors.accent
       : $unread
-        ? 'rgba(201,162,4,0.3)'
+        ? 'rgba(11,122,117,0.3)'
         : 'transparent'};
 
   &:last-child {
@@ -188,7 +188,7 @@ const MessageAvatar = styled.div<{ $unread: boolean }>`
   background: ${({ $unread, theme }) =>
     $unread ? theme.colors.accentDim : theme.colors.surface};
   border: 1px solid ${({ $unread, theme }) =>
-    $unread ? 'rgba(201,162,4,0.25)' : theme.colors.surfaceBorder};
+    $unread ? 'rgba(11,122,117,0.25)' : theme.colors.surfaceBorder};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,11 +330,11 @@ const DetailActionBtn = styled.button<{ $danger?: boolean }>`
   color: ${({ $danger, theme }) =>
     $danger ? theme.colors.danger : theme.colors.textMuted};
   border-color: ${({ $danger }) =>
-    $danger ? 'rgba(192,57,43,0.2)' : 'rgba(30,38,53,0.08)'};
+    $danger ? 'rgba(192,57,43,0.2)' : 'rgba(20,23,31,0.08)'};
 
   &:hover {
     background: ${({ $danger }) =>
-      $danger ? 'rgba(192,57,43,0.15)' : 'rgba(30,38,53,0.06)'};
+      $danger ? 'rgba(192,57,43,0.15)' : 'rgba(20,23,31,0.06)'};
     color: ${({ $danger, theme }) =>
       $danger ? theme.colors.danger : theme.colors.textPrimary};
     border-color: currentColor;

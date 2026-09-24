@@ -146,7 +146,7 @@ const IconBtn = styled.button<{ $danger?: boolean; $active?: boolean }>`
         ? 'rgba(192,57,43,0.12)'
         : $active
           ? 'rgba(30,142,90,0.1)'
-          : 'rgba(30,38,53,0.05)'};
+          : 'rgba(20,23,31,0.05)'};
     color: ${({ $danger, $active, theme }) =>
       $danger ? theme.colors.danger : $active ? theme.colors.success : theme.colors.textPrimary};
   }

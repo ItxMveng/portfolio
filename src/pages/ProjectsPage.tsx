@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SEOHead } from '../components/layout/SEOHead';
 import { SectionLabel, SectionTitle, Tag } from '../components/ui';
+import { ProjectCoverArt } from '../components/ui/ProjectCoverArt';
 import { useProjects } from '../hooks/useProjects';
 import { staggerContainer, staggerItem } from '../lib/animations';
 import { normalizeExternalUrlField } from '../lib/external-links';
@@ -22,17 +23,12 @@ const PageHeader = styled.section`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(201,162,4, 0.12) 0%,
-      transparent 70%
-    );
-    filter: blur(40px);
+    top: -70px;
+    right: 6%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.colors.sun};
     pointer-events: none;
   }
 `;
@@ -129,7 +125,7 @@ const ProjectCard = styled(motion.div)`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: rgba(201,162,4, 0.35);
+    border-color: rgba(11,122,117, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.cardHover};
     transform: translateY(-4px);
   }
@@ -157,30 +153,19 @@ const ProjectCover = styled.div<{ $hasCover: boolean }>`
   }
 `;
 
-const CoverPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  opacity: 0.45;
-`;
-
 const CoverBadge = styled.div`
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
   padding: 0.2rem 0.6rem;
-  background: rgba(10, 10, 15, 0.82);
-  backdrop-filter: blur(8px);
+  background: ${({ theme }) => theme.colors.bgCard};
   border: 1px solid ${({ theme }) => theme.colors.surfaceBorder};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 const FeaturedBadge = styled.div`
@@ -188,14 +173,13 @@ const FeaturedBadge = styled.div`
   top: 0.75rem;
   right: 0.75rem;
   padding: 0.2rem 0.6rem;
-  background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.3);
+  background: ${({ theme }) => theme.colors.sun};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.ink};
 `;
 
 const CardBody = styled.div`
@@ -333,19 +317,6 @@ const EmptyState = styled(motion.div)`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-const CATEGORY_ICONS: Record<string, string> = {
-  Web: '🌐',
-  AI: '🤖',
-  Mobile: '📱',
-  Data: '🗄️',
-  Automatisation: '⚡',
-  Other: '🔧',
-};
-
-function getCoverPlaceholder(category: string) {
-  return CATEGORY_ICONS[category] ?? '🔧';
-}
-
 export default function ProjectsPage() {
   const { projects, loading } = useProjects();
   const [activeCategory, setActiveCategory] = useState('Tous');
@@ -364,23 +335,23 @@ export default function ProjectsPage() {
     <PageWrapper>
       <SEOHead
         title="Projets"
-        description="Realisations en developpement web, IA, automatisation et integration de donnees."
+        description="Réalisations en développement web, IA, automatisation et intégration de données."
       />
       <PageHeader>
         <Container>
           <HeaderContent variants={staggerContainer} initial="hidden" animate="visible">
             <motion.div variants={staggerItem}>
-              <SectionLabel>Realisations</SectionLabel>
+              <SectionLabel>Réalisations</SectionLabel>
             </motion.div>
             <motion.div variants={staggerItem}>
               <SectionTitle>
-                Projets classes par <span>domaine d&apos;expertise</span>
+                Projets classés par <span>domaine d&apos;expertise</span>
               </SectionTitle>
             </motion.div>
             <motion.div variants={staggerItem}>
               <PageSubtitle>
-                Applications web, agents IA, automatisations et integrations de donnees -
-                chaque projet resout un probleme reel.
+                Applications web, agents IA, automatisations et intégrations de données —
+                chaque projet résout un problème réel.
               </PageSubtitle>
             </motion.div>
           </HeaderContent>
@@ -448,7 +419,7 @@ export default function ProjectsPage() {
                       {project.cover_url ? (
                         <img src={project.cover_url} alt={project.title} loading="lazy" />
                       ) : (
-                        <CoverPlaceholder>{getCoverPlaceholder(project.category)}</CoverPlaceholder>
+                        <ProjectCoverArt title={project.title} seed={project.slug} />
                       )}
                       <CoverBadge>{project.category}</CoverBadge>
                       {project.featured && <FeaturedBadge>Featured</FeaturedBadge>}

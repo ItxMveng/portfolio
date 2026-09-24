@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="fr">
       <Head>
         <meta charSet="UTF-8" />
-        <meta name="theme-color" content="#FFF8F1" />
+        <meta name="theme-color" content="#FFFAF1" />
         <meta name="robots" content="index, follow" />
         <meta
           name="description"
@@ -19,7 +19,7 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..800;1,9..144,500..700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         />
       </Head>
       <body>

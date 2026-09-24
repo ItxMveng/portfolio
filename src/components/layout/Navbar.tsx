@@ -33,7 +33,7 @@ const NavWrapper = styled(motion.header)<{ $scrolled: boolean }>`
           -webkit-backdrop-filter: blur(20px) saturate(1.6);
           border-bottom: 1px solid rgba(154, 52, 18, 0.1);
           padding: 0.6rem 0;
-          box-shadow: 0 2px 18px rgba(201,162,4, 0.08);
+          box-shadow: 0 2px 18px rgba(11,122,117, 0.08);
         `
       : css`
           background: transparent;
@@ -145,9 +145,9 @@ const AvailabilityBadge = styled(motion.div)<{ $status: string }>`
     }
     if ($status === 'busy') {
       return css`
-        background: rgba(201,162,4, 0.08);
+        background: rgba(11,122,117, 0.08);
         color: ${theme.colors.warning};
-        border-color: rgba(201,162,4, 0.2);
+        border-color: rgba(11,122,117, 0.2);
       `;
     }
     return css`

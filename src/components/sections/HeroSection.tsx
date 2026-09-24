@@ -26,65 +26,54 @@ const HeroWrapper = styled.section`
   background: ${({ theme }) => theme.colors.bg};
 `;
 
-/* ── Blobs d'arrière-plan ── */
-const BlobGreen = styled.div`
+/* ── Formes géométriques pleines (pas de halos flous) ── */
+const SunDisc = styled.div`
   position: absolute;
-  width: 600px;
-  height: 600px;
-  top: -10%;
-  right: -8%;
+  width: 440px;
+  height: 440px;
+  top: 6%;
+  right: -9%;
   border-radius: 50%;
-  background: radial-gradient(circle, ${({ theme }) => theme.colors.accentDim} 0%, transparent 70%);
-  filter: blur(90px);
+  background: ${({ theme }) => theme.colors.sun};
   pointer-events: none;
-  animation: blobFloat 14s ease-in-out infinite;
-  opacity: 0.9;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: 280px;
+    height: 280px;
+    top: 2%;
+    right: -18%;
+    opacity: 0.8;
+  }
 `;
 
-const BlobBlue = styled.div`
+const TealRing = styled.div`
   position: absolute;
-  width: 400px;
-  height: 400px;
-  bottom: 5%;
-  left: -5%;
+  width: 170px;
+  height: 170px;
+  bottom: -60px;
+  left: -110px;
   border-radius: 50%;
-  background: radial-gradient(circle, ${({ theme }) => theme.colors.goldDim} 0%, transparent 70%);
-  filter: blur(80px);
+  border: 16px solid ${({ theme }) => theme.colors.accent};
   pointer-events: none;
-  animation: blobFloat 18s ease-in-out infinite reverse;
-  opacity: 0.85;
+  animation: floatSlow 9s ease-in-out infinite;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: none;
+  }
 `;
 
-/* Grille légère */
-const GridLines = styled.div`
+const CoralDot = styled.div`
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(${({ theme }) => theme.colors.divider} 1px, transparent 1px),
-    linear-gradient(90deg, ${({ theme }) => theme.colors.divider} 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 65% at 55% 35%, black 0%, transparent 75%);
+  width: 34px;
+  height: 34px;
+  top: 15%;
+  left: 55%;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.coral};
   pointer-events: none;
-`;
+  animation: floatSlow 7s ease-in-out infinite reverse;
 
-/* Trait vertical décoratif */
-const VerticalAccent = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    ${({ theme }) => theme.colors.accent} 30%,
-    ${({ theme }) => theme.colors.gold} 70%,
-    transparent 100%
-  );
-  opacity: 0.35;
-  pointer-events: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: none;
   }
 `;
@@ -174,9 +163,9 @@ const PulseDot = styled(motion.span)<{ $status: string }>`
 
 /* ── Titre principal ── */
 const HeroTitle = styled(motion.h1)`
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 800;
-  line-height: 1.1;
+  font-size: clamp(2.5rem, 6.2vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.02;
   letter-spacing: -0.03em;
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
@@ -393,7 +382,7 @@ const ProfileCard = styled(motion.div)`
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.gold});
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.sun});
   }
 `;
 
@@ -415,28 +404,16 @@ const OrbOuter = styled(motion.div)`
   width: 82px;
   height: 82px;
   border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    ${({ theme }) => theme.colors.accent},
-    ${({ theme }) => theme.colors.gold},
-    ${({ theme }) => theme.colors.gold},
-    ${({ theme }) => theme.colors.accent}
-  );
-  filter: blur(1px);
-  animation: orbSpin 8s linear infinite;
+  /* Disque jaune décalé derrière la photo (effet « autocollant ») */
+  background: ${({ theme }) => theme.colors.sun};
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-42%, -42%);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     width: 100px;
     height: 100px;
-  }
-
-  @keyframes orbSpin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
   }
 `;
 
@@ -563,21 +540,23 @@ const ScrollLine = styled(motion.div)`
 
 /* ── Animations ── */
 const wordVariants: Variants = {
-  hidden: { opacity: 0, y: 16, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 18 },
   visible: (i: number) => ({
-    opacity: 1, y: 0, filter: 'blur(0px)',
-    transition: { delay: i * 0.07, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] },
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
   }),
 };
 
 function AnimatedTitle({ text }: { text: string }) {
+  const words = text.split(' ');
   return (
     <>
-      {text.split(' ').map((word, i) => (
+      {words.map((word, i) => (
         <motion.span
           key={`${word}-${i}`}
           custom={i}
           variants={wordVariants}
+          className={i === words.length - 1 ? 'marker' : undefined}
           style={{ display: 'inline-block', marginRight: '0.25em' }}
         >
           {word}
@@ -617,10 +596,9 @@ export function HeroSection() {
 
   return (
     <HeroWrapper>
-      <BlobGreen />
-      <BlobBlue />
-      <GridLines />
-      <VerticalAccent />
+      <SunDisc />
+      <TealRing />
+      <CoralDot />
 
       <HeroContainer>
         <HeroGrid

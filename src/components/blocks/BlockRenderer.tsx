@@ -109,7 +109,7 @@ const Para = styled.p`
   code {
     font-family: ${({ theme }) => theme.fonts.mono};
     font-size: 0.875em;
-    background: rgba(201,162,4, 0.12);
+    background: rgba(11,122,117, 0.12);
     color: ${({ theme }) => theme.colors.accentHover};
     padding: 0.15em 0.45em;
     border-radius: 4px;
@@ -274,7 +274,7 @@ const CopyButton = styled(motion.button)`
   &:hover {
     color: #fff;
     border-color: ${({ theme }) => theme.colors.accent};
-    background: rgba(201,162,4, 0.25);
+    background: rgba(11,122,117, 0.25);
   }
 `;
 
@@ -401,16 +401,16 @@ const AlternativesList = styled.ul`
 const calloutConfig = {
   info: {
     icon: Info,
-    bg: 'rgba(201,162,4,0.07)',
-    border: 'rgba(201,162,4,0.28)',
-    accent: '#323B4C',
+    bg: 'rgba(11,122,117,0.08)',
+    border: 'rgba(11,122,117,0.3)',
+    accent: '#08635F',
     label: 'Info',
   },
   warning: {
     icon: AlertTriangle,
-    bg: 'rgba(201,162,4,0.09)',
-    border: 'rgba(183,121,31,0.3)',
-    accent: '#B7791F',
+    bg: 'rgba(255,201,60,0.22)',
+    border: 'rgba(154,79,5,0.35)',
+    accent: '#9A4F05',
     label: 'Attention',
   },
   danger: {
@@ -422,9 +422,9 @@ const calloutConfig = {
   },
   tip: {
     icon: Lightbulb,
-    bg: 'rgba(30,142,90,0.07)',
-    border: 'rgba(30,142,90,0.25)',
-    accent: '#1E8E5A',
+    bg: 'rgba(255,107,74,0.10)',
+    border: 'rgba(255,107,74,0.4)',
+    accent: '#B23A1E',
     label: 'Conseil',
   },
 } as const;
@@ -498,7 +498,7 @@ const FileIconWrap = styled.div`
   height: 40px;
   border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -566,7 +566,7 @@ const StepsCount = styled.span`
   font-family: ${({ theme }) => theme.fonts.mono};
   color: ${({ theme }) => theme.colors.accent};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   padding: 0.1rem 0.5rem;
   border-radius: ${({ theme }) => theme.radii.full};
 `;
@@ -594,7 +594,7 @@ const StepRowHeader = styled.button`
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(201,162,4, 0.04);
+    background: rgba(11,122,117, 0.04);
   }
 `;
 
@@ -603,7 +603,7 @@ const StepNum = styled.div`
   height: 28px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.3);
+  border: 1px solid rgba(11,122,117, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -767,7 +767,7 @@ function CodeBlock({ block }: { block: Block }) {
         <CopyButton onClick={handleCopy} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
           {copied ? (
             <>
-              <Check size={12} /> Copie
+              <Check size={12} /> Copié
             </>
           ) : (
             <>
@@ -827,9 +827,9 @@ function StepGroupBlock({ block }: { block: Block }) {
         <StepsLeadIcon>
           <Play size={13} />
         </StepsLeadIcon>
-        <StepsTitle>Etapes</StepsTitle>
+        <StepsTitle>Étapes</StepsTitle>
         <StepsCount>
-          {steps.length} etape{steps.length !== 1 ? 's' : ''}
+          {steps.length} étape{steps.length !== 1 ? 's' : ''}
         </StepsCount>
       </StepsHeader>
 

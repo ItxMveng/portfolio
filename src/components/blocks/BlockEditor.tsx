@@ -299,7 +299,7 @@ const StepNum = styled.span`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.accent};
   background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   width: 20px;
   height: 20px;
   border-radius: 50%;

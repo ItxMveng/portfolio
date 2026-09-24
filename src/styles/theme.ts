@@ -1,9 +1,9 @@
 export interface Theme {
   colors: {
-    // Backgrounds — système de sections alternées
-    bg: string;          // section 1 (blanc / dark profond)
-    bgSecondary: string; // section 2 (off-white / dark medium)
-    bgTertiary: string;  // section 3 (gris léger / dark léger)
+    // Fonds — papier chaud, sections alternées
+    bg: string;
+    bgSecondary: string;
+    bgTertiary: string;
     bgCard: string;
     bgCardHover: string;
     // Surfaces
@@ -11,18 +11,25 @@ export interface Theme {
     surfaceHover: string;
     surfaceBorder: string;
     surfaceBorderHover: string;
-    // Accent navy (actions) — cf. bandeau du CV
+    // Accent teal (actions, liens)
     accent: string;
     accentHover: string;
     accentDim: string;
     accentDimHover: string;
     accentGlow: string;
-    // Secondaires : gold = or du CV (highlights), navyDeep = aplats sombres
+    // Soleil : jaune vif pour aplats et surlignage (jamais en texte sur clair)
+    sun: string;
+    sunSoft: string;
+    // gold : ambre foncé, lisible en texte ; goldDim : fond jaune translucide
     gold: string;
     goldSoft: string;
     goldDim: string;
     goldGlow: string;
-    navyDeep: string;
+    // Corail : touches vives (pastilles, détails) — texte encre dessus
+    coral: string;
+    coralDim: string;
+    // Encre : texte principal et aplats sombres
+    ink: string;
     onAccent: string;
     // Textes
     textPrimary: string;
@@ -93,8 +100,8 @@ export interface Theme {
 
 const shared: Omit<Theme, 'colors' | 'shadows' | 'gradients'> = {
   fonts: {
-    sans: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    display: "'Poppins', 'Montserrat', -apple-system, sans-serif",
+    sans: "'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    display: "'Fraunces', 'Iowan Old Style', Georgia, serif",
     mono: "'JetBrains Mono', 'Fira Code', monospace",
   },
   fontSizes: {
@@ -120,62 +127,68 @@ const shared: Omit<Theme, 'colors' | 'shadows' | 'gradients'> = {
   zIndex: { base: 0, raised: 10, dropdown: 100, sticky: 200, overlay: 300, modal: 400, toast: 500 },
 };
 
-/* Thème unique repris du CV : navy #323B4C, or #C9A204, gris #4D4D4F sur blanc. */
+/*
+ * Identité : papier chaud + encre + teal profond, avec du jaune soleil en
+ * surlignage et une touche de corail. Contrastes vérifiés (WCAG AA) :
+ * texte principal 17:1, secondaire 9:1, atténué 6:1, blanc sur teal 5,2:1.
+ */
 export const theme: Theme = {
   ...shared,
   colors: {
-    bg: '#FFFFFF',
-    bgSecondary: '#F5F7FA',
-    bgTertiary: '#ECEFF5',
+    bg: '#FFFAF1',
+    bgSecondary: '#FFF3DF',
+    bgTertiary: '#FBE7C4',
     bgCard: '#FFFFFF',
-    bgCardHover: '#FAFBFD',
-    surface: 'rgba(50,59,76,0.04)',
-    surfaceHover: 'rgba(50,59,76,0.08)',
-    surfaceBorder: 'rgba(50,59,76,0.14)',
-    surfaceBorderHover: 'rgba(201,162,4,0.55)',
-    // Accent : navy du CV — le texte blanc reste lisible dessus
-    accent: '#323B4C',
-    accentHover: '#232C3C',
-    // Dims dorés : pastille or + texte navy, comme les tags du CV
-    accentDim: 'rgba(201,162,4,0.14)',
-    accentDimHover: 'rgba(201,162,4,0.24)',
-    accentGlow: 'rgba(201,162,4,0.35)',
-    gold: '#C9A204',
-    goldSoft: '#E8C34A',
-    goldDim: 'rgba(201,162,4,0.14)',
-    goldGlow: 'rgba(201,162,4,0.4)',
-    navyDeep: '#1E2635',
-    onAccent: '#1E2635',
-    textPrimary: '#1E2635',
-    textSecondary: '#4D4D4F',
-    textMuted: '#646C7B',
-    textAccent: '#8A6E02',
-    success: '#1E8E5A',
-    warning: '#B7791F',
+    bgCardHover: '#FFFDF8',
+    surface: 'rgba(20,23,31,0.04)',
+    surfaceHover: 'rgba(20,23,31,0.08)',
+    surfaceBorder: 'rgba(20,23,31,0.14)',
+    surfaceBorderHover: 'rgba(11,122,117,0.6)',
+    accent: '#0B7A75',
+    accentHover: '#08635F',
+    accentDim: 'rgba(11,122,117,0.12)',
+    accentDimHover: 'rgba(11,122,117,0.2)',
+    accentGlow: 'rgba(11,122,117,0.35)',
+    sun: '#FFC93C',
+    sunSoft: '#FFDD85',
+    gold: '#9A4F05',
+    goldSoft: '#FFDD85',
+    goldDim: 'rgba(255,201,60,0.30)',
+    goldGlow: 'rgba(255,201,60,0.45)',
+    coral: '#FF6B4A',
+    coralDim: 'rgba(255,107,74,0.16)',
+    ink: '#14171F',
+    onAccent: '#FFFFFF',
+    textPrimary: '#14171F',
+    textSecondary: '#3F4554',
+    textMuted: '#5A6170',
+    textAccent: '#08635F',
+    success: '#1B7F4B',
+    warning: '#9A4F05',
     danger: '#C0392B',
-    info: '#323B4C',
-    calloutInfo: 'rgba(50,59,76,0.06)',
-    calloutWarning: 'rgba(201,162,4,0.12)',
-    calloutDanger: 'rgba(192,57,43,0.07)',
-    calloutTip: 'rgba(201,162,4,0.1)',
-    divider: 'rgba(50,59,76,0.1)',
+    info: '#0B7A75',
+    calloutInfo: 'rgba(11,122,117,0.08)',
+    calloutWarning: 'rgba(255,201,60,0.22)',
+    calloutDanger: 'rgba(192,57,43,0.08)',
+    calloutTip: 'rgba(255,107,74,0.10)',
+    divider: 'rgba(20,23,31,0.10)',
   },
   gradients: {
-    brand: 'linear-gradient(135deg, #3C4860 0%, #2A3345 60%, #1E2635 100%)',
-    gold: 'linear-gradient(135deg, #E8C34A 0%, #C9A204 55%, #A8850A 100%)',
-    navy: 'linear-gradient(160deg, #323B4C 0%, #1E2635 100%)',
-    soft: 'linear-gradient(135deg, rgba(201,162,4,0.14) 0%, rgba(50,59,76,0.08) 100%)',
+    brand: 'linear-gradient(135deg, #0B7A75 0%, #08635F 100%)',
+    gold: 'linear-gradient(135deg, #FFDD85 0%, #FFC93C 100%)',
+    navy: 'linear-gradient(160deg, #1D222E 0%, #14171F 100%)',
+    soft: 'linear-gradient(135deg, rgba(255,201,60,0.28) 0%, rgba(11,122,117,0.10) 100%)',
   },
   shadows: {
-    sm: '0 1px 2px rgba(30,38,53,0.06)',
-    md: '0 4px 10px rgba(30,38,53,0.08), 0 2px 4px rgba(30,38,53,0.05)',
-    lg: '0 12px 30px rgba(30,38,53,0.12), 0 4px 10px rgba(30,38,53,0.06)',
-    card: '0 1px 3px rgba(30,38,53,0.07), 0 6px 18px rgba(30,38,53,0.05)',
-    cardHover: '0 14px 38px rgba(30,38,53,0.16), 0 3px 10px rgba(201,162,4,0.12)',
-    cardRaised: '0 24px 60px rgba(30,38,53,0.2), 0 8px 22px rgba(30,38,53,0.08)',
-    accent: '0 6px 22px rgba(50,59,76,0.28)',
-    accentStrong: '0 10px 38px rgba(50,59,76,0.4)',
-    glow: '0 0 70px rgba(201,162,4,0.22)',
-    blue: '0 4px 20px rgba(201,162,4,0.25)',
+    sm: '0 1px 2px rgba(20,23,31,0.07)',
+    md: '0 4px 10px rgba(20,23,31,0.08), 0 2px 4px rgba(20,23,31,0.05)',
+    lg: '0 12px 30px rgba(20,23,31,0.12), 0 4px 10px rgba(20,23,31,0.06)',
+    card: '0 1px 2px rgba(20,23,31,0.06), 0 6px 16px rgba(120,80,20,0.06)',
+    cardHover: '0 14px 34px rgba(120,80,20,0.14), 0 3px 8px rgba(20,23,31,0.08)',
+    cardRaised: '0 24px 56px rgba(20,23,31,0.18), 0 8px 20px rgba(20,23,31,0.08)',
+    accent: '0 4px 14px rgba(11,122,117,0.28)',
+    accentStrong: '0 8px 24px rgba(11,122,117,0.38)',
+    glow: '0 0 0 6px rgba(255,201,60,0.28)',
+    blue: '0 4px 14px rgba(255,201,60,0.4)',
   },
 };

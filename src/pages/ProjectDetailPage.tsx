@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { BlockRenderer } from '../components/blocks/BlockRenderer';
 import { SEOHead } from '../components/layout/SEOHead';
 import { Spinner, Tag } from '../components/ui';
+import { ProjectCoverArt } from '../components/ui/ProjectCoverArt';
 import { normalizeProjectUrls } from '../lib/external-links';
 import { supabase } from '../lib/supabase';
 import { fadeUp, staggerContainer, staggerItem } from '../lib/animations';
@@ -40,25 +41,10 @@ const HeroCover = styled.img`
   opacity: 0.6;
 `;
 
-const HeroPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 5rem;
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.accentDim},
-    ${({ theme }) => theme.colors.goldDim}
-  );
-  opacity: 0.5;
-`;
-
 const HeroOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 10, 15, 0.2) 0%, rgba(10, 10, 15, 0.85) 100%);
+  background: linear-gradient(to bottom, rgba(20, 23, 31, 0.6) 0%, rgba(20, 23, 31, 0.94) 100%);
 `;
 
 const HeroContent = styled(motion.div)`
@@ -96,14 +82,13 @@ const BackLink = styled(Link)`
 const HeroCategory = styled.span`
   display: inline-flex;
   padding: 0.2rem 0.75rem;
-  background: ${({ theme }) => theme.colors.accentDim};
-  border: 1px solid rgba(201,162,4, 0.3);
+  background: ${({ theme }) => theme.colors.sun};
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.ink};
   margin-bottom: 0.75rem;
 `;
 
@@ -313,14 +298,6 @@ const FallbackText = styled.p`
   line-height: 1.7;
 `;
 
-const CATEGORY_ICONS: Record<string, string> = {
-  Web: '🌐',
-  AI: '🤖',
-  Mobile: '📱',
-  Data: '🗄️',
-  Automatisation: '⚡',
-};
-
 export default function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [project, setProject] = useState<Project | null>(null);
@@ -377,7 +354,7 @@ export default function ProjectDetailPage() {
         {project.cover_url ? (
           <HeroCover src={project.cover_url} alt={project.title} />
         ) : (
-          <HeroPlaceholder>{CATEGORY_ICONS[project.category] ?? '🔧'}</HeroPlaceholder>
+          <ProjectCoverArt title={project.title} seed={project.slug} showName={false} />
         )}
         <HeroOverlay />
         <HeroContent

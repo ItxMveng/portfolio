@@ -243,7 +243,7 @@ const CategoryBadge = styled.span`
   padding: 0.2rem 0.65rem;
   background: ${({ theme }) => theme.colors.accentDim};
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(201,162,4, 0.2);
+  border: 1px solid rgba(11,122,117, 0.2);
   border-radius: ${({ theme }) => theme.radii.full};
   font-size: 0.7rem;
   font-weight: 600;
@@ -268,7 +268,7 @@ const StatusBadge = styled.span<{ $published: boolean }>`
   color: ${({ $published, theme }) =>
     $published ? theme.colors.success : theme.colors.textMuted};
   border: 1px solid
-    ${({ $published }) => ($published ? 'rgba(30,142,90,0.2)' : 'rgba(30,38,53,0.08)')};
+    ${({ $published }) => ($published ? 'rgba(30,142,90,0.2)' : 'rgba(20,23,31,0.08)')};
 
   &::before {
     content: '';
@@ -314,7 +314,7 @@ const ActionBtn = styled.button<{ $danger?: boolean; $active?: boolean }>`
         ? 'rgba(192,57,43,0.12)'
         : $active
           ? 'rgba(30,142,90,0.1)'
-          : 'rgba(30,38,53,0.06)'};
+          : 'rgba(20,23,31,0.06)'};
     color: ${({ $danger, $active, theme }) =>
       $danger ? theme.colors.danger : $active ? theme.colors.success : theme.colors.textPrimary};
   }
@@ -331,7 +331,7 @@ const IconLink = styled.a`
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(30,38,53,0.06);
+    background: rgba(20,23,31,0.06);
     color: ${({ theme }) => theme.colors.textPrimary};
   }
 `;

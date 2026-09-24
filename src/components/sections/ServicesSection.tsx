@@ -1,10 +1,22 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Bot, Cloud, Code2, Sparkles, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SectionLabel, SectionTitle } from '../../components/ui';
 import { useServices } from '../../hooks/useServices';
 import { defaultViewport, fadeUp, staggerContainer, staggerItem } from '../../lib/animations';
+
+/* Les icônes sont saisies en base sous forme d'emoji : on les rend en SVG. */
+const ICON_MAP: Record<string, LucideIcon> = {
+  '🌐': Code2,
+  '🤖': Bot,
+  '☁️': Cloud,
+};
+
+function ServiceGlyph({ icon }: { icon?: string | null }) {
+  const Glyph = (icon && ICON_MAP[icon.trim()]) || Sparkles;
+  return <Glyph size={22} strokeWidth={1.9} aria-hidden="true" />;
+}
 
 /* Section 2 → off-white */
 const Section = styled.section`
@@ -72,7 +84,7 @@ const ServiceCard = styled(motion.div)`
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.gold});
+    background: linear-gradient(to right, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.sun});
     opacity: 0;
     transition: opacity 0.3s;
   }
@@ -94,7 +106,7 @@ const ServiceIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.375rem;
+  color: ${({ theme }) => theme.colors.accent};
   flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
 
@@ -281,7 +293,9 @@ export function ServicesSection() {
           {services.map((service) => (
             <TiltCard key={service.id}>
               <ServiceCard variants={staggerItem}>
-                <ServiceIcon>{service.icon}</ServiceIcon>
+                <ServiceIcon>
+                  <ServiceGlyph icon={service.icon} />
+                </ServiceIcon>
                 <div>
                   <ServiceTitle>{service.title}</ServiceTitle>
                   <ServiceTagline>{service.tagline}</ServiceTagline>
