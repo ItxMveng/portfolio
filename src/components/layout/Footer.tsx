@@ -167,6 +167,7 @@ export function Footer() {
               <ColTitle>Navigation</ColTitle>
               <LinksList>
                 <RouteLink to="/projects">Projets</RouteLink>
+                <RouteLink to="/certifications">Certifications</RouteLink>
                 <RouteLink to="/blog">Blog</RouteLink>
                 <HashLink onClick={() => nav('services')} type="button">Services</HashLink>
                 <HashLink onClick={() => nav('contact')} type="button">Contact</HashLink>

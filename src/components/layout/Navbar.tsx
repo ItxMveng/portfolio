@@ -9,6 +9,7 @@ import { useProfile } from '../../hooks/useProfile';
 const NAV_LINKS = [
   { label: 'Services', to: '/#services' },
   { label: 'Projets', to: '/projects' },
+  { label: 'Certifications', to: '/certifications' },
   { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/#contact' },
 ];

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { BadgeCheck, ExternalLink } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SectionLabel, SectionTitle } from '../../components/ui';
 import { useCertifications } from '../../hooks/useCertifications';
@@ -28,19 +29,27 @@ const Container = styled.div`
 `;
 
 const SectionHeader = styled.div`
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 3.5rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
 `;
 
-const SectionDesc = styled(motion.p)`
-  font-size: 1rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.7;
+const ViewAllLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.accent};
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &:hover {
+    gap: 0.6rem;
+  }
 `;
 
 const Grid = styled(motion.div)`
@@ -177,10 +186,11 @@ function formatIssuedAt(value: string | null) {
     .replace(/^\w/, (letter) => letter.toUpperCase());
 }
 
-export function CertificationsSection() {
+export function CertificationsPreviewSection() {
   const { certifications, loading } = useCertifications();
+  const highlighted = certifications.slice(0, 3);
 
-  if (loading || certifications.length === 0) return null;
+  if (loading || highlighted.length === 0) return null;
 
   return (
     <Section id="certifications">
@@ -191,16 +201,17 @@ export function CertificationsSection() {
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
           >
             <SectionLabel>Certifications</SectionLabel>
             <SectionTitle>
               Des compétences <span>vérifiables</span>
             </SectionTitle>
-            <SectionDesc variants={staggerItem}>
-              Chaque certification renvoie vers sa page de vérification officielle chez l&apos;organisme
-              émetteur.
-            </SectionDesc>
+          </motion.div>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={defaultViewport}>
+            <ViewAllLink to="/certifications">
+              Toutes les certifications <ArrowRight size={15} />
+            </ViewAllLink>
           </motion.div>
         </SectionHeader>
 
@@ -210,7 +221,7 @@ export function CertificationsSection() {
           whileInView="visible"
           viewport={defaultViewport}
         >
-          {certifications.map((certification) => {
+          {highlighted.map((certification) => {
             const issuedAt = formatIssuedAt(certification.issued_at);
 
             return (

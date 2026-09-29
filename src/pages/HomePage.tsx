@@ -1,6 +1,6 @@
 import { SEOHead } from '../components/layout/SEOHead';
 import { BlogPreviewSection } from '../components/sections/BlogPreviewSection';
-import { CertificationsSection } from '../components/sections/CertificationsSection';
+import { CertificationsPreviewSection } from '../components/sections/CertificationsPreviewSection';
 import { ContactSection } from '../components/sections/ContactSection';
 import { HeroSection } from '../components/sections/HeroSection';
 import { ProjectsPreviewSection } from '../components/sections/ProjectsPreviewSection';
@@ -13,7 +13,7 @@ export default function HomePage() {
       <HeroSection />
       <ServicesSection />
       <ProjectsPreviewSection />
-      <CertificationsSection />
+      <CertificationsPreviewSection />
       <BlogPreviewSection />
       <ContactSection />
     </>

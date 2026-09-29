@@ -42,6 +42,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const pages = [
     { loc: `${siteUrl}/`, lastmod: new Date().toISOString() },
     { loc: `${siteUrl}/projects`, lastmod: new Date().toISOString() },
+    { loc: `${siteUrl}/certifications`, lastmod: new Date().toISOString() },
     { loc: `${siteUrl}/blog`, lastmod: new Date().toISOString() },
     ...(projects ?? []).map((project) => ({
       loc: `${siteUrl}/projects/${project.slug}`,

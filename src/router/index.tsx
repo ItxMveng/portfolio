@@ -10,6 +10,7 @@ import styled from 'styled-components';
 const HomePage = lazy(() => import('../pages/HomePage'));
 const ProjectsPage = lazy(() => import('../pages/ProjectsPage'));
 const BlogPage = lazy(() => import('../pages/BlogPage'));
+const CertificationsPage = lazy(() => import('../pages/CertificationsPage'));
 const ArticlePage = lazy(() => import('../pages/ArticlePage'));
 const ProjectDetailPage = lazy(() => import('../pages/ProjectDetailPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'projects', element: <ProjectsPage /> },
       { path: 'projects/:slug', element: <ProjectDetailPage /> },
+      { path: 'certifications', element: <CertificationsPage /> },
       { path: 'blog', element: <BlogPage /> },
       { path: 'blog/:slug', element: <ArticlePage /> },
       { path: '*', element: <NotFoundPage /> },
