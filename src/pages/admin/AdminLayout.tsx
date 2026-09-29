@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
+  Award,
   Briefcase,
   ExternalLink,
   FileText,
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { to: '/admin/profile', label: 'Profil', icon: User },
   { to: '/admin/skills', label: 'Atouts', icon: Star },
   { to: '/admin/services', label: 'Services', icon: Briefcase },
+  { to: '/admin/certifications', label: 'Certifications', icon: Award },
   { to: '/admin/projects', label: 'Projets', icon: FolderOpen },
   { to: '/admin/blog', label: 'Blog', icon: FileText },
   { to: '/admin/messages', label: 'Messages', icon: MessageSquare },

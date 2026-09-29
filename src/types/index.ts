@@ -112,6 +112,19 @@ export interface Skill {
   active: boolean;
 }
 
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  issued_at: string | null;
+  credential_url: string;
+  image_url: string;
+  description: string;
+  display_order: number;
+  active: boolean;
+  created_at: string;
+}
+
 export interface Message {
   id: string;
   name: string;

@@ -20,6 +20,7 @@ const DashboardPage = lazy(() => import('../pages/admin/DashboardPage'));
 const ProfileEditor = lazy(() => import('../pages/admin/ProfileEditor'));
 const SkillsEditor = lazy(() => import('../pages/admin/SkillsEditor'));
 const ServicesEditor = lazy(() => import('../pages/admin/ServicesEditor'));
+const CertificationsEditor = lazy(() => import('../pages/admin/CertificationsEditor'));
 const ProjectsManager = lazy(() => import('../pages/admin/ProjectsManager'));
 const ProjectEditor = lazy(() => import('../pages/admin/ProjectEditor'));
 const BlogManager = lazy(() => import('../pages/admin/BlogManager'));
@@ -101,6 +102,7 @@ const router = createBrowserRouter([
       { path: 'profile', element: <ProfileEditor /> },
       { path: 'skills', element: <SkillsEditor /> },
       { path: 'services', element: <ServicesEditor /> },
+      { path: 'certifications', element: <CertificationsEditor /> },
       { path: 'projects', element: <ProjectsManager /> },
       { path: 'projects/new', element: <ProjectEditor /> },
       { path: 'projects/:id/edit', element: <ProjectEditor /> },
