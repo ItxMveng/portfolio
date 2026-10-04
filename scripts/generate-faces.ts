@@ -254,20 +254,39 @@ interface ModelInfo {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** Erreur qui ne se résout pas en réessayant (crédit épuisé, token invalide) : on arrête tout. */
+class FatalError extends Error {}
+
 class ReplicateClient {
   constructor(private readonly token: string) {}
 
   private async request<T>(url: string, init: RequestInit = {}): Promise<T> {
-    const res = await fetch(url.startsWith('http') ? url : `https://api.replicate.com/v1${url}`, {
-      ...init,
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        'Content-Type': 'application/json',
-        ...init.headers,
-      },
-    });
-    if (!res.ok) throw new Error(`Replicate ${res.status} : ${await res.text()}`);
-    return (await res.json()) as T;
+    // Sans moyen de paiement, Replicate limite à ~6 prédictions/min : on attend `retry_after`.
+    for (let throttled = 0; ; throttled += 1) {
+      const res = await fetch(url.startsWith('http') ? url : `https://api.replicate.com/v1${url}`, {
+        ...init,
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+          ...init.headers,
+        },
+      });
+      if (res.ok) return (await res.json()) as T;
+      const body = await res.text();
+      if (res.status === 429 && throttled < 20) {
+        const retryAfter = Number((JSON.parse(body) as { retry_after?: number }).retry_after) || 10;
+        await sleep((retryAfter + 1) * 1000);
+        continue;
+      }
+      if (res.status === 401 || res.status === 402) {
+        throw new FatalError(
+          res.status === 402
+            ? 'Crédit Replicate insuffisant : ajoutez du crédit sur https://replicate.com/account/billing puis relancez.'
+            : 'REPLICATE_API_TOKEN invalide (401).',
+        );
+      }
+      throw new Error(`Replicate ${res.status} : ${body}`);
+    }
   }
 
   async latestVersion(model: string) {
@@ -352,6 +371,7 @@ async function generateWithReplicate(keys: FaceKey[], image: Buffer, options: Op
         console.log(`  ✓ ${key}  ${JSON.stringify(params)}`);
         return;
       } catch (error) {
+        if (error instanceof FatalError) throw error;
         lastError = error;
         console.warn(`  … ${key} tentative ${attempt} échouée : ${String(error)}`);
         await sleep(2000 * attempt);
@@ -370,6 +390,10 @@ async function runPool<T>(items: T[], concurrency: number, worker: (item: T) => 
         try {
           await worker(item);
         } catch (error) {
+          if (error instanceof FatalError) {
+            queue.length = 0;
+            throw error;
+          }
           failures.push(error);
         }
       }
