@@ -13,7 +13,8 @@
     "setup-supabase": "npx prisma migrate deploy && node scripts/setup-supabase.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "faces:generate": "tsx scripts/generate-faces.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.2",
@@ -46,6 +47,8 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",
     "prisma": "^7.4.2",
+    "sharp": "^0.35.5",
+    "tsx": "^4.23.15",
     "typescript": "5.5.3"
   }
 }

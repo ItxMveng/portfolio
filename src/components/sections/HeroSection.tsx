@@ -1,4 +1,5 @@
 import { motion, useMotionValue, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { Variants } from 'framer-motion';
 import {
@@ -11,6 +12,7 @@ import {
   Globe,
 } from 'lucide-react';
 import styled from 'styled-components';
+import { FaceTracker } from '../FaceTracker';
 import { useProfile } from '../../hooks/useProfile';
 import { useSkills } from '../../hooks/useSkills';
 import { staggerContainer, staggerItem } from '../../lib/animations';
@@ -579,23 +581,25 @@ export function HeroSection() {
   const parallaxY = useTransform(scrollYProgress, [0, 0.3], ['0%', '20%']);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
+  const heroRef = useRef<HTMLElement>(null);
 
   if (loading || !profile) return null;
 
   const status = profile.status ?? 'closed';
   const stats = profile.stats ?? { projects: 0, domains: 0, response_time: '' };
+  // `expression` : réaction de la photo (<FaceTracker />) au survol du lien.
   const profileLinks = [
-    profile.github_url ? { href: profile.github_url, label: 'GitHub', icon: Github } : null,
-    profile.linkedin_url ? { href: profile.linkedin_url, label: 'LinkedIn', icon: Linkedin } : null,
-    profile.email ? { href: `mailto:${profile.email}`, label: profile.email, icon: Mail } : null,
-    profile.website_url ? { href: profile.website_url, label: 'Site web', icon: Globe } : null,
-  ].filter(Boolean) as Array<{ href: string; label: string; icon: typeof Github }>;
+    profile.github_url ? { href: profile.github_url, label: 'GitHub', icon: Github, expression: 'wink' } : null,
+    profile.linkedin_url ? { href: profile.linkedin_url, label: 'LinkedIn', icon: Linkedin, expression: 'wink' } : null,
+    profile.email ? { href: `mailto:${profile.email}`, label: profile.email, icon: Mail, expression: 'big-smile' } : null,
+    profile.website_url ? { href: profile.website_url, label: 'Site web', icon: Globe, expression: 'wink' } : null,
+  ].filter(Boolean) as Array<{ href: string; label: string; icon: typeof Github; expression: string }>;
 
   const initials = (profile.full_name ?? '')
     .split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <HeroWrapper>
+    <HeroWrapper ref={heroRef}>
       <SunDisc />
       <TealRing />
       <CoralDot />
@@ -613,6 +617,7 @@ export function HeroSection() {
               $status={status}
               variants={staggerItem}
               whileHover={{ scale: 1.04 }}
+              data-expression="raised-eyebrow"
             >
               <PulseDot
                 $status={status}
@@ -627,7 +632,9 @@ export function HeroSection() {
               initial="hidden"
               animate="visible"
             >
-              <AnimatedTitle text={profile.full_name ?? ''} />
+              <span data-expression="smile">
+                <AnimatedTitle text={profile.full_name ?? ''} />
+              </span>
               <AccentLine>
                 <motion.span variants={staggerItem} custom={3} style={{ display: 'block' }}>
                   {profile.title || 'Élève-ingénieur en informatique — logiciel & IA'}
@@ -635,7 +642,7 @@ export function HeroSection() {
               </AccentLine>
             </HeroTitle>
 
-            <HeroSub variants={staggerItem}>
+            <HeroSub variants={staggerItem} data-expression="neutral">
               {profile.bio ||
                 "Je conçois des applications modernes, intelligentes et automatisées — de l'interface utilisateur jusqu'à l'intégration IA."}
             </HeroSub>
@@ -650,13 +657,18 @@ export function HeroSection() {
 
             <CTARow variants={staggerItem}>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-                <PrimaryBtn to="/projects">
+                <PrimaryBtn to="/projects" data-expression="surprised">
                   Voir mes projets <ArrowRight size={16} />
                 </PrimaryBtn>
               </motion.div>
               {profile.cv_url ? (
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-                  <SecondaryLinkBtn href={profile.cv_url} target="_blank" rel="noopener noreferrer">
+                  <SecondaryLinkBtn
+                    href={profile.cv_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-expression="big-smile"
+                  >
                     <Download size={16} /> Télécharger CV
                   </SecondaryLinkBtn>
                 </motion.div>
@@ -664,6 +676,7 @@ export function HeroSection() {
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                   <SecondaryBtn
                     type="button"
+                    data-expression="big-smile"
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                   >
                     Me contacter <ArrowRight size={16} />
@@ -672,7 +685,7 @@ export function HeroSection() {
               )}
             </CTARow>
 
-            <StatsRow variants={staggerItem}>
+            <StatsRow variants={staggerItem} data-expression="surprised">
               <StatItem>
                 <StatVal>{stats.projects}<span>+</span></StatVal>
                 <StatLab>Projets</StatLab>
@@ -698,7 +711,11 @@ export function HeroSection() {
                 <OrbOuter />
                 <OrbInner>
                   {profile.avatar_url ? (
-                    <img src={profile.avatar_url} alt={profile.full_name || ''} />
+                    <FaceTracker
+                      src={profile.avatar_url}
+                      alt={profile.full_name || ''}
+                      trackingRef={heroRef}
+                    />
                   ) : (
                     initials
                   )}
@@ -713,7 +730,13 @@ export function HeroSection() {
               {profileLinks.length > 0 && (
                 <ProfileLinks>
                   {profileLinks.slice(0, 3).map((item) => (
-                    <ProfileLink key={item.label} href={item.href} target="_blank" rel="noopener noreferrer">
+                    <ProfileLink
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-expression={item.expression}
+                    >
                       <item.icon size={14} />
                       {item.label}
                     </ProfileLink>
