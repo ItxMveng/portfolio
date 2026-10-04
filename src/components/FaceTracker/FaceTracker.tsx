@@ -25,6 +25,22 @@ const Frame = styled.span`
   user-select: none;
 `;
 
+/**
+ * Légère parallaxe continue (vers le curseur) entre deux images de la grille :
+ * le mouvement paraît fluide au lieu de sauter de case en case. Le zoom de
+ * PARALLAX_SCALE garde les bords du cadre couverts pendant le déplacement.
+ */
+const PARALLAX_SCALE = 1.08;
+const PARALLAX_SHIFT_PCT = 3;
+
+const Parallax = styled.span`
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform: scale(${PARALLAX_SCALE});
+  will-change: transform;
+`;
+
 const layerStyles = `
   position: absolute;
   inset: 0;
@@ -151,6 +167,7 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
   const finePointer = useMediaQuery(FINE_POINTER_QUERY);
   const noHover = useMediaQuery(NO_HOVER_QUERY);
   const frameRef = useRef<HTMLSpanElement>(null);
+  const parallaxRef = useRef<HTMLSpanElement>(null);
   const preloaded = useRef<HTMLImageElement[]>([]);
   const [ready, setReady] = useState(false);
   const { layers, show } = useCrossfade(src);
@@ -181,7 +198,8 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
   useEffect(() => {
     const area = trackingRef.current;
     const frame = frameRef.current;
-    if (mode !== 'pointer' || !ready || !area || !frame) return undefined;
+    const parallax = parallaxRef.current;
+    if (mode !== 'pointer' || !ready || !area || !frame || !parallax) return undefined;
 
     let pointer: Point | null = null;
     let hoverExpression: Expression | null = null;
@@ -210,6 +228,10 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
         current.x = target.x;
         current.y = target.y;
       }
+
+      parallax.style.transform = `translate3d(${current.x * PARALLAX_SHIFT_PCT}%, ${
+        current.y * PARALLAX_SHIFT_PCT
+      }%, 0) scale(${PARALLAX_SCALE})`;
 
       const expression = hoverExpression ?? focusExpression;
       const key = expression
@@ -260,6 +282,7 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
       area.removeEventListener('focusin', onFocusIn);
       area.removeEventListener('focusout', onFocusOut);
       cancelAnimationFrame(rafId);
+      parallax.style.transform = '';
     };
   }, [mode, ready, show, trackingRef]);
 
@@ -288,23 +311,25 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
 
   return (
     <Frame ref={frameRef} data-face-tracker={mode}>
-      {/* Image porteuse de l'alt : rendu, SEO et lecteurs d'écran identiques à avant. */}
-      <BaseImage src={src} alt={alt} draggable={false} />
-      {[previous, current].map((layer) =>
-        layer ? (
-          <FaceLayer
-            key={layer.id}
-            src={layer.src}
-            alt=""
-            aria-hidden="true"
-            draggable={false}
-            // `initial` n'est lu qu'au montage : une couche devenue « previous » reste opaque.
-            initial={layer.id === 0 ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: CROSSFADE_S, ease: 'linear' }}
-          />
-        ) : null,
-      )}
+      <Parallax ref={parallaxRef}>
+        {/* Image porteuse de l'alt : rendu, SEO et lecteurs d'écran identiques à avant. */}
+        <BaseImage src={src} alt={alt} draggable={false} />
+        {[previous, current].map((layer) =>
+          layer ? (
+            <FaceLayer
+              key={layer.id}
+              src={layer.src}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              // `initial` n'est lu qu'au montage : une couche devenue « previous » reste opaque.
+              initial={layer.id === 0 ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: CROSSFADE_S, ease: 'linear' }}
+            />
+          ) : null,
+        )}
+      </Parallax>
     </Frame>
   );
 }

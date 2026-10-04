@@ -5,7 +5,7 @@
  *                          (row 0 = regarde en haut, col 0 = regarde vers la gauche de l'écran)
  *   expr_{name}.webp       expressions : smile, big-smile, wink, surprised, raised-eyebrow, neutral
  *
- * Toutes les images : WebP 400×400, qualité 80, même cadrage carré centré que la
+ * Toutes les images : WebP 480×480, qualité 80, même cadrage carré centré que la
  * photo actuelle (équivalent du `object-fit: cover` du Hero).
  *
  * ── Usage ────────────────────────────────────────────────────────────────────
@@ -63,7 +63,8 @@ const DEFAULT_SOURCE_URLS = [
   'https://nsscebubijinfnoxwtgm.supabase.co/storage/v1/object/public/media/avatars/1774216175092-98lb0bj3hak.jpg',
 ];
 
-const OUTPUT_SIZE = 400;
+/** Affichée jusqu'à 216 px (× 2 en écran Retina) : 480 px garde la photo nette. */
+const OUTPUT_SIZE = 480;
 const WEBP_QUALITY = 80;
 /** Taille envoyée à Replicate : assez de détail pour le visage, data URI léger. */
 const REPLICATE_INPUT_SIZE = 768;
@@ -74,10 +75,10 @@ type SharpPipeline = ReturnType<typeof sharp>;
 type ChannelStats = Awaited<ReturnType<SharpPipeline['stats']>>['channels'];
 
 /**
- * Amplitudes aux bords de la grille. Volontairement modérées (plages du modèle :
- * pupilles ±15, rotations ±20) pour garder un rendu naturel.
+ * Amplitudes aux bords de la grille (plages du modèle : pupilles ±15, rotations ±20).
+ * Assez marquées pour que le suivi du regard se lise, sans déformer le visage.
  */
-const GAZE_RANGE = { pupil: 11, yaw: 9, pitch: 6 };
+const GAZE_RANGE = { pupil: 14, yaw: 15, pitch: 10 };
 
 /**
  * Conventions de signe du modèle (LivePortrait). t < 0 = gauche / haut de l'écran.

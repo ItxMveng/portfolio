@@ -371,12 +371,12 @@ const ProfileCard = styled(motion.div)`
   gap: 1rem;
   position: relative;
   overflow: hidden;
-  width: 220px;
+  width: min(280px, 100%);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     padding: 1.5rem;
     gap: 1.25rem;
-    width: auto;
+    width: 100%;
   }
 
   &::before {
@@ -388,57 +388,58 @@ const ProfileCard = styled(motion.div)`
   }
 `;
 
-/* Orb avatar */
+/* Orb avatar : photo interactive (<FaceTracker />), assez grande pour lire le regard */
 const OrbWrap = styled.div`
   position: relative;
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 0.5rem 0;
-  height: 90px;
+  height: 196px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    height: 110px;
+    height: 252px;
   }
 `;
 
 const OrbOuter = styled(motion.div)`
-  width: 82px;
-  height: 82px;
+  width: 186px;
+  height: 186px;
   border-radius: 50%;
   /* Disque jaune décalé derrière la photo (effet « autocollant ») */
   background: ${({ theme }) => theme.colors.sun};
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-42%, -42%);
+  transform: translate(-44%, -44%);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 100px;
-    height: 100px;
+    width: 240px;
+    height: 240px;
   }
 `;
 
 const OrbInner = styled.div`
-  width: 70px;
-  height: 70px;
+  width: 168px;
+  height: 168px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.bgCard};
-  border: 1.5px solid ${({ theme }) => theme.colors.surfaceBorder};
+  border: 3px solid ${({ theme }) => theme.colors.bgCard};
+  box-shadow: ${({ theme }) => theme.shadows.md};
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 1;
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: 800;
   color: ${({ theme }) => theme.colors.accent};
   overflow: hidden;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 86px;
-    height: 86px;
-    font-size: 1.75rem;
+    width: 216px;
+    height: 216px;
+    font-size: 4rem;
   }
 
   img {
