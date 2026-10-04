@@ -1,7 +1,7 @@
 /**
  * Génère le jeu d'images du composant <FaceTracker /> dans `public/face/`.
  *
- *   gaze_{row}_{col}.webp  grille 5×5 de directions du regard / de la tête
+ *   gaze_{row}_{col}.webp  grille 7×7 de directions du regard / de la tête
  *                          (row 0 = regarde en haut, col 0 = regarde vers la gauche de l'écran)
  *   expr_{name}.webp       expressions : smile, big-smile, wink, surprised, raised-eyebrow, neutral
  *
@@ -12,9 +12,10 @@
  *   # Génération réelle via Replicate (modèle fofr/expression-editor, ~31 prédictions)
  *   REPLICATE_API_TOKEN=r8_xxx npm run faces:generate
  *
- *   # 1er lancement conseillé : calibrer le sens du regard (2 prédictions seulement)
- *   REPLICATE_API_TOKEN=r8_xxx npm run faces:generate -- --only gaze_0_0,gaze_4_4 --force
- *   → gaze_0_0 doit regarder en HAUT à GAUCHE de l'écran, gaze_4_4 en BAS à DROITE.
+ *   # 1er lancement conseillé : calibrer le sens du regard (3 prédictions seulement)
+ *   REPLICATE_API_TOKEN=r8_xxx npm run faces:generate -- --only gaze_0_0,gaze_3_0,gaze_6_6 --force
+ *   → gaze_0_0 / gaze_3_0 : tête ET yeux vers la GAUCHE de l'écran (haut / milieu),
+ *     gaze_6_6 vers le BAS à DROITE.
  *     Sinon, inverser le signe concerné dans SIGN ci-dessous.
  *
  *   # Images de test sans Replicate (décalages de cadrage sur la photo d'origine)
@@ -82,9 +83,10 @@ const GAZE_RANGE = { pupil: 14, yaw: 15, pitch: 10 };
 
 /**
  * Conventions de signe du modèle (LivePortrait). t < 0 = gauche / haut de l'écran.
- * À vérifier avec la commande de calibration ci-dessus ; inverser si besoin.
+ * Vérifiées visuellement : rotate_yaw > 0 tourne la tête vers la gauche de l'image
+ * (un yaw de signe opposé aux pupilles donnait un effet miroir).
  */
-const SIGN = { pupilX: 1, pupilY: -1, yaw: -1, pitch: 1 };
+const SIGN = { pupilX: 1, pupilY: -1, yaw: 1, pitch: 1 };
 
 type ModelInput = Partial<
   Record<

@@ -6,8 +6,11 @@ import { FACE_SET } from './faceSet.generated';
  * expression ici puis relancer le script suffit à la rendre disponible.
  */
 
-/** Grille de regard GRID_SIZE × GRID_SIZE ; la case centrale = face caméra. */
-export const GRID_SIZE = 5;
+/**
+ * Grille de regard GRID_SIZE × GRID_SIZE ; la case centrale = face caméra.
+ * 7 × 7 : pas de 5° de rotation entre deux images voisines, transitions douces.
+ */
+export const GRID_SIZE = 7;
 export const GRID_CENTER = Math.floor(GRID_SIZE / 2);
 
 export const EXPRESSIONS = [

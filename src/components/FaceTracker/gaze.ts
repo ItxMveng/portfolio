@@ -53,11 +53,29 @@ export function normalizePointer(pointer: Point, anchor: Point, area: Bounds, re
 
 /** [-1, 1] → index de case [0, GRID_SIZE - 1], cases de largeur égale. */
 export function toCellIndex(value: number): number {
-  const index = Math.round(((clamp(value, -1, 1) + 1) / 2) * (GRID_SIZE - 1));
+  const index = Math.round(toCellPosition(value));
   return clamp(index, 0, GRID_SIZE - 1);
 }
 
+/** [-1, 1] → position continue sur [0, GRID_SIZE - 1]. */
+function toCellPosition(value: number): number {
+  return ((clamp(value, -1, 1) + 1) / 2) * (GRID_SIZE - 1);
+}
+
+/** Marge (en fraction de case) à franchir avant de quitter la case courante. */
+export const CELL_HYSTERESIS = 0.18;
+
+/**
+ * Comme `toCellIndex`, mais reste sur `previous` tant que la position ne
+ * dépasse pas la frontière de plus de `margin` : supprime le clignotement entre
+ * deux images quand le curseur s'arrête pile sur une frontière.
+ */
+export function toCellIndexStable(value: number, previous: number, margin = CELL_HYSTERESIS): number {
+  const position = toCellPosition(value);
+  return Math.abs(position - previous) <= 0.5 + margin ? previous : toCellIndex(value);
+}
+
 /** Facteur de lissage exponentiel indépendant de la fréquence d'affichage. */
-export function smoothingFactor(deltaMs: number, perFrame = 0.3): number {
+export function smoothingFactor(deltaMs: number, perFrame = 0.24): number {
   return 1 - Math.pow(1 - perFrame, deltaMs / (1000 / 60));
 }

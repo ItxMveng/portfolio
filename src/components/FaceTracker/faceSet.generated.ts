@@ -7,7 +7,7 @@ export const FACE_SET: {
   /** URLs de la photo d'origine : le suivi ne s'active que si l'avatar affiché en fait partie. */
   readonly sources: readonly string[];
 } = {
-  version: '51e437fd2c',
+  version: '645161a997',
   placeholder: false,
   sources: [
     '/francis-itoua.jpg',
