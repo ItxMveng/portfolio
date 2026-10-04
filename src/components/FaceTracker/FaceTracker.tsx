@@ -6,6 +6,7 @@ import {
   CENTER_GAZE_KEY,
   EXPRESSION_KEYS,
   GAZE_KEYS,
+  GRID_CENTER,
   expressionKey,
   faceUrl,
   gazeKey,
@@ -13,7 +14,7 @@ import {
   isFaceSetFor,
 } from './faceAssets';
 import type { Expression, FaceKey } from './faceAssets';
-import { normalizePointer, smoothingFactor, toCellIndex } from './gaze';
+import { normalizePointer, smoothingFactor, toCellIndexStable } from './gaze';
 import type { Point } from './gaze';
 
 /* ── Styles : le cadre remplit son parent (taille, rayon et overflow hérités) ── */
@@ -60,8 +61,10 @@ const FaceLayer = styled(motion.img)`
 
 /* ── Réglages ── */
 
-/** Durée du fondu entre deux images (assez court pour rester net, sans flou). */
-const CROSSFADE_S = 0.1;
+/** Fondu entre deux directions voisines : court, les images se ressemblent. */
+const GAZE_FADE_S = 0.14;
+/** Fondu vers/depuis une expression ou la photo d'origine : changement plus visible. */
+const EXPRESSION_FADE_S = 0.24;
 /** Durée d'affichage d'une expression déclenchée au tap (écrans tactiles). */
 const TAP_EXPRESSION_MS = 1400;
 /** En dessous de cet écart, le lissage est considéré comme terminé. */
@@ -124,19 +127,25 @@ function expressionFrom(target: EventTarget | null): Expression | null {
 interface LayerState {
   id: number;
   src: string;
+  fade: number;
 }
+
+const isGazeUrl = (src: string) => src.includes('/gaze_');
 
 function useCrossfade(initialSrc: string) {
   const [layers, setLayers] = useState<{ previous: LayerState | null; current: LayerState }>({
     previous: null,
-    current: { id: 0, src: initialSrc },
+    current: { id: 0, src: initialSrc, fade: 0 },
   });
   const currentSrc = useRef(initialSrc);
 
   const show = useCallback((src: string) => {
-    if (src === currentSrc.current) return;
+    const from = currentSrc.current;
+    if (src === from) return;
     currentSrc.current = src;
-    setLayers(({ current }) => ({ previous: current, current: { id: current.id + 1, src } }));
+    // Entre deux regards voisins, fondu court ; sinon (expression, photo d'origine) plus long.
+    const fade = isGazeUrl(src) && isGazeUrl(from) ? GAZE_FADE_S : EXPRESSION_FADE_S;
+    setLayers(({ current }) => ({ previous: current, current: { id: current.id + 1, src, fade } }));
   }, []);
 
   return { layers, show };
@@ -159,7 +168,7 @@ type Mode = 'static' | 'pointer' | 'touch';
  * survol des éléments `[data-expression]` de la zone suivie.
  *
  * Aucune animation en temps réel : on affiche l'image pré-générée
- * (`public/face/`) correspondant à la case de la grille 5×5 visée, et l'état
+ * (`public/face/`) correspondant à la case de la grille 7×7 visée, et l'état
  * React ne change que lorsque cette case change.
  */
 export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
@@ -205,6 +214,7 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
     let hoverExpression: Expression | null = null;
     let focusExpression: Expression | null = null;
     const current: Point = { x: 0, y: 0 };
+    const cell = { row: GRID_CENTER, col: GRID_CENTER };
     let rafId = 0;
     let lastTime = 0;
 
@@ -233,10 +243,10 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
         current.y * PARALLAX_SHIFT_PCT
       }%, 0) scale(${PARALLAX_SCALE})`;
 
+      cell.row = toCellIndexStable(current.y, cell.row);
+      cell.col = toCellIndexStable(current.x, cell.col);
       const expression = hoverExpression ?? focusExpression;
-      const key = expression
-        ? expressionKey(expression)
-        : gazeKey(toCellIndex(current.y), toCellIndex(current.x));
+      const key = expression ? expressionKey(expression) : gazeKey(cell.row, cell.col);
       show(faceUrl(key));
 
       rafId = settled ? 0 : requestAnimationFrame(tick);
@@ -325,7 +335,7 @@ export function FaceTracker({ src, alt, trackingRef }: FaceTrackerProps) {
               // `initial` n'est lu qu'au montage : une couche devenue « previous » reste opaque.
               initial={layer.id === 0 ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: CROSSFADE_S, ease: 'linear' }}
+              transition={{ duration: layer.fade, ease: 'easeOut' }}
             />
           ) : null,
         )}
