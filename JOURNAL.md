@@ -1,5 +1,11 @@
 # JOURNAL
 
+## 2026-10-10 — P0-03 Section « En construction »
+- Fait : section « En construction » listant les 4 projets de la campagne (Studeria Assistant, routage des tickets, extraction de factures, maintenance prédictive) avec leurs dates.
+- Chiffre mesuré : aucun
+- Décision technique : une fiche unique dans « Projets » plutôt qu'un article de blog : c'est la page que lisent les recruteurs, sans mélanger livré et en cours.
+- Visuel disponible : aucun
+
 ## 2026-10-10 — P0-02 Études de cas RelanceAuto et ReTurn
 - Fait : études de cas ReTurn (extraction Mistral Vision, rapprochement multicritère, vérification d'identité, CI/CD) et RelanceAuto (séquences de relance, SMTP chiffré, passe planifiée), écrites à partir des dépôts.
 - Chiffre mesuré : aucun
