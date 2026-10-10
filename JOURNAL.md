@@ -1,5 +1,11 @@
 # JOURNAL
 
+## 2026-10-10 — P0-01 Études de cas portfolio et pipeline vidéo
+- Fait : études de cas du portfolio (assistant Mistral derrière un proxy serveur protégé) et du pipeline de génération vidéo, dans docs/portfolio/.
+- Chiffre mesuré : aucun
+- Décision technique : chaque affirmation renvoie au code ou à une URL vérifiée ; le pipeline vidéo, sans dépôt public, est décrit sans chiffre ni lien.
+- Visuel disponible : aucun
+
 ## 2026-10-10 — P0-00 Démarrage
 - Fait : cadrage de P0 dans le dépôt portfolio (CLAUDE.md, SPEC.md, ROADMAP.md de 5 tickets).
 - Chiffre mesuré : aucun
