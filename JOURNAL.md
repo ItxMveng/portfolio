@@ -1,5 +1,18 @@
 # JOURNAL
 
+## 2026-10-10 — LIVRÉ
+- Fait : P0 livré. 4 études de cas (portfolio, pipeline vidéo, RelanceAuto, ReTurn), section « En construction » P1–P4, textes du site et guide de collage dans docs/portfolio/ ; README de profil GitHub publié (https://github.com/ItxMveng).
+- Chiffre mesuré : aucun (P0 met en avant l'existant ; aucune mesure n'a été faite)
+- Décision technique : aucun code du site modifié ; le contenu passe par l'administration, que Francis met à jour à partir de docs/portfolio/A-COLLER-DANS-L-ADMIN.md.
+- Visuel disponible : aucun
+- URL de démo : https://francisitoua.vercel.app
+
+## 2026-10-10 — P0-05 README de profil GitHub
+- Fait : dépôt public ItxMveng/ItxMveng créé avec un README de profil : positionnement, stage recherché, expérience CERV, 3 projets avec liens, 4 projets en construction datés.
+- Chiffre mesuré : aucun
+- Décision technique : un README sobre, sans badges ni statistiques automatiques : chaque ligne renvoie à une preuve.
+- Visuel disponible : aucun
+
 ## 2026-10-10 — P0-04 Textes du site et guide d'administration
 - Fait : textes du site (accroche, bio servant de méta-description) et guide de collage dans l'administration, chemins déduits du code.
 - Chiffre mesuré : aucun
