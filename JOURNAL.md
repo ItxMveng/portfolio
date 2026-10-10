@@ -1,5 +1,11 @@
 # JOURNAL
 
+## 2026-10-10 — P0-04 Textes du site et guide d'administration
+- Fait : textes du site (accroche, bio servant de méta-description) et guide de collage dans l'administration, chemins déduits du code.
+- Chiffre mesuré : aucun
+- Décision technique : modifier le contenu par l'administration plutôt que par le code ou un script SQL : réversible, relu, sans risque pour la production.
+- Visuel disponible : aucun
+
 ## 2026-10-10 — P0-03 Section « En construction »
 - Fait : section « En construction » listant les 4 projets de la campagne (Studeria Assistant, routage des tickets, extraction de factures, maintenance prédictive) avec leurs dates.
 - Chiffre mesuré : aucun
