@@ -5,3 +5,4 @@
 - [x] P0-03 Section « En construction » — docs/portfolio/en-construction.md liste P1–P4 avec dates et dépôts (fait le 2026-10-10)
 - [x] P0-04 Textes du site et guide d'administration — docs/portfolio/textes-site.md et A-COLLER-DANS-L-ADMIN.md avec le chemin exact de chaque champ (fait le 2026-10-10)
 - [x] P0-05 README de profil GitHub — dépôt public ItxMveng/ItxMveng créé et README poussé (fait le 2026-10-10)
+- [x] P0-06 Textes SEO et assistant alignés sur la recherche de stage — 4 chaînes de texte modifiées, npm run build vert (fait le 2026-10-11)
