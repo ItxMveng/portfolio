@@ -26,7 +26,7 @@ function getServerSupabase() {
 }
 
 function formatStatus(status: string | null | undefined) {
-  if (status === 'open') return 'Disponible pour missions et CDI';
+  if (status === 'open') return "Recherche un stage de fin d'études de 6 mois en IA appliquée & MLOps, à partir de février 2027.";
   if (status === 'busy') return 'Partiellement disponible';
   return 'Actuellement indisponible';
 }

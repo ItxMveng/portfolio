@@ -335,7 +335,7 @@ export default function ProjectsPage() {
     <PageWrapper>
       <SEOHead
         title="Projets"
-        description="Réalisations en développement web, IA, automatisation et intégration de données."
+        description="Projets d'IA appliquée et de MLOps : pour chacun, le problème, l'architecture, les mesures et la démo."
       />
       <PageHeader>
         <Container>

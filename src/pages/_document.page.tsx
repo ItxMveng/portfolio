@@ -9,7 +9,7 @@ export default function Document() {
         <meta name="robots" content="index, follow" />
         <meta
           name="description"
-          content="Ingénieur informatique — IA, automatisation et applications sur mesure."
+          content="Francis Itoua, élève-ingénieur ENIB / M2 SIIA : IA appliquée et MLOps (RAG, agents, évaluation, déploiement). Stage de fin d'études dès février 2027."
         />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="fr_FR" />

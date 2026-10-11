@@ -569,7 +569,7 @@ export default function BlogPage() {
     <PageWrapper>
       <SEOHead
         title="Blog"
-        description="Tutoriels, analyses et retours d'experience autour de l'IA, du web et de l'automatisation."
+        description="Notes techniques sur la construction, l'évaluation et la mise en production de systèmes d'IA."
       />
       <PageHeader>
         <Container>

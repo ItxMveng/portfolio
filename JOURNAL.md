@@ -1,5 +1,11 @@
 # JOURNAL
 
+## 2026-10-11 — P0-06 Textes SEO et assistant alignés sur la recherche de stage
+- Fait : méta-description par défaut, descriptions des pages Projets et Blog, et statut annoncé par l'assistant alignés sur le stage IA appliquée & MLOps de février 2027 ; npm run build réussi avant le push.
+- Chiffre mesuré : aucun
+- Décision technique : modifier uniquement les quatre chaînes de texte, sans toucher à la logique, pour limiter le risque sur le site en production.
+- Visuel disponible : aucun
+
 ## 2026-10-10 — LIVRÉ
 - Fait : P0 livré. 4 études de cas (portfolio, pipeline vidéo, RelanceAuto, ReTurn), section « En construction » P1–P4, textes du site et guide de collage dans docs/portfolio/ ; README de profil GitHub publié (https://github.com/ItxMveng).
 - Chiffre mesuré : aucun (P0 met en avant l'existant ; aucune mesure n'a été faite)
