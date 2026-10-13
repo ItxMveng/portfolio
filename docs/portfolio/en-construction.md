@@ -7,11 +7,11 @@
 ## Méthode commune
 Chaque projet suit la même règle : un problème d'entreprise précis, un jeu de test versionné, une évaluation qui tourne en CI, une API conteneurisée déployée sur Google Cloud Run (Terraform), une interface sur Vercel, des traces LLM, et un journal de bord public. Les résultats ne sont publiés qu'une fois mesurés.
 
-## 1. Studeria Assistant — assistant documentaire fiable et évalué
+## 1. Guichet des règlements — assistant documentaire fiable et évalué
 - **Dates** : 12 → 23 octobre 2026
 - **Problème** : un assistant interne qui invente des réponses sur les règlements et procédures est inutilisable.
 - **Ce qui est construit** : RAG sur des documents institutionnels (recherche hybride dense + BM25, reranking), réponses avec citations, abstention explicite quand l'information n'est pas dans les documents ; évaluation sur 60 questions dont 20 hors corpus.
-- **Dépôt** : https://github.com/ItxMveng/studeria-assistant
+- **Dépôt** : https://github.com/ItxMveng/policy-help-desk
 
 ## 2. Routage automatique des tickets de support
 - **Dates** : 26 octobre → 13 novembre 2026
