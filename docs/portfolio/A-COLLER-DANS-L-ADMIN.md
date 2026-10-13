@@ -51,8 +51,8 @@ Menu **Projets** › **Nouveau projet**, source : `docs/portfolio/en-constructio
 - « Catégorie » : AI · « Slug * » : `en-construction`
 - « Description courte (carte) » : la ligne **Description courte (carte)** du fichier.
 - « Tags » : `En cours`, `RAG`, `MLOps`
-- **Contenu détaillé** : un bloc **Titre** (H2) + un bloc **Paragraphe** par section du fichier (Méthode commune, puis les 4 projets). Pour Guichet des règlements, mettre le lien GitHub dans le paragraphe.
-- **Liens** › « GitHub » : https://github.com/ItxMveng/policy-help-desk
+- **Contenu détaillé** : un bloc **Titre** (H2) + un bloc **Paragraphe** par section du fichier (Méthode commune, puis les 4 projets). Pour Le Classeur, mettre le lien GitHub dans le paragraphe.
+- **Liens** › « GitHub » : https://github.com/ItxMveng/policy-binder
 - **Visibilité** : Publié ; **En vedette** activé.
 - **Sauvegarder**.
 À chaque livraison (entrée « LIVRÉ » du journal du projet), créer la fiche projet définitive avec ses résultats mesurés et retirer le projet de cette fiche.

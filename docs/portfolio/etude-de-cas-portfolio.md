@@ -43,7 +43,7 @@ flowchart LR
 Next.js 14 · React 18 · TypeScript · styled-components · Framer Motion · Supabase (Postgres, Auth, Storage, RLS) · Prisma · API Mistral (streaming SSE) · Vercel.
 
 ## Limites et suite
-- **Pas d'évaluation** : on ne sait pas mesurer aujourd'hui si l'assistant invente un fait sur le profil. Le projet Guichet des règlements (en cours) construit exactement cette brique : jeu de questions, abstention explicite, citations des sources ; elle pourra être reportée ici.
-- **Contexte injecté en entier** dans le prompt : simple et suffisant pour un portfolio, mais ne passe pas à l'échelle d'un gros corpus (c'est la raison d'un RAG avec recherche hybride dans Guichet des règlements).
+- **Pas d'évaluation** : on ne sait pas mesurer aujourd'hui si l'assistant invente un fait sur le profil. Le projet Le Classeur (en cours) construit exactement cette brique : jeu de questions, abstention explicite, citations des sources ; elle pourra être reportée ici.
+- **Contexte injecté en entier** dans le prompt : simple et suffisant pour un portfolio, mais ne passe pas à l'échelle d'un gros corpus (c'est la raison d'un RAG avec recherche hybride dans Le Classeur).
 - **Limitation par IP en mémoire d'instance** : best-effort sur une plateforme serverless ; une limite partagée (Redis, Upstash) serait plus robuste.
 - Pas de traces des appels LLM (latence, coût) : à ajouter avec Langfuse.
