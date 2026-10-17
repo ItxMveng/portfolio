@@ -5,12 +5,13 @@
 **Description courte (carte)** : Quatre systèmes d'IA construits et mis en production d'ici janvier 2027, chacun avec une évaluation chiffrée, une CI/CD, des conteneurs et un déploiement cloud.
 
 ## Méthode commune
-Chaque projet suit la même règle : un problème d'entreprise précis, un jeu de test versionné, une évaluation qui tourne en CI, une API conteneurisée déployée sur Google Cloud Run (Terraform), une interface sur Vercel, des traces LLM, et un journal de bord public. Les résultats ne sont publiés qu'une fois mesurés.
+Chaque projet suit la même règle : un problème d'entreprise précis, un jeu de test versionné, une évaluation qui tourne en CI, une API conteneurisée déployée dans le cloud avec Terraform (Azure Container Apps pour Le Classeur ; Cloud Run prévu, faute de compte de facturation Google), une interface sur Vercel, des traces LLM, et un journal de bord public. Les résultats ne sont publiés qu'une fois mesurés.
 
 ## 1. Le Classeur — assistant documentaire fiable et évalué
 - **Dates** : 12 → 23 octobre 2026
 - **Problème** : un assistant interne qui invente des réponses sur les règlements et procédures est inutilisable.
 - **Ce qui est construit** : RAG sur des documents institutionnels (recherche hybride dense + BM25, reranking), réponses avec citations, abstention explicite quand l'information n'est pas dans les documents ; évaluation sur 60 questions dont 20 hors corpus.
+- **État** : en ligne et évalué (https://policy-binder.vercel.app), étude de cas prête dans `etude-de-cas-le-classeur.md` ; passe dans « Projets » le jour de sa livraison.
 - **Dépôt** : https://github.com/ItxMveng/policy-binder
 
 ## 2. Routage automatique des tickets de support

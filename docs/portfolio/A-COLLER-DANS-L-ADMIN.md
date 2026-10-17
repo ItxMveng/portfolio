@@ -45,6 +45,15 @@ Pour chaque fiche :
 4. Carte **Visibilité** : interrupteur sur **Publié — visible sur le site** ; **En vedette** pour le portfolio, RelanceAuto et ReTurn (ce sont eux qui apparaissent en premier).
 5. Cliquer **Sauvegarder** (en haut).
 
+## 2 bis. Le Classeur (le jour de sa livraison)
+À faire quand le journal de policy-binder contient l'entrée « LIVRÉ ». Même méthode que les fiches du point 2, source `etude-de-cas-le-classeur.md` :
+- « Titre * » : `Le Classeur — assistant documentaire qui cite ses sources` · « Catégorie » : AI · « Slug * » : `le-classeur`
+- « Tags » : `RAG`, `LLM`, `Évaluation`, `MLOps`
+- **Liens** : « Site en ligne » et « Démo » : https://policy-binder.vercel.app · « GitHub » : https://github.com/ItxMveng/policy-binder
+- Pour **Résultats** : coller aussi l'image `docs/media/reponse-citee.png` du dépôt policy-binder (bouton **Image**).
+- **Visibilité** : Publié ; **En vedette** activé.
+- Puis, dans la fiche « En construction », supprimer les deux blocs de la section « 1. Le Classeur ».
+
 ## 3. Section « En construction »
 Menu **Projets** › **Nouveau projet**, source : `docs/portfolio/en-construction.md`.
 - « Titre * » : `En construction — 4 systèmes d'IA mis en production (oct. 2026 → janv. 2027)`
