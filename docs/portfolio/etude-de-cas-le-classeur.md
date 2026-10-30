@@ -31,7 +31,7 @@ flowchart LR
 ## Résultats (mesurés)
 Sur les 60 mêmes questions, même modèle et même juge (intervalle de confiance à 95 %) :
 - **Exactitude** : 70 % (IC 55–82 %) pour la version finale, contre 42,5 % (IC 29–58 %) pour la base naïve (recherche dense seule).
-- **0 réponse incorrecte** sur 40 questions avec réponse (2 pour la base naïve).
+- **0 réponse incorrecte** sur 40 questions avec réponse (2 pour la base naïve) lors de cette comparaison ; les évaluations suivantes en ont compté au plus 1, sur une question dont la référence est incomplète.
 - **20/20 abstentions** sur les questions hors corpus, dont 15 sans appel au LLM.
 - **Bonne page retrouvée** parmi les passages fournis : 95 %, contre 62,5 %.
 - **Coût** : 0,25 $ pour 1 000 questions (tarif public Groq).
