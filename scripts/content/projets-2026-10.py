@@ -143,13 +143,13 @@ mesh = dict(
     tech_stack=["next.js 16", "react 19", "typescript", "neon postgres", "neon auth", "object storage", "transformers.js", "three.js", "cloudflare workers ai", "vercel"],
     live_url="https://atelier-coiffure-phi.vercel.app",
     demo_url="",
-    github_url="",
+    github_url="https://github.com/ItxMveng/atelier-coiffure",
     featured=True,
     display_order=-30,
     blocks=[
         h("me-h-pb", "Le problème"),
         p("me-p-pb", "Beaucoup de coiffeurs indépendants gèrent leurs rendez-vous par messages, sans vitrine ni agenda fiable : doubles réservations, questions perdues, photos d'inspiration éparpillées. Côté client, il est difficile de savoir <strong>qui réalise vraiment la coiffure qu'on a en tête</strong>. Mesh relie les deux : une boutique en ligne pour chaque professionnel, et un parcours simple pour le client, de la photo d'inspiration jusqu'au rendez-vous confirmé."),
-        callout("me-c-ctx", "Projet personnel en production, construit du 20 au 24 octobre 2026 : 28 migrations SQL versionnées, 19 modules métier, 13 décisions d'architecture documentées. Marchés de départ : France et Cameroun (pays, devises, fuseaux horaires configurables). Le code est privé ; le site est public.", "info"),
+        callout("me-c-ctx", "Projet personnel en production, construit du 20 au 24 octobre 2026 : 28 migrations SQL versionnées, 19 modules métier, 13 décisions d'architecture documentées. Marchés de départ : France et Cameroun (pays, devises, fuseaux horaires configurables). Code et décisions d'architecture consultables sur GitHub.", "info"),
         h("me-h-flow", "Le parcours"),
         steps("me-steps", [
             ("Découvrir", "Le client cherche par ville, prestation ou coiffure, ou part d'une photo d'inspiration pour trouver les coiffeurs qui réalisent ce style. La découverte fonctionne sans compte."),

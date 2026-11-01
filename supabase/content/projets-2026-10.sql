@@ -371,7 +371,7 @@ values (
   {
     "id": "me-c-ctx",
     "type": "callout",
-    "content": "Projet personnel en production, construit du 20 au 24 octobre 2026 : 28 migrations SQL versionnées, 19 modules métier, 13 décisions d'architecture documentées. Marchés de départ : France et Cameroun (pays, devises, fuseaux horaires configurables). Le code est privé ; le site est public.",
+    "content": "Projet personnel en production, construit du 20 au 24 octobre 2026 : 28 migrations SQL versionnées, 19 modules métier, 13 décisions d'architecture documentées. Marchés de départ : France et Cameroun (pays, devises, fuseaux horaires configurables). Code et décisions d'architecture consultables sur GitHub.",
     "meta": {
       "variant": "info"
     }
@@ -522,7 +522,7 @@ values (
   }
 ]$blocks$::jsonb,
   '',
-  '',
+  'https://github.com/ItxMveng/atelier-coiffure',
   'https://atelier-coiffure-phi.vercel.app',
   true,
   true,
