@@ -2,6 +2,13 @@
 
 Chemins déduits du code : routes dans `src/router/index.tsx`, menu dans `src/pages/admin/AdminLayout.tsx`, formulaires dans `src/pages/admin/ProfileEditor.tsx`, `ProjectEditor.tsx` et `src/components/blocks/BlockEditor.tsx`. Les modifications sont enregistrées dans Supabase et visibles sur le site sans redéploiement.
 
+## Méthode rapide : script SQL (octobre 2026)
+Les fiches **Le Classeur**, **Mesh**, **Portfolio**, **Pipeline vidéo** et la mise à jour de **En construction** (Le Classeur retiré, car livré) sont générées par `scripts/content/projets-2026-10.py` dans `supabase/content/projets-2026-10.sql`, avec couvertures et schémas d'architecture dans `public/images/projects/`.
+1. Supabase › **SQL Editor** › **New query**, coller le contenu de `supabase/content/projets-2026-10.sql`, **Run**.
+2. Le script est idempotent (mise à jour par slug) et recalcule le compteur « Projets » de l'accueil.
+3. Pour corriger un texte : modifier le script Python, relancer `python scripts/content/projets-2026-10.py`, puis réexécuter le SQL (ou corriger directement dans `/admin`).
+Les sections 2 et 2 bis ci-dessous restent valables pour une saisie manuelle.
+
 ## 0. Se connecter
 1. Ouvrir https://francisitoua.vercel.app/admin/login et se connecter avec le compte administrateur.
 2. Le menu de gauche contient : Dashboard · Profil · Atouts · Services · Certifications · Projets · Blog · Messages.
