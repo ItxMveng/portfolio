@@ -52,8 +52,8 @@ Pour chaque fiche :
 4. Carte **Visibilité** : interrupteur sur **Publié — visible sur le site** ; **En vedette** pour le portfolio, RelanceAuto et ReTurn (ce sont eux qui apparaissent en premier).
 5. Cliquer **Sauvegarder** (en haut).
 
-## 2 bis. Le Classeur (le jour de sa livraison)
-À faire quand le journal de policy-binder contient l'entrée « LIVRÉ ». Même méthode que les fiches du point 2, source `etude-de-cas-le-classeur.md` :
+## 2 bis. Le Classeur (livré le 01/11/2026 : à faire maintenant)
+Le journal de policy-binder contient l'entrée « LIVRÉ ». Même méthode que les fiches du point 2, source `etude-de-cas-le-classeur.md` :
 - « Titre * » : `Le Classeur — assistant documentaire qui cite ses sources` · « Catégorie » : AI · « Slug * » : `le-classeur`
 - « Tags » : `RAG`, `LLM`, `Évaluation`, `MLOps`
 - **Liens** : « Site en ligne » et « Démo » : https://policy-binder.vercel.app · « GitHub » : https://github.com/ItxMveng/policy-binder
@@ -67,8 +67,8 @@ Menu **Projets** › **Nouveau projet**, source : `docs/portfolio/en-constructio
 - « Catégorie » : AI · « Slug * » : `en-construction`
 - « Description courte (carte) » : la ligne **Description courte (carte)** du fichier.
 - « Tags » : `En cours`, `RAG`, `MLOps`
-- **Contenu détaillé** : un bloc **Titre** (H2) + un bloc **Paragraphe** par section du fichier (Méthode commune, puis les 4 projets). Pour Le Classeur, mettre le lien GitHub dans le paragraphe.
-- **Liens** › « GitHub » : https://github.com/ItxMveng/policy-binder
+- **Contenu détaillé** : un bloc **Titre** (H2) + un bloc **Paragraphe** par section du fichier (Méthode commune, puis les 3 projets en cours).
+- **Liens** › « GitHub » : laisser vide (le dépôt de chaque projet est indiqué dans sa section)
 - **Visibilité** : Publié ; **En vedette** activé.
 - **Sauvegarder**.
 À chaque livraison (entrée « LIVRÉ » du journal du projet), créer la fiche projet définitive avec ses résultats mesurés et retirer le projet de cette fiche.

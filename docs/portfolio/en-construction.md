@@ -8,7 +8,7 @@
 Chaque projet suit la même règle : un problème d'entreprise précis, un jeu de test versionné, une évaluation qui tourne en CI, une API conteneurisée déployée dans le cloud avec Terraform (Azure Container Apps pour Le Classeur ; Cloud Run prévu, faute de compte de facturation Google), une interface sur Vercel, des traces LLM, et un journal de bord public. Les résultats ne sont publiés qu'une fois mesurés.
 
 ## Livré : Le Classeur
-Livré le 17 octobre 2026 et publié dans « Projets » (fiche `le-classeur`, générée par `scripts/content/projets-2026-10.py`) : 70 % d'exactitude contre 42,5 % pour la base naïve, 0 réponse incorrecte, 20/20 abstentions hors corpus.
+Livré le 1er novembre 2026 (entrée « LIVRÉ » du journal de policy-binder) et publié dans « Projets » (fiche `le-classeur`, générée par `scripts/content/projets-2026-10.py`) : 70 % d'exactitude contre 42,5 % pour la base naïve, 20/20 abstentions hors corpus, au plus 1 réponse jugée incorrecte sur 40 selon les évaluations.
 
 ## 1. Routage automatique des tickets de support
 - **Dates** : 26 octobre → 13 novembre 2026
