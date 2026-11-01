@@ -61,7 +61,7 @@ le_classeur = dict(
     short_description=(
         "Assistant RAG qui répond aux questions sur des règlements en citant la page exacte du document "
         "officiel, et qui dit « je ne trouve pas » quand la réponse n'y est pas. Évalué sur 60 questions "
-        "(70 % d'exactitude contre 42,5 % pour une base naïve, 0 réponse incorrecte, 20/20 abstentions "
+        "(70 % d'exactitude contre 42,5 % pour une base naïve, au plus 1 réponse jugée incorrecte sur 40, 20/20 abstentions "
         "hors corpus), déployé sur Azure et évalué en CI à chaque changement."
     ),
     cover_url="/images/projects/le-classeur.webp",
@@ -90,7 +90,7 @@ le_classeur = dict(
         p("lc-p-res-intro", "Sur les 60 mêmes questions (40 avec réponse, 20 hors corpus), même modèle et même juge, avec intervalles de confiance à 95 % :"),
         p("lc-p-res", ul(
             "<strong>Exactitude : 70 %</strong> (IC 55–82 %), contre 42,5 % (IC 29–58 %) pour la base naïve (recherche dense seule).",
-            "<strong>0 réponse incorrecte</strong> sur les 40 questions avec réponse.",
+            "<strong>0 réponse incorrecte</strong> sur les 40 questions avec réponse lors de cette comparaison ; les évaluations suivantes en ont compté au plus 1, sur une question dont la référence est incomplète.",
             "<strong>20/20 abstentions correctes</strong> sur les questions hors corpus, dont 15 décidées sans appel au LLM.",
             "<strong>Bonne page retrouvée</strong> parmi les passages fournis : 95 %, contre 62,5 %.",
             "<strong>Coût</strong> : 0,25 $ pour 1 000 questions (tarif public Groq).",
@@ -299,7 +299,7 @@ en_construction = dict(
     blocks=[
         h("ec-h-method", "Méthode commune"),
         p("ec-p-method", "Chaque projet suit la même règle : un problème d'entreprise précis, un jeu de test versionné, une évaluation qui tourne en CI, une API conteneurisée déployée dans le cloud avec Terraform, une interface sur Vercel, des traces LLM et un journal de bord public. Les résultats ne sont publiés qu'une fois mesurés."),
-        callout("ec-c-done", "Livré : Le Classeur, assistant documentaire qui cite ses sources ou dit qu'il ne sait pas (70 % d'exactitude contre 42,5 % pour une base naïve, 0 réponse incorrecte, 20/20 abstentions hors corpus). Voir sa fiche dans les projets.", "tip"),
+        callout("ec-c-done", "Livré : Le Classeur, assistant documentaire qui cite ses sources ou dit qu'il ne sait pas (70 % d'exactitude contre 42,5 % pour une base naïve, 20/20 abstentions hors corpus). Voir sa fiche dans les projets.", "tip"),
         h("ec-h-2", "1. Routage automatique des tickets de support"),
         p("ec-p-2", ul(
             "<strong>Dates</strong> : 26 octobre → 13 novembre 2026",

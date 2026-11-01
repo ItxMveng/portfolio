@@ -21,7 +21,7 @@ values (
   'Le Classeur — assistant documentaire qui cite ses sources',
   'le-classeur',
   'AI',
-  'Assistant RAG qui répond aux questions sur des règlements en citant la page exacte du document officiel, et qui dit « je ne trouve pas » quand la réponse n''y est pas. Évalué sur 60 questions (70 % d''exactitude contre 42,5 % pour une base naïve, 0 réponse incorrecte, 20/20 abstentions hors corpus), déployé sur Azure et évalué en CI à chaque changement.',
+  'Assistant RAG qui répond aux questions sur des règlements en citant la page exacte du document officiel, et qui dit « je ne trouve pas » quand la réponse n''y est pas. Évalué sur 60 questions (70 % d''exactitude contre 42,5 % pour une base naïve, au plus 1 réponse jugée incorrecte sur 40, 20/20 abstentions hors corpus), déployé sur Azure et évalué en CI à chaque changement.',
   '/images/projects/le-classeur.webp',
   array['RAG', 'LLM', 'Évaluation', 'MLOps']::text[],
   array['python', 'fastapi', 'qdrant', 'bm25', 'reranker', 'groq', 'langfuse', 'react', 'terraform', 'azure container apps', 'github actions']::text[],
@@ -119,7 +119,7 @@ values (
   {
     "id": "lc-p-res",
     "type": "paragraph",
-    "content": "<ul><li><strong>Exactitude : 70 %</strong> (IC 55–82 %), contre 42,5 % (IC 29–58 %) pour la base naïve (recherche dense seule).</li><li><strong>0 réponse incorrecte</strong> sur les 40 questions avec réponse.</li><li><strong>20/20 abstentions correctes</strong> sur les questions hors corpus, dont 15 décidées sans appel au LLM.</li><li><strong>Bonne page retrouvée</strong> parmi les passages fournis : 95 %, contre 62,5 %.</li><li><strong>Coût</strong> : 0,25 $ pour 1 000 questions (tarif public Groq).</li><li><strong>Latence de la démo en ligne</strong> : médiane 8,2 s sur 6 questions, due au reranker sur CPU.</li><li><strong>Questions sur plusieurs établissements</strong> : 8 parties sur 10 répondues et citées (contre 1 sur 10 avant correction), 7/7 parties absentes des documents signalées comme telles.</li></ul>"
+    "content": "<ul><li><strong>Exactitude : 70 %</strong> (IC 55–82 %), contre 42,5 % (IC 29–58 %) pour la base naïve (recherche dense seule).</li><li><strong>0 réponse incorrecte</strong> sur les 40 questions avec réponse lors de cette comparaison ; les évaluations suivantes en ont compté au plus 1, sur une question dont la référence est incomplète.</li><li><strong>20/20 abstentions correctes</strong> sur les questions hors corpus, dont 15 décidées sans appel au LLM.</li><li><strong>Bonne page retrouvée</strong> parmi les passages fournis : 95 %, contre 62,5 %.</li><li><strong>Coût</strong> : 0,25 $ pour 1 000 questions (tarif public Groq).</li><li><strong>Latence de la démo en ligne</strong> : médiane 8,2 s sur 6 questions, due au reranker sur CPU.</li><li><strong>Questions sur plusieurs établissements</strong> : 8 parties sur 10 répondues et citées (contre 1 sur 10 avant correction), 7/7 parties absentes des documents signalées comme telles.</li></ul>"
   },
   {
     "id": "lc-c-honest",
@@ -272,7 +272,7 @@ values (
   {
     "id": "ec-c-done",
     "type": "callout",
-    "content": "Livré : Le Classeur, assistant documentaire qui cite ses sources ou dit qu'il ne sait pas (70 % d'exactitude contre 42,5 % pour une base naïve, 0 réponse incorrecte, 20/20 abstentions hors corpus). Voir sa fiche dans les projets.",
+    "content": "Livré : Le Classeur, assistant documentaire qui cite ses sources ou dit qu'il ne sait pas (70 % d'exactitude contre 42,5 % pour une base naïve, 20/20 abstentions hors corpus). Voir sa fiche dans les projets.",
     "meta": {
       "variant": "tip"
     }
