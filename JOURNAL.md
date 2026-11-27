@@ -1,5 +1,12 @@
 # JOURNAL
 
+## 2026-11-27 — Éducation et études de cas Unity
+- Fait : section Éducation après la présentation, liens de navigation, deux schémas SVG, extraits C# réels, étapes et choix techniques pour Jardin des cristaux et Roots ; crédits du binôme conservés.
+- Chiffre mesuré : aucun nouveau résultat de performance revendiqué.
+- Décision technique : composants et types de blocs existants ; enrichissements versionnés, persistables dans l’administration, sans migration de base.
+- Visuel disponible : public/images/projects/jardin-cristaux-schema.svg et roots-architecture.svg.
+- Validation : 3 tests ciblés réussis, npm run build réussi après ajustement du menu tablette, SVG rendus et relus. Le contrôle visuel complet par navigateur est indisponible (service de contrôle en timeout).
+
 ## 2026-10-11 — P0-06 Textes SEO et assistant alignés sur la recherche de stage
 - Fait : méta-description par défaut, descriptions des pages Projets et Blog, et statut annoncé par l'assistant alignés sur le stage IA appliquée & MLOps de février 2027 ; npm run build réussi avant le push.
 - Chiffre mesuré : aucun

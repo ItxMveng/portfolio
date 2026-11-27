@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+<title id="title">Roots : boucle de jeu et intelligence des ennemis</title><desc id="desc">L’exploration conduit aux quêtes ou aux autels, puis à la progression et au boss. Une machine à états pilote les ennemis entre patrouille, poursuite et attaque.</desc>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m0 0 8 4-8 4z" fill="#0b7a75"/></marker></defs>
+<rect width="1400" height="860" rx="28" fill="#fffaf1"/>
+<g font-family="Arial,sans-serif" fill="#14171f">
+<text x="65" y="63" font-size="18" font-weight="700" fill="#0b7a75" letter-spacing="3">UNITY · GAME JAM IEVA · FRANCIS &amp; EWEN</text>
+<text x="65" y="132" font-size="52" font-weight="700">Roots — risquer pour progresser</text>
+<text x="65" y="177" font-size="23" fill="#3f4554">Une boucle de décision, des épreuves et des ennemis qui réagissent.</text>
+<g stroke="#d6d7d2" fill="#fff"><rect x="65" y="240" width="265" height="155" rx="20"/><rect x="400" y="240" width="265" height="155" rx="20"/><rect x="735" y="240" width="265" height="155" rx="20"/><rect x="1070" y="240" width="265" height="155" rx="20"/></g>
+<g font-size="27" font-weight="700"><text x="90" y="286">Explorer</text><text x="425" y="286">Risquer</text><text x="760" y="286">Progresser</text><text x="1095" y="286">S’échapper</text></g>
+<g font-size="21" fill="#3f4554"><text x="90" y="330">Chemin sûr ou</text><text x="90" y="362">chemin dangereux</text><text x="425" y="330">Mise d’objets</text><text x="425" y="362">Épreuves et quêtes</text><text x="760" y="330">Expérience, niveaux</text><text x="760" y="362">Bonus d’inventaire</text><text x="1095" y="330">Boss vaincu</text><text x="1095" y="362">Zone de secours</text></g>
+<path d="M340 315h48m287 0h48m287 0h48" stroke="#0b7a75" stroke-width="3" marker-end="url(#a)"/>
+<rect x="65" y="455" width="1270" height="272" rx="20" fill="#e7f1ed"/>
+<text x="90" y="500" font-size="19" font-weight="700" fill="#0b7a75" letter-spacing="2">ZOOM · MACHINE À ÉTATS DES ENNEMIS</text>
+<g fill="#fff" stroke="#0b7a75" stroke-width="2"><rect x="100" y="556" width="220" height="76" rx="12"/><rect x="585" y="556" width="220" height="76" rx="12"/><rect x="1070" y="556" width="220" height="76" rx="12"/></g>
+<g font-size="26" font-weight="700"><text x="144" y="603">Patrouille</text><text x="631" y="603">Poursuite</text><text x="1128" y="603">Attaque</text></g>
+<path d="M330 575h240m240 0h240" stroke="#0b7a75" stroke-width="2" marker-end="url(#a)"/>
+<g font-size="18" fill="#3f4554"><text x="376" y="554">Cible visible</text><text x="868" y="554">Cible à portée</text></g>
+<path d="M1060 618H820m-245 0H335" stroke="#0b7a75" stroke-width="2" marker-end="url(#a)"/>
+<g font-size="18" fill="#3f4554"><text x="862" y="658">Cible éloignée</text><text x="352" y="658">Cible perdue / trop loin</text></g>
+<text x="90" y="700" font-size="18" fill="#3f4554">NavMeshAgent : déplacement et obstacles · État Mort : arrêt de l’IA · Boss : phases et attaques supplémentaires</text>
+<text x="65" y="780" font-size="21" font-weight="700" fill="#0b7a75">MONDE PRINCIPAL ⇄ ÉPREUVES EN CHARGEMENT ADDITIF</text>
+<text x="65" y="815" font-size="18" fill="#5a6170">Schéma d’architecture, pas une capture du jeu. Conçu à partir du README et du code C# du projet.</text>
+</g></svg>

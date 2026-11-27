@@ -24,6 +24,7 @@ import { BlockEditor } from '../../components/blocks/BlockEditor';
 import { BlockRenderer } from '../../components/blocks/BlockRenderer';
 import { useMedia } from '../../hooks/useMedia';
 import { normalizeProjectUrls } from '../../lib/external-links';
+import { enrichProject } from '../../lib/project-enrichments';
 import { supabase } from '../../lib/supabase';
 import { staggerContainer, staggerItem } from '../../lib/animations';
 import type { Project } from '../../types';
@@ -612,7 +613,7 @@ export default function ProjectEditor() {
         }
 
         if (!error && data) {
-          const project = data as Project;
+          const project = enrichProject(data as Project);
           setForm({
             title: project.title,
             slug: project.slug,

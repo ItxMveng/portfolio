@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { normalizeProjectUrls } from '../lib/external-links';
+import { enrichProject } from '../lib/project-enrichments';
 import { supabase } from '../lib/supabase';
 import type { Project } from '../types';
 
@@ -14,7 +15,7 @@ export function useProjects(adminMode = false) {
       .order('display_order', { ascending: true });
     if (!adminMode) query = query.eq('published', true);
     const { data } = await query;
-    setProjects((data ?? []).map((project) => normalizeProjectUrls(project as Project)));
+    setProjects((data ?? []).map((project) => normalizeProjectUrls(enrichProject(project as Project))));
     setLoading(false);
   }, [adminMode]);
 

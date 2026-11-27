@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+<title id="title">Jardin des cristaux : du point généré à l’interaction VR</title><desc id="desc">Schéma explicatif : une graine alimente Bridson, les points respectent une distance minimale, les zones réservées sont exclues, puis les cristaux sont collectés en VR.</desc>
+<defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#0b7a75" stroke-opacity=".12"/></pattern><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m0 0 8 4-8 4z" fill="#0b7a75"/></marker></defs>
+<rect width="1400" height="860" rx="28" fill="#fffaf1"/>
+<g font-family="Arial,sans-serif" fill="#14171f">
+<text x="65" y="63" font-size="18" font-weight="700" fill="#0b7a75" letter-spacing="3">UNITY · C# · INTERACTIONS XR</text>
+<text x="65" y="132" font-size="52" font-weight="700">Jardin des cristaux</text>
+<text x="65" y="177" font-size="23" fill="#3f4554">Une même graine. Des sites espacés. Un monde à manipuler.</text>
+<rect x="65" y="225" width="710" height="490" rx="20" fill="#e8f2ec" stroke="#bad1c7"/>
+<rect x="85" y="245" width="670" height="450" fill="url(#grid)"/>
+<g fill="#0b7a75" opacity=".65"><circle cx="153" cy="300" r="9"/><circle cx="277" cy="295" r="9"/><circle cx="420" cy="290" r="9"/><circle cx="571" cy="300" r="9"/><circle cx="695" cy="310" r="9"/><circle cx="190" cy="446" r="9"/><circle cx="333" cy="431" r="9"/><circle cx="475" cy="420" r="9"/><circle cx="650" cy="440" r="9"/><circle cx="140" cy="592" r="9"/><circle cx="300" cy="620" r="9"/><circle cx="460" cy="575" r="9"/><circle cx="680" cy="620" r="9"/></g>
+<circle cx="333" cy="431" r="125" fill="none" stroke="#0b7a75" stroke-width="2" stroke-dasharray="7 7"/>
+<path d="M333 431h125" stroke="#0b7a75" stroke-width="3" marker-end="url(#arrow)"/><text x="375" y="411" font-size="20" font-weight="700">r min.</text>
+<g stroke="#664ac0" stroke-width="2"><path d="m277 253-20 37 20 22 20-22z" fill="#bda4f2"/><path d="m475 378-20 37 20 22 20-22z" fill="#bda4f2"/><path d="m680 578-20 37 20 22 20-22z" fill="#bda4f2"/></g>
+<rect x="500" y="545" width="112" height="125" rx="16" fill="#ffdd85" stroke="#9a4f05" stroke-dasharray="6 5"/><text x="517" y="595" font-size="18">Zone de</text><text x="529" y="623" font-size="18">dépôt</text>
+<rect x="85" y="663" width="175" height="34" rx="17" fill="#fffaf1"/><text x="102" y="686" font-size="16">Vue de principe XZ</text>
+<g fill="#ffffff" stroke="#d6d7d2"><rect x="825" y="225" width="510" height="100" rx="16"/><rect x="825" y="350" width="510" height="100" rx="16"/><rect x="825" y="475" width="510" height="100" rx="16"/><rect x="825" y="600" width="510" height="115" rx="16"/></g>
+<g font-size="24" font-weight="700"><text x="853" y="265">01 · Générer</text><text x="853" y="390">02 · Filtrer et peupler</text><text x="853" y="515">03 · Saisir et déposer</text><text x="853" y="640">04 · Rejouer ou régénérer</text></g>
+<g font-size="20" fill="#3f4554"><text x="853" y="298">Graine → Bridson → points espacés</text><text x="853" y="423">Zones réservées, cristaux, végétation</text><text x="853" y="548">Le relâchement valide la collecte</text><text x="853" y="673">Graine et espacement via les boutons XR</text></g>
+<path d="M1080 326v23m0 102v23m0 102v23" stroke="#0b7a75" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="65" y="774" font-size="21" font-weight="700" fill="#0b7a75">REPRODUCTIBILITÉ + CONTRÔLE DE LA DENSITÉ</text>
+<text x="65" y="810" font-size="18" fill="#5a6170">Schéma pédagogique, pas une capture du jeu. L’espacement seul ne garantit pas un chemin praticable.</text>
+</g></svg>

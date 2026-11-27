@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components';
 import { useProfile } from '../../hooks/useProfile';
 
 const NAV_LINKS = [
+  { label: 'Éducation', to: '/#education' },
   { label: 'Services', to: '/#services' },
   { label: 'Projets', to: '/projects' },
   { label: 'Certifications', to: '/certifications' },
@@ -82,7 +83,7 @@ const DesktopNav = styled.nav`
   align-items: center;
   gap: 0.25rem;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: flex;
   }
 `;
@@ -120,7 +121,7 @@ const NavActions = styled.div`
   align-items: center;
   gap: 0.75rem;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: flex;
   }
 `;
@@ -206,7 +207,7 @@ const MobileMenuButton = styled.button`
     border-color: ${({ theme }) => theme.colors.accent};
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: none;
   }
 `;
@@ -224,7 +225,7 @@ const MobileMenu = styled(motion.div)`
   flex-direction: column;
   padding: 1.5rem;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: none;
   }
 `;

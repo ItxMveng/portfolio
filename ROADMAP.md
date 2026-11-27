@@ -1,5 +1,7 @@
 # ROADMAP — P0 : mise en avant de l'existant
 
+- [x] 2026-11-27 Section Éducation et enrichissements Unity implémentés ; validation et déploiement suivis dans JOURNAL.md.
+
 - [x] P0-01 Études de cas portfolio et pipeline vidéo — docs/portfolio/etude-de-cas-portfolio.md et etude-de-cas-pipeline-video.md au format DoD, sans chiffre inventé (fait le 2026-10-10)
 - [x] P0-02 Études de cas RelanceAuto et ReTurn — docs/portfolio/etude-de-cas-relanceauto.md et etude-de-cas-return.md, chaque fait renvoie au dépôt (fait le 2026-10-10)
 - [x] P0-03 Section « En construction » — docs/portfolio/en-construction.md liste P1–P4 avec dates et dépôts (fait le 2026-10-10)

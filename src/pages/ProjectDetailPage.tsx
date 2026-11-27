@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, ExternalLink, Github, Layers, Tag as TagIcon } fro
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { BlockRenderer } from '../components/blocks/BlockRenderer';
+import { enrichProject } from '../lib/project-enrichments';
 import { SEOHead } from '../components/layout/SEOHead';
 import { Spinner, Tag } from '../components/ui';
 import { ProjectCoverArt } from '../components/ui/ProjectCoverArt';
@@ -314,7 +315,7 @@ export default function ProjectDetailPage() {
       .single()
       .then(({ data, error }) => {
         if (error || !data) setProject(null);
-        else setProject(normalizeProjectUrls(data as Project));
+        else setProject(normalizeProjectUrls(enrichProject(data as Project)));
         setLoading(false);
       });
   }, [slug]);
