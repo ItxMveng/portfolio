@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getAssistantSystemPrompt } from '../../lib/assistant-context';
+import { callMistral, upstreamErrorCode } from '../../lib/mistral-upstream';
 
 // Clé strictement serveur : jamais de variante NEXT_PUBLIC_/VITE_ (elles sont exposées au navigateur).
 const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY ?? '';
-const MISTRAL_ENDPOINT = 'https://api.mistral.ai/v1/chat/completions';
 
 // Le modèle « large » n'est plus inclus dans l'abonnement : on essaie les modèles
 // dans l'ordre et on bascule sur le suivant en cas de 403 (tier) / 429 (quota).
@@ -87,29 +87,6 @@ function sanitizeMessages(input: unknown): { role: ChatRole; content: string }[]
   return messages;
 }
 
-async function callUpstream(body: Record<string, unknown>) {
-  let lastResponse: Response | null = null;
-
-  for (const model of MODEL_CHAIN) {
-    const response = await fetch(MISTRAL_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${MISTRAL_API_KEY}`,
-      },
-      body: JSON.stringify({ ...body, model }),
-    });
-
-    if (response.ok) return response;
-
-    lastResponse = response;
-    if (![403, 404, 429, 500, 502, 503].includes(response.status)) break;
-    console.warn(`[assistant] modèle ${model} indisponible (${response.status}), bascule.`);
-  }
-
-  return lastResponse;
-}
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -142,19 +119,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(503).json({ error: 'Assistant indisponible.' });
   }
 
-  const upstream = await callUpstream({
-    messages: [{ role: 'system', content: systemPrompt }, ...messages],
-    max_tokens: MAX_TOKENS,
-    temperature: 0.6,
-    stream: true,
-  });
+  let upstream: Response | null;
+  try {
+    upstream = await callMistral({
+      apiKey: MISTRAL_API_KEY,
+      models: MODEL_CHAIN,
+      body: {
+        messages: [{ role: 'system', content: systemPrompt }, ...messages],
+        max_tokens: MAX_TOKENS,
+        temperature: 0.6,
+        stream: true,
+      },
+    });
+  } catch {
+    console.error('[assistant] upstream network failure or timeout');
+    return res.status(502).json({ error: 'Le service IA ne répond pas pour le moment. Réessayez dans un instant.', code: 'UPSTREAM_NETWORK' });
+  }
 
   if (!upstream || !upstream.ok || !upstream.body) {
     const status = upstream?.status ?? 502;
-    console.error('[assistant] Mistral:', status, upstream ? await upstream.text() : 'no response');
+    const code = upstreamErrorCode(status);
+    console.error('[assistant] Mistral:', status, code);
     return res
       .status(status === 429 ? 429 : 502)
-      .json({ error: status === 429 ? 'Assistant très sollicité, réessayez dans un instant.' : 'Assistant indisponible.' });
+      .json({ error: status === 429 ? 'Assistant très sollicité, réessayez dans un instant.' : 'Le service IA est temporairement indisponible. Vous pouvez consulter les projets ou utiliser le formulaire de contact.', code });
   }
 
   res.writeHead(200, {

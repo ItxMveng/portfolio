@@ -639,7 +639,7 @@ export function ChatAssistant() {
             ? {
                 ...message,
                 content:
-                  error instanceof AssistantError && error.status === 429
+                  error instanceof AssistantError
                     ? error.message
                     : "Désolé, une erreur s'est produite. Vous pouvez réessayer ou passer par le formulaire de contact.",
                 isStreaming: false,

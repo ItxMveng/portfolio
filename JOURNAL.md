@@ -1,5 +1,10 @@
 # JOURNAL
 
+## 2026-11-27 — Diagnostic de l’assistant Mistral
+- Fait : erreur 502 reproduite sur « Quels sont tes projets IA ? ». Ajout d’un code d’erreur public sans détail sensible, prise en charge du refus invalid_model lors du basculement, délai commun de 20 secondes et gestion des erreurs réseau ; l’interface affiche les messages sûrs de l’API.
+- Validation : 3 tests ciblés réussis ; diagnostic définitif du fournisseur à vérifier après déploiement.
+- Décision technique : ne pas masquer la panne du modèle par une réponse prédéfinie présentée comme de l’IA.
+
 ## 2026-11-27 — Éducation et études de cas Unity
 - Fait : section Éducation après la présentation, liens de navigation, deux schémas SVG, extraits C# réels, étapes et choix techniques pour Jardin des cristaux et Roots ; crédits du binôme conservés.
 - Chiffre mesuré : aucun nouveau résultat de performance revendiqué.
